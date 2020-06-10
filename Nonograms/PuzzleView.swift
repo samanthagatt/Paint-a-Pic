@@ -109,7 +109,7 @@ class PuzzleView: UIView {
             mainStackView.removeArrangedSubview(subview)
         }
         // Loop through the number of vertical rows desired
-        for i in 1...verticalRows {
+        for i in 0..<verticalRows {
             // Create horizontal stack view for each desired row
             /// Stack view containing all squares in the row
             let stackView = UIStackView()
@@ -121,7 +121,7 @@ class PuzzleView: UIView {
                 // Create a new square
                 let square = UIView()
                 // Visual setup of square
-                square.tag = i + (horizontalRows * j)
+                square.tag = j + (horizontalRows * i)
                 square.backgroundColor = .clear
                 square.layer.borderColor = UIColor.black.cgColor
                 square.layer.borderWidth = 1
