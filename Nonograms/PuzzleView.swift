@@ -38,7 +38,7 @@ class PuzzleView: UIView {
             widthConstraint = mainStackView.widthAnchor
                 .constraint(equalTo: widthAnchor,
                             constant: -horizontalPadding)
-            NSLayoutConstraint.activate([getSmallestConstraint()])
+            NSLayoutConstraint.activate([getRulingConstraint()])
         }
     }
     @IBInspectable
@@ -48,7 +48,7 @@ class PuzzleView: UIView {
             heightConstraint = mainStackView.heightAnchor
                 .constraint(equalTo: heightAnchor,
                             constant: -verticalPadding)
-            NSLayoutConstraint.activate([getSmallestConstraint()])
+            NSLayoutConstraint.activate([getRulingConstraint()])
         }
     }
     
@@ -85,9 +85,8 @@ class PuzzleView: UIView {
             widthConstraint,
             heightConstraint
         ])
-        let smallestConstraint = getSmallestConstraint()
         NSLayoutConstraint.activate([
-            smallestConstraint
+            getRulingConstraint()
         ])
     }
     
@@ -129,12 +128,19 @@ class PuzzleView: UIView {
             // Centers stackview within superview
             mainStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             mainStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            getSmallestConstraint()
+            getRulingConstraint()
         ])
     }
     
-    private func getSmallestConstraint() -> NSLayoutConstraint {
-        frame.width < frame.height ?
-            widthConstraint : heightConstraint
+    private func getRulingConstraint() -> NSLayoutConstraint {
+        switch horizontalRows.relation(to: verticalRows) {
+            case .lessThan:
+                return heightConstraint
+            case .equalTo:
+                return frame.width < frame.height ?
+                    widthConstraint : heightConstraint
+            case .greaterThan:
+                return widthConstraint
+        }
     }
 }
