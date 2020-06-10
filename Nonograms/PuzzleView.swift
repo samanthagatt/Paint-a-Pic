@@ -121,7 +121,8 @@ class PuzzleView: UIView {
                 // Create a new square
                 let square = UIView()
                 // Visual setup of square
-                square.tag = j + (horizontalRows * i)
+                // Add 50 to tag to make sure no other views have the same tag
+                square.tag = j + (horizontalRows * i) + 50
                 square.backgroundColor = .clear
                 square.layer.borderColor = UIColor.black.cgColor
                 square.layer.borderWidth = 1
@@ -133,13 +134,28 @@ class PuzzleView: UIView {
                         .constraint(equalTo: square.heightAnchor)
                 ])
                 
-                // TODO: Gesture setup of square
+                // Gesture setup of square
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+                square.addGestureRecognizer(tapGesture)
                 
                 // Add square to horizontal stack view
                 stackView.addArrangedSubview(square)
             }
             // Add row view to main stack view
             mainStackView.addArrangedSubview(stackView)
+        }
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        guard let tag = sender.view?.tag else {
+            print("No view :(")
+            return
+        }
+        print(tag)
+        if let tappedView = viewWithTag(tag) {
+            print(tappedView)
+            let color = tappedView.backgroundColor
+            tappedView.backgroundColor = color == .clear ? .black : .clear
         }
     }
     
