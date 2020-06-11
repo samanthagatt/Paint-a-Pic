@@ -101,7 +101,7 @@ final class PuzzleView: UIView {
             subview.removeFromSuperview()
         }
         // Loop through the number of vertical rows desired
-        for i in 0..<numCols {
+        for col in 0..<numCols {
             // Create horizontal stack view for each desired row
             /// Stack view containing all squares in the row
             let stackView = UIStackView()
@@ -109,9 +109,9 @@ final class PuzzleView: UIView {
             stackView.spacing = 0
             
             // Loop through number of horizontal rows desired
-            for j in 1...numRows {
+            for row in 1...numRows {
                 /// Unique tag for each square (from 1 to `numRows` * `numCols`)
-                let number = j + (numRows * i)
+                let number = row + (numRows * col)
                 let square = PuzzleSquare(tag: number) { tag in
                     print(tag)
                     return true

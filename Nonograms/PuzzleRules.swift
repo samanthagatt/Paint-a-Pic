@@ -9,6 +9,6 @@
 import Foundation
 
 struct PuzzleRules: Equatable {
-    var rowRules: FixedLengthArray<[Int]>
-    var colRules: FixedLengthArray<[Int]>
+    let rowRules: FixedLengthArray<[Int]>
+    let colRules: FixedLengthArray<[Int]>
 }
