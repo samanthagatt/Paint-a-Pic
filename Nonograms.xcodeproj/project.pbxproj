@@ -14,7 +14,6 @@
 		D652C5B024911F9D000FC445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D652C5AF24911F9D000FC445 /* Assets.xcassets */; };
 		D652C5B324911F9D000FC445 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D652C5B124911F9D000FC445 /* LaunchScreen.storyboard */; };
 		D652C5BB24911FCC000FC445 /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5BA24911FCC000FC445 /* PuzzleView.swift */; };
-		D652C5BE24913D3A000FC445 /* NumberRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5BD24913D3A000FC445 /* NumberRelation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +26,6 @@
 		D652C5B224911F9D000FC445 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D652C5B424911F9D000FC445 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D652C5BA24911FCC000FC445 /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
-		D652C5BD24913D3A000FC445 /* NumberRelation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberRelation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +58,6 @@
 		D652C5A524911F99000FC445 /* Nonograms */ = {
 			isa = PBXGroup;
 			children = (
-				D652C5BC24913D19000FC445 /* Utils and Extensions */,
 				D652C5A624911F99000FC445 /* AppDelegate.swift */,
 				D652C5A824911F99000FC445 /* SceneDelegate.swift */,
 				D652C5AA24911F99000FC445 /* ViewController.swift */,
@@ -71,14 +68,6 @@
 				D652C5B424911F9D000FC445 /* Info.plist */,
 			);
 			path = Nonograms;
-			sourceTree = "<group>";
-		};
-		D652C5BC24913D19000FC445 /* Utils and Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				D652C5BD24913D3A000FC445 /* NumberRelation.swift */,
-			);
-			path = "Utils and Extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,7 +143,6 @@
 			files = (
 				D652C5BB24911FCC000FC445 /* PuzzleView.swift in Sources */,
 				D652C5AB24911F99000FC445 /* ViewController.swift in Sources */,
-				D652C5BE24913D3A000FC445 /* NumberRelation.swift in Sources */,
 				D652C5A724911F99000FC445 /* AppDelegate.swift in Sources */,
 				D652C5A924911F99000FC445 /* SceneDelegate.swift in Sources */,
 			);

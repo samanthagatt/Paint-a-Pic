@@ -122,8 +122,7 @@ class PuzzleView: UIView {
                 // Create a new square
                 let square = UIView()
                 // Visual setup of square
-                // Add 50 to tag to make sure no other views have the same tag
-                square.tag = j + (horizontalRows * i) + 50
+                square.tag = j + (horizontalRows * i)
                 square.backgroundColor = .clear
                 square.layer.borderColor = UIColor.black.cgColor
                 square.layer.borderWidth = 1
@@ -160,21 +159,12 @@ class PuzzleView: UIView {
     /// Determines which constraint needs to be activated
     /// in order for entire puzzle view to be visible within view
     private func getRulingConstraint() -> NSLayoutConstraint {
-        switch horizontalRows.relation(to: verticalRows) {
-            // Puzzle height is longer
-            case .lessThan:
-                return heightConstraint
-            // Puzzle is a square
-            case .equalTo:
-                return frame.width < frame.height ?
-                    // View's width is shorter
-                    widthConstraint :
-                    // View's height is shorter
-                    heightConstraint
-            // Puzzle width is longer
-            case .greaterThan:
-                return widthConstraint
-        }
+        let horizontalRatio = frame.width / CGFloat(horizontalRows)
+        let verticalRatio = frame.height / CGFloat(verticalRows)
+        return horizontalRatio < verticalRatio ?
+            widthConstraint :
+            heightConstraint
+        // If ratios are equal, either constraint will work (I think)
     }
     
     /// Activates constraint so entire puzzle view is visible within view
