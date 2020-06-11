@@ -36,10 +36,7 @@ class PuzzleView: UIView {
     var horizontalPadding: CGFloat = 0 {
         // Needs to update width constraint when updated in IB
         didSet {
-            updateWidthHeightConstraints() {
-                // Set constraint constant to new padding
-                widthConstraint.constant = -horizontalPadding * 2
-            }
+            widthConstraint.constant = -horizontalPadding * 2
         }
     }
     /// Padding desired on the top and bottom of puzzle
@@ -47,10 +44,7 @@ class PuzzleView: UIView {
     var verticalPadding: CGFloat = 0 {
         // Needs to update height constraint when updated in IB
         didSet {
-            updateWidthHeightConstraints() {
-                // Set constraint constant to new padding
-                heightConstraint.constant = -verticalPadding * 2
-            }
+            heightConstraint.constant = -verticalPadding * 2
         }
     }
     
@@ -106,7 +100,6 @@ class PuzzleView: UIView {
     private func setupGrid() {
         // Clear main stack view's arranged subviews
         for subview in mainStackView.arrangedSubviews {
-            mainStackView.removeArrangedSubview(subview)
             subview.removeFromSuperview()
         }
         // Loop through the number of vertical rows desired
@@ -135,7 +128,10 @@ class PuzzleView: UIView {
                 ])
                 
                 // Gesture setup of square
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+                let tapGesture = UITapGestureRecognizer(
+                    target: self,
+                    action: #selector(handleTap(_:))
+                )
                 square.addGestureRecognizer(tapGesture)
                 
                 // Add square to horizontal stack view
@@ -146,10 +142,9 @@ class PuzzleView: UIView {
         }
     }
     
+    /// Toggles background of view that was tapped
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        guard let tag = sender.view?.tag else {
-            return
-        }
+        guard let tag = sender.view?.tag else { return }
         if let tappedView = viewWithTag(tag) {
             let color = tappedView.backgroundColor
             tappedView.backgroundColor = color == .clear ? .black : .clear
@@ -159,25 +154,24 @@ class PuzzleView: UIView {
     /// Determines which constraint needs to be activated
     /// in order for entire puzzle view to be visible within view
     private func getRulingConstraint() -> NSLayoutConstraint {
-        let horizontalRatio = frame.width / CGFloat(horizontalRows)
-        let verticalRatio = frame.height / CGFloat(verticalRows)
-        return horizontalRatio < verticalRatio ?
+        let maximumSquareWidth = frame.width / CGFloat(horizontalRows)
+        let maximumSqaureHeight = frame.height / CGFloat(verticalRows)
+        // The smallest maximum length of a square rules which constraint
+        // to activate so the puzzle fits within the parent view
+        return maximumSquareWidth < maximumSqaureHeight ?
             widthConstraint :
             heightConstraint
-        // If ratios are equal, either constraint will work (I think)
+        // If ratios are equal, either constraint will work
     }
     
-    /// Activates constraint so entire puzzle view is visible within view
-    /// - Parameter block: Block of code where you can update
-    /// either of the width or height constraints
-    private func updateWidthHeightConstraints(block: () -> Void = { }) {
+    /// Deactivates old constraints and activates ruling constraint
+    /// so entire main stack view is visible within parent view
+    private func updateWidthHeightConstraints() {
         // Make sure old constraints are deactivated
         NSLayoutConstraint.deactivate([
             widthConstraint,
             heightConstraint
         ])
-        // Run code block
-        block()
         // Activate ruling constraint
         NSLayoutConstraint.activate([
             getRulingConstraint()
