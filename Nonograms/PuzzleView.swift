@@ -76,14 +76,6 @@ class PuzzleView: UIView {
         sharedInit()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // Make sure puzzle view is still visible whenever view lays out its subviews
-        // e.g. when the device rotates or any time the view's frame changes
-        updateWidthHeightConstraints()
-    }
-    
     /// Makes sure main stack view is added to view and the puzzle grid is rendered
     private func sharedInit() {
         addSubview(mainStackView)
@@ -93,6 +85,14 @@ class PuzzleView: UIView {
             mainStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             mainStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // Make sure puzzle view is still visible whenever view lays out its subviews
+        // e.g. when the device rotates or any time the view's frame changes
+        updateWidthHeightConstraints()
     }
     
     /// Renders puzzle grid
