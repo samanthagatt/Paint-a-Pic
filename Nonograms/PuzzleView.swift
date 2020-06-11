@@ -107,6 +107,7 @@ class PuzzleView: UIView {
         // Clear main stack view's arranged subviews
         for subview in mainStackView.arrangedSubviews {
             mainStackView.removeArrangedSubview(subview)
+            subview.removeFromSuperview()
         }
         // Loop through the number of vertical rows desired
         for i in 0..<verticalRows {
@@ -148,12 +149,9 @@ class PuzzleView: UIView {
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         guard let tag = sender.view?.tag else {
-            print("No view :(")
             return
         }
-        print(tag)
         if let tappedView = viewWithTag(tag) {
-            print(tappedView)
             let color = tappedView.backgroundColor
             tappedView.backgroundColor = color == .clear ? .black : .clear
         }
