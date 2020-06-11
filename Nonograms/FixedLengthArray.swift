@@ -14,9 +14,7 @@ struct FixedLengthArray<T: Equatable>: Equatable {
     
     subscript(index: Int) -> T {
         get { storage[index] }
-        set {
-            storage[index] = newValue
-        }
+        set { storage[index] = newValue }
     }
     
     init(repeating: T, count: Int) {

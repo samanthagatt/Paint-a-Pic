@@ -9,11 +9,11 @@
 import Foundation
 
 struct PuzzleValidator {
-    private var numRows: Int { rules.rowRules.count }
-    private var numCols: Int { rules.colRules.count }
     private var rows: FixedLengthArray<Bool>
     private var cols: FixedLengthArray<Bool>
     private let rules: PuzzleRules
+    private var numRows: Int { rules.rowRules.count }
+    private var numCols: Int { rules.colRules.count }
     
     /// Initialize a new puzzle validator with no progress from a `PuzzleRules`
     init(from rules: PuzzleRules) {

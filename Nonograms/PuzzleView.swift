@@ -9,31 +9,29 @@
 import UIKit
 
 @IBDesignable
-class PuzzleView: UIView {
+final class PuzzleView: UIView {
     
-    /// Number of squares horizontally
+    /// Number of squares in each row
     @IBInspectable
-    var horizontalRows: Int = 10 {
+    private var numRows: Int = 10 {
         didSet {
-            if horizontalRows < 5 {
-                horizontalRows = 5
-            }
+            // Number of rows can't be less than 5
+            if numRows < 5 { numRows = 5 }
             setupGrid()
         }
     }
-    /// Number of squares vertically
+    /// Number of squares in each column
     @IBInspectable
-    var verticalRows: Int = 10 {
+    private var numCols: Int = 10 {
         didSet {
-            if verticalRows < 5 {
-                verticalRows = 5
-            }
+            // Number of columns can't be less than 5
+            if numCols < 5 { numCols = 5 }
             setupGrid()
         }
     }
     /// Padding desired on both sides of puzzle
     @IBInspectable
-    var horizontalPadding: CGFloat = 0 {
+    private var horizontalPadding: CGFloat = 0 {
         // Needs to update width constraint when updated in IB
         didSet {
             widthConstraint.constant = -horizontalPadding * 2
@@ -41,7 +39,7 @@ class PuzzleView: UIView {
     }
     /// Padding desired on the top and bottom of puzzle
     @IBInspectable
-    var verticalPadding: CGFloat = 0 {
+    private var verticalPadding: CGFloat = 0 {
         // Needs to update height constraint when updated in IB
         didSet {
             heightConstraint.constant = -verticalPadding * 2
@@ -103,7 +101,7 @@ class PuzzleView: UIView {
             subview.removeFromSuperview()
         }
         // Loop through the number of vertical rows desired
-        for i in 0..<verticalRows {
+        for i in 0..<numCols {
             // Create horizontal stack view for each desired row
             /// Stack view containing all squares in the row
             let stackView = UIStackView()
@@ -111,29 +109,13 @@ class PuzzleView: UIView {
             stackView.spacing = 0
             
             // Loop through number of horizontal rows desired
-            for j in 1...horizontalRows {
-                // Create a new square
-                let square = UIView()
-                // Visual setup of square
-                square.tag = j + (horizontalRows * i)
-                square.backgroundColor = .clear
-                square.layer.borderColor = UIColor.black.cgColor
-                square.layer.borderWidth = 1
-                // Constrain square view
-                square.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    // Make square view a square
-                    square.widthAnchor
-                        .constraint(equalTo: square.heightAnchor)
-                ])
-                
-                // Gesture setup of square
-                let tapGesture = UITapGestureRecognizer(
-                    target: self,
-                    action: #selector(handleTap(_:))
-                )
-                square.addGestureRecognizer(tapGesture)
-                
+            for j in 1...numRows {
+                /// Unique tag for each square (from 1 to `numRows` * `numCols`)
+                let number = j + (numRows * i)
+                let square = PuzzleSquare(tag: number) { tag in
+                    print(tag)
+                    return true
+                }
                 // Add square to horizontal stack view
                 stackView.addArrangedSubview(square)
             }
@@ -142,25 +124,15 @@ class PuzzleView: UIView {
         }
     }
     
-    /// Toggles background of view that was tapped
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        guard let tag = sender.view?.tag else { return }
-        if let tappedView = viewWithTag(tag) {
-            let color = tappedView.backgroundColor
-            tappedView.backgroundColor = color == .clear ? .black : .clear
-        }
-    }
-    
     /// Determines which constraint needs to be activated
     /// in order for entire puzzle view to be visible within view
     private func getRulingConstraint() -> NSLayoutConstraint {
-        let maximumSquareWidth = frame.width / CGFloat(horizontalRows)
-        let maximumSqaureHeight = frame.height / CGFloat(verticalRows)
+        let maximumSquareWidth = frame.width / CGFloat(numRows)
+        let maximumSqaureHeight = frame.height / CGFloat(numCols)
         // The smallest maximum length of a square rules which constraint
         // to activate so the puzzle fits within the parent view
         return maximumSquareWidth < maximumSqaureHeight ?
-            widthConstraint :
-            heightConstraint
+            widthConstraint : heightConstraint
         // If ratios are equal, either constraint will work
     }
     

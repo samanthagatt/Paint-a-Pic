@@ -10,6 +10,7 @@
 		D62849EE24927DF60053F7D6 /* PuzzleValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849ED24927DF60053F7D6 /* PuzzleValidator.swift */; };
 		D62849F0249286520053F7D6 /* FixedLengthArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849EF249286520053F7D6 /* FixedLengthArray.swift */; };
 		D62849F22492892F0053F7D6 /* PuzzleRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849F12492892F0053F7D6 /* PuzzleRules.swift */; };
+		D62849F42492AD510053F7D6 /* PuzzleSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849F32492AD510053F7D6 /* PuzzleSquare.swift */; };
 		D652C5A724911F99000FC445 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5A624911F99000FC445 /* AppDelegate.swift */; };
 		D652C5A924911F99000FC445 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5A824911F99000FC445 /* SceneDelegate.swift */; };
 		D652C5AB24911F99000FC445 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5AA24911F99000FC445 /* ViewController.swift */; };
@@ -23,6 +24,7 @@
 		D62849ED24927DF60053F7D6 /* PuzzleValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleValidator.swift; sourceTree = "<group>"; };
 		D62849EF249286520053F7D6 /* FixedLengthArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedLengthArray.swift; sourceTree = "<group>"; };
 		D62849F12492892F0053F7D6 /* PuzzleRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleRules.swift; sourceTree = "<group>"; };
+		D62849F32492AD510053F7D6 /* PuzzleSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleSquare.swift; sourceTree = "<group>"; };
 		D652C5A324911F99000FC445 /* Nonograms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nonograms.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D652C5A624911F99000FC445 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D652C5A824911F99000FC445 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				D652C5A824911F99000FC445 /* SceneDelegate.swift */,
 				D652C5AA24911F99000FC445 /* ViewController.swift */,
 				D652C5BA24911FCC000FC445 /* PuzzleView.swift */,
+				D62849F32492AD510053F7D6 /* PuzzleSquare.swift */,
 				D62849ED24927DF60053F7D6 /* PuzzleValidator.swift */,
 				D62849F12492892F0053F7D6 /* PuzzleRules.swift */,
 				D62849EF249286520053F7D6 /* FixedLengthArray.swift */,
@@ -150,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D62849F42492AD510053F7D6 /* PuzzleSquare.swift in Sources */,
 				D62849EE24927DF60053F7D6 /* PuzzleValidator.swift in Sources */,
 				D652C5BB24911FCC000FC445 /* PuzzleView.swift in Sources */,
 				D652C5AB24911F99000FC445 /* ViewController.swift in Sources */,
