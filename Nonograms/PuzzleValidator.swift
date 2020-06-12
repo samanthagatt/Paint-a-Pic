@@ -37,53 +37,46 @@ struct PuzzleValidator {
     
     mutating func toggle(square tag: Int) -> Bool {
         filled.toggle(tag)
-        // If row or col isn't valid after changing tag then entire puzzle isn't either
-        guard validate(changed: tag) else { return false }
-        return isValid
-    }
-    
-    // TODO: Test
-    @discardableResult
-    private mutating func validate(changed tag: Int) -> Bool {
         // Find the row by dividing tag by number of columns
         // Must subtract one from tag because arrays are 0 indexed and tags start at 1
         let row = (tag - 1) / numCols
         // Get column by how much is left over after dividing by numCols
         let col = (tag - 1) % numCols
-        validate(row: row)
-        validate(col: col)
-        return rows[row] && cols[col]
+        rows[row] = validate(row: row)
+        cols[col] = validate(col: col)
+        // If row or col isn't valid after changing tag then entire puzzle isn't either
+        guard rows[row] && cols[col] else { return false }
+        return isValid
     }
-    // TODO: Test
-    private mutating func validate(row: Int) {
-        /// Rules for row
-        let rowRule = rules.rowRules[row]
-        /// Array of stretches. Should exactly equal seq if valid.
+
+    private func validate(
+        rule: [Int],
+        numSquares: Int,
+        tag: (_ index: Int) -> Int
+    ) -> Bool {
+        /// Array of stretches. Should exactly equal rule if valid.
         var stretches: [Int] = []
         /// Length of current stretch of filled squares
         var stretch = 0
-        for col in 0..<numCols {
+        for i in 0..<numSquares {
             // Get tag number of square
-            // Add 1 since row should start at 1 not 0 for calculation
-            let tag = (numRows * row) + col + 1
-            // See if square is filled
+            let tag = tag(i)
+            // See if current square is filled
             let squareIsFilled = filled.contains(tag)
             // If it is, add 1 to stretch and check to see if it breaks rule
             if squareIsFilled {
                 // Make sure stretches count is smaller than rowRule's
                 // If it's not then we know the rule is broken since there will be
                 // more stretches in the user's puzzle than the rules
-                guard stretches.count < rowRule.count else {
-                    rows[row] = false
-                    return
+                guard stretches.count < rule.count else {
+                    return false
                 }
                 stretch += 1
                 // If stretch is longer than corresponding row rule then it breaks the rules
-                if stretch > rowRule[stretches.count] {
-                    rows[row] = false
-                    return
+                if stretch > rule[stretches.count] {
+                    return false
                 }
-            // If the square is not filled
+            // If the current square is not filled
             } else {
                 // If last square was filled that means the stretch was just broken
                 if stretch > 0 {
@@ -91,9 +84,8 @@ struct PuzzleValidator {
                     // (Don't have to worry about stretches and rowRule counts since
                     // it's taken into account when square is filled, and stretch can't break
                     // if a square was never filled)
-                    guard rowRule[stretches.count] == stretch else {
-                        rows[row] = false
-                        return
+                    guard rule[stretches.count] == stretch else {
+                        return false
                     }
                     stretches.append(stretch)
                     stretch = 0
@@ -101,56 +93,23 @@ struct PuzzleValidator {
             }
         }
         if stretch > 0 { stretches.append(stretch) }
-        rows[row] = rowRule == stretches
+        return rule == stretches
     }
-    // TODO: Test
-    // TODO: Clean up validate(row:) and validate(col:) into one func so its DRY
-    private mutating func validate(col: Int) {
-        /// Rules for row
-        let colRule = rules.colRules[col]
-        /// Array of stretches. Should exactly equal seq if valid.
-        var stretches: [Int] = []
-        /// Length of current stretch of filled squares
-        var stretch = 0
-        for row in 0..<numRows {
-            // Get tag number of square
-            // Add 1 since row should start at 1 not 0 for calculation
-            let tag = (numRows * row) + col + 1
-            // See if square is filled
-            let squareIsFilled = filled.contains(tag)
-            // If it is, add 1 to stretch and check to see if it breaks rule
-            if squareIsFilled {
-                // Make sure stretches count is smaller than rowRule's
-                // If it's not then we know the rule is broken since there will be
-                // more stretches in the user's puzzle than the rules
-                guard stretches.count < colRule.count else {
-                    cols[col] = false
-                    return
-                }
-                stretch += 1
-                // If stretch is longer than corresponding row rule then it breaks the rules
-                if stretch > colRule[stretches.count] {
-                    cols[col] = false
-                    return
-                }
-            // If the square is not filled
-            } else {
-                // If last square was filled that means the stretch was just broken
-                if stretch > 0 {
-                    // Make sure the stretch that was just broken matches row rule
-                    // (Don't have to worry about stretches and rowRule counts since
-                    // it's taken into account when square is filled, and stretch can't break
-                    // if a square was never filled)
-                    guard colRule[stretches.count] == stretch else {
-                        cols[col] = false
-                        return
-                    }
-                    stretches.append(stretch)
-                    stretch = 0
-                }
-            }
-        }
-        if stretch > 0 { stretches.append(stretch) }
-        cols[col] = colRule == stretches
+    private func validate(row: Int) -> Bool {
+        validate(rule: rules.rowRules[row],
+                 numSquares: numCols,
+                 tag: { col in
+                    getTag(row: row, col: col)
+        })
+    }
+    private func validate(col: Int) -> Bool {
+        validate(rule: rules.colRules[col],
+                 numSquares: numRows,
+                 tag: { row in
+                    getTag(row: row, col: col)
+        })
+    }
+    private func getTag(row: Int, col: Int) -> Int {
+        (numRows * row) + col + 1
     }
 }
