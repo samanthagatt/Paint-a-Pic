@@ -20,7 +20,7 @@ final class PuzzleSquare: UIView {
     }
     /// Closure called when square view is tapped
     /// - Returns: Success of closure as a `Bool`
-    var wasTapped: (Int) -> Bool = { _ in true }
+    var wasTapped: (Int) -> Void = { _ in }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,14 +35,15 @@ final class PuzzleSquare: UIView {
         emptyColor: UIColor = .clear,
         filledColor: UIColor = .black,
         isFilled: Bool = false,
-        wasTapped: @escaping (Int) -> Bool = { _ in true }
+        wasTapped: @escaping (Int) -> Void = { _ in }
     ) {
         self.init()
         self.tag = tag
         self.wasTapped = wasTapped
     }
+    /// Handles setting up view when initialized
     private func sharedInit() {
-        setBackground()
+        backgroundColor = emptyColor
         layer.borderColor = UIColor.black.cgColor
         layer.borderWidth = 1
         
@@ -63,12 +64,11 @@ final class PuzzleSquare: UIView {
     
     /// Toggles background of view that was tapped
     @objc private func handleTap(_ sender: UITapGestureRecognizer) {
-        // Make sure wasTapped was successful
-        guard wasTapped(tag) else { return }
-        // Only toggle isFilled if wasTapped succeeded
+        wasTapped(tag)
         isFilled.toggle()
     }
     
+    /// Sets background color of square based off whether it is filled or not
     private func setBackground() {
         backgroundColor = isFilled ? filledColor : emptyColor
     }

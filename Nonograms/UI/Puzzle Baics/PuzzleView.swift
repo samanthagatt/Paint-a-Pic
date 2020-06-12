@@ -7,33 +7,45 @@
 //
 
 import UIKit
+import Combine
 
+/// Displays puzzle and is interactive.
+///
+/// When user taps on a square it gets filled in
 @IBDesignable
 final class PuzzleView: UIView {
-    
-    var squareWasTapped: (Int) -> Bool = { _ in true }
-    
-    /// Number of squares in each row
-    @IBInspectable
-    var numRows: Int = 10 {
+    /// A passthrough subject from `Combine` that emits a bool representing
+    /// if the puzzle is valid every time a square is tapped.
+    ///
+    /// Will always emit `false` if `rules` is not set.
+    /// Emits `true` when puzzle is solved (each row and column
+    /// meets the puzzle's `rules`)
+    var puzzleValidity = PassthroughSubject<Bool, Never>()
+    /// The rules of the puzzle. Used to create the grid and puzzle validator.
+    ///
+    /// Must be set (either in `viewDidLoad` of parent view controller if using IB,
+    /// or using `.init(rules:)` programmatically) to gain validation functionality
+    var rules: PuzzleRules? {
         didSet {
-            // Number of rows can't be less than 5
-            if numRows < 5 { numRows = 5 }
+            guard let rules = rules else { return }
+            validator = PuzzleValidator(from: rules)
             setupGrid()
         }
     }
-    /// Number of squares in each column
-    @IBInspectable
-    var numCols: Int = 10 {
-        didSet {
-            // Number of columns can't be less than 5
-            if numCols < 5 { numCols = 5 }
-            setupGrid()
-        }
+    /// The puzzle validator based off of the given` rules`
+    private var validator: PuzzleValidator?
+    /// The number of rows in the puzzle based off `rules`. Defaults to `10`
+    private var numRows: Int {
+        validator?.numRows ?? 10
     }
+    /// The number of columns in the puzzle based off `rules`. Defaults to `10`
+    private var numCols: Int {
+        validator?.numCols ?? 10
+    }
+    
     /// Padding desired on both sides of puzzle
     @IBInspectable
-    private var horizontalPadding: CGFloat = 0 {
+    var horizontalPadding: CGFloat = 0 {
         // Needs to update width constraint when updated in IB
         didSet {
             widthConstraint.constant = -horizontalPadding * 2
@@ -41,7 +53,7 @@ final class PuzzleView: UIView {
     }
     /// Padding desired on the top and bottom of puzzle
     @IBInspectable
-    private var verticalPadding: CGFloat = 0 {
+    var verticalPadding: CGFloat = 0 {
         // Needs to update height constraint when updated in IB
         didSet {
             heightConstraint.constant = -verticalPadding * 2
@@ -74,6 +86,12 @@ final class PuzzleView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         sharedInit()
+    }
+    /// Initializes new instance and sets `rules`. `sink` `puzzleValidity` to
+    /// subscribe to changes in puzzle validity.
+    convenience init(_ rules: PuzzleRules) {
+        self.init()
+        self.rules = rules
     }
     
     /// Makes sure main stack view is added to view and the puzzle grid is rendered
@@ -116,8 +134,10 @@ final class PuzzleView: UIView {
                 let number = row + (numRows * col)
                 let square = PuzzleSquare(tag: number) {
                     [weak self] squareTag in
-                    guard let self = self else { return false }
-                    return self.squareWasTapped(squareTag)
+                    guard let self = self else { return }
+                    let isValid = self.validator?
+                        .toggle(square: squareTag) ?? false
+                    self.puzzleValidity.send(isValid)
                 }
                 // Add square to horizontal stack view
                 stackView.addArrangedSubview(square)

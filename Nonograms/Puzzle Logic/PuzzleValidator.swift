@@ -1,5 +1,5 @@
 //
-//  Puzzle.swift
+//  PuzzleValidator.swift
 //  Nonograms
 //
 //  Created by Samantha Gatt on 6/11/20.
@@ -23,7 +23,7 @@ struct PuzzleValidator {
     private var filled: Set<Int> = []
     /// Computed property determining the validity of the current state of puzzle
     private var isValid: Bool {
-        return !rows.contains(false) &&
+        !rows.contains(false) &&
             !cols.contains(false)
     }
     

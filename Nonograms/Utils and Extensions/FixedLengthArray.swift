@@ -28,3 +28,9 @@ struct FixedLengthArray<T: Equatable>: Equatable {
         storage.contains(element)
     }
 }
+
+extension FixedLengthArray: ExpressibleByArrayLiteral {
+    init(arrayLiteral: T...) {
+        self.init(storage: arrayLiteral)
+    }
+}
