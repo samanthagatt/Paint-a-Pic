@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+extension Set {
+    mutating func toggle(_ item: Element) {
+        if contains(item) {
+            remove(item)
+        } else {
+            insert(item)
+        }
+    }
+}

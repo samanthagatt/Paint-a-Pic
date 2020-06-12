@@ -11,9 +11,11 @@ import UIKit
 @IBDesignable
 final class PuzzleView: UIView {
     
+    var squareWasTapped: (Int) -> Bool = { _ in true }
+    
     /// Number of squares in each row
     @IBInspectable
-    private var numRows: Int = 10 {
+    var numRows: Int = 10 {
         didSet {
             // Number of rows can't be less than 5
             if numRows < 5 { numRows = 5 }
@@ -22,7 +24,7 @@ final class PuzzleView: UIView {
     }
     /// Number of squares in each column
     @IBInspectable
-    private var numCols: Int = 10 {
+    var numCols: Int = 10 {
         didSet {
             // Number of columns can't be less than 5
             if numCols < 5 { numCols = 5 }
@@ -112,9 +114,10 @@ final class PuzzleView: UIView {
             for row in 1...numRows {
                 /// Unique tag for each square (from 1 to `numRows` * `numCols`)
                 let number = row + (numRows * col)
-                let square = PuzzleSquare(tag: number) { tag in
-                    print(tag)
-                    return true
+                let square = PuzzleSquare(tag: number) {
+                    [weak self] squareTag in
+                    guard let self = self else { return false }
+                    return self.squareWasTapped(squareTag)
                 }
                 // Add square to horizontal stack view
                 stackView.addArrangedSubview(square)
