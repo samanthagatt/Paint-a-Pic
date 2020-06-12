@@ -49,6 +49,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D62849F72493E98C0053F7D6 /* Puzzle Logic */ = {
+			isa = PBXGroup;
+			children = (
+				D62849ED24927DF60053F7D6 /* PuzzleValidator.swift */,
+				D62849F12492892F0053F7D6 /* PuzzleRules.swift */,
+			);
+			path = "Puzzle Logic";
+			sourceTree = "<group>";
+		};
+		D62849F82493E9E20053F7D6 /* Utils and Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D62849F52492F96E0053F7D6 /* Set+Toggle.swift */,
+				D62849EF249286520053F7D6 /* FixedLengthArray.swift */,
+			);
+			path = "Utils and Extensions";
+			sourceTree = "<group>";
+		};
+		D62849F92493E9FD0053F7D6 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				D62849FA2493EA190053F7D6 /* Puzzle Baics */,
+				D652C5AA24911F99000FC445 /* ViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		D62849FA2493EA190053F7D6 /* Puzzle Baics */ = {
+			isa = PBXGroup;
+			children = (
+				D652C5BA24911FCC000FC445 /* PuzzleView.swift */,
+				D62849F32492AD510053F7D6 /* PuzzleSquare.swift */,
+			);
+			path = "Puzzle Baics";
+			sourceTree = "<group>";
+		};
 		D652C59A24911F99000FC445 = {
 			isa = PBXGroup;
 			children = (
@@ -70,13 +106,9 @@
 			children = (
 				D652C5A624911F99000FC445 /* AppDelegate.swift */,
 				D652C5A824911F99000FC445 /* SceneDelegate.swift */,
-				D652C5AA24911F99000FC445 /* ViewController.swift */,
-				D62849F52492F96E0053F7D6 /* Set+Toggle.swift */,
-				D652C5BA24911FCC000FC445 /* PuzzleView.swift */,
-				D62849F32492AD510053F7D6 /* PuzzleSquare.swift */,
-				D62849ED24927DF60053F7D6 /* PuzzleValidator.swift */,
-				D62849F12492892F0053F7D6 /* PuzzleRules.swift */,
-				D62849EF249286520053F7D6 /* FixedLengthArray.swift */,
+				D62849F82493E9E20053F7D6 /* Utils and Extensions */,
+				D62849F72493E98C0053F7D6 /* Puzzle Logic */,
+				D62849F92493E9FD0053F7D6 /* UI */,
 				D652C5AC24911F99000FC445 /* Main.storyboard */,
 				D652C5AF24911F9D000FC445 /* Assets.xcassets */,
 				D652C5B124911F9D000FC445 /* LaunchScreen.storyboard */,
