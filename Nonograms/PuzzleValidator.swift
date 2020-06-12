@@ -21,6 +21,7 @@ struct PuzzleValidator {
     var numCols: Int { rules.colRules.count }
     /// Set of all filled in square tags for easy lookup
     private var filled: Set<Int> = []
+    /// Computed property determining the validity of the current state of puzzle
     private var isValid: Bool {
         return !rows.contains(false) &&
             !cols.contains(false)
@@ -35,6 +36,8 @@ struct PuzzleValidator {
                                 count: rules.colRules.count)
     }
     
+    /// Fills or unfills square and returns the validity of the entire puzzle
+    /// - Parameter square: the tag of the square being filled or unfilled
     mutating func toggle(square tag: Int) -> Bool {
         filled.toggle(tag)
         // Find the row by dividing tag by number of columns
@@ -49,7 +52,15 @@ struct PuzzleValidator {
         return isValid
     }
 
-    private func validate(
+    /// Returns the validity of a row or column based off the given rule.
+    /// Only to be used in `validate(row:)` and `validate(col:)`.
+    /// - Parameters:
+    ///     - rule: The rule for the column or row
+    ///     - numSquares: The number of squres in column if validating a row,
+    ///                     or row if validating a column
+    ///     - tag: Function returning the tag number of current square in for loop
+    ///     - index: The current index in the for loop
+    private func _validate(
         rule: [Int],
         numSquares: Int,
         tag: (_ index: Int) -> Int
@@ -95,20 +106,23 @@ struct PuzzleValidator {
         if stretch > 0 { stretches.append(stretch) }
         return rule == stretches
     }
+    /// Returns the validity of a row
     private func validate(row: Int) -> Bool {
-        validate(rule: rules.rowRules[row],
-                 numSquares: numCols,
-                 tag: { col in
+        _validate(rule: rules.rowRules[row],
+                  numSquares: numCols,
+                  tag: { col in
                     getTag(row: row, col: col)
         })
     }
+    /// Returns the validity of a column
     private func validate(col: Int) -> Bool {
-        validate(rule: rules.colRules[col],
-                 numSquares: numRows,
-                 tag: { row in
+        _validate(rule: rules.colRules[col],
+                  numSquares: numRows,
+                  tag: { row in
                     getTag(row: row, col: col)
         })
     }
+    /// Calculates the tag number of a square given the row and column
     private func getTag(row: Int, col: Int) -> Int {
         (numRows * row) + col + 1
     }
