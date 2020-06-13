@@ -12,21 +12,12 @@ import Combine
 final class ViewController: UIViewController {
     /// Set of all subscriptions. Each will be canceled on deallocation.
     private var subscriptions = Set<AnyCancellable>()
-    /// Rules for current puzzle
-    private lazy var rules: PuzzleRules = {
-        PuzzleRules(
-            rowRules: [[2, 1], [2], [2], [1], [2]],
-            colRules: [[1, 1], [1, 1, 1], [3], [1], [1]]
-        )
-    }()
 
     @IBOutlet weak var puzzleView: PuzzleView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set puzzleView's rules
-        puzzleView.rules = rules
         // Subscribe to updates to see if puzzle has been solved
         puzzleView.puzzleValidity.sink { [weak self] isValid in
             guard let self = self else { return }

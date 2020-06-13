@@ -17,66 +17,51 @@ final class PuzzleView: UIView {
     /// A passthrough subject from `Combine` that emits a bool representing
     /// if the puzzle is valid every time a square is tapped.
     ///
-    /// Will always emit `false` if `rules` is not set.
     /// Emits `true` when puzzle is solved (each row and column
     /// meets the puzzle's `rules`)
     var puzzleValidity = PassthroughSubject<Bool, Never>()
     /// The rules of the puzzle. Used to create the grid and puzzle validator.
     ///
-    /// Must be set (either in `viewDidLoad` of parent view controller if using IB,
-    /// or using `.init(rules:)` programmatically) to gain validation functionality
-    var rules: PuzzleRules? {
+    /// Must be set (either in `viewDidLoad` of parent view controller if using IB, or
+    /// using `.init(rules:)` programmatically) if not planning on using default value.
+    var rules: PuzzleRules = PuzzleRules(
+            rowRules: [[2, 1], [2], [2], [1], [2]],
+            colRules: [[1, 1], [1, 1, 1], [3], [1], [1]]
+        ) {
         didSet {
-            guard let rules = rules else { return }
             validator = PuzzleValidator(from: rules)
-            setupGrid()
+            setupPuzzle()
         }
     }
     /// The puzzle validator based off of the given` rules`
-    private var validator: PuzzleValidator?
-    /// The number of rows in the puzzle based off `rules`. Defaults to `10`
+    private lazy var validator: PuzzleValidator =
+        PuzzleValidator(from: rules)
+    /// The number of rows in the puzzle based off `rules`
     private var numRows: Int {
-        validator?.numRows ?? 10
+        validator.numRows
     }
-    /// The number of columns in the puzzle based off `rules`. Defaults to `10`
+    /// The number of columns in the puzzle based off `rules`
     private var numCols: Int {
-        validator?.numCols ?? 10
+        validator.numCols
     }
     
-    /// Padding desired on both sides of puzzle
+    /// Padding desired between puzzle grid and rules
     @IBInspectable
-    var horizontalPadding: CGFloat = 0 {
-        // Needs to update width constraint when updated in IB
-        didSet {
-            widthConstraint.constant = -horizontalPadding * 2
-        }
-    }
-    /// Padding desired on the top and bottom of puzzle
-    @IBInspectable
-    var verticalPadding: CGFloat = 0 {
-        // Needs to update height constraint when updated in IB
-        didSet {
-            heightConstraint.constant = -verticalPadding * 2
-        }
-    }
+    var rulesPadding: CGFloat = 16
     
-    /// Main stack view (vertical). Will hold each horizontal stack view to make a grid.
-    private var mainStackView: UIStackView = {
+    private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = rulesPadding
         return stackView
     }()
     /// Reference to main stack view's width constraint
     private lazy var widthConstraint: NSLayoutConstraint = {
-        mainStackView.widthAnchor
-            .constraint(equalTo: widthAnchor, constant: -horizontalPadding)
+        mainStackView.widthAnchor.constraint(equalTo: widthAnchor)
     }()
     /// Reference to main stack view's height constraint
     private lazy var heightConstraint: NSLayoutConstraint = {
-        mainStackView.heightAnchor
-            .constraint(equalTo: heightAnchor, constant: -verticalPadding)
+        mainStackView.heightAnchor.constraint(equalTo: heightAnchor)
     }()
     
     override init(frame: CGRect) {
@@ -97,7 +82,7 @@ final class PuzzleView: UIView {
     /// Makes sure main stack view is added to view and the puzzle grid is rendered
     private func sharedInit() {
         addSubview(mainStackView)
-        setupGrid()
+        setupPuzzle()
         // Center main stackview within view
         NSLayoutConstraint.activate([
             mainStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -113,13 +98,13 @@ final class PuzzleView: UIView {
         updateWidthHeightConstraints()
     }
     
-    /// Renders puzzle grid
-    /// - Note: Clears old grid before adding new one
-    private func setupGrid() {
-        // Clear main stack view's arranged subviews
-        for subview in mainStackView.arrangedSubviews {
-            subview.removeFromSuperview()
-        }
+    /// Makes stack view (vertical) that holds each horizontal stack view to make the grid.
+    private func makeGrid() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
         // Loop through the number of vertical rows desired
         for col in 0..<numCols {
             // Create horizontal stack view for each desired row
@@ -135,16 +120,79 @@ final class PuzzleView: UIView {
                 let square = PuzzleSquare(tag: number) {
                     [weak self] squareTag in
                     guard let self = self else { return }
-                    let isValid = self.validator?
-                        .toggle(square: squareTag) ?? false
+                    let isValid = self.validator
+                        .toggle(square: squareTag)
                     self.puzzleValidity.send(isValid)
                 }
                 // Add square to horizontal stack view
                 stackView.addArrangedSubview(square)
             }
-            // Add row view to main stack view
-            mainStackView.addArrangedSubview(stackView)
+            // Add row view to grid stack view
+            stackView.addArrangedSubview(stackView)
         }
+        return stackView
+    }
+    
+    private func makeRules(axis: NSLayoutConstraint.Axis,
+                           spacing: CGFloat) -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = axis
+        stackView.distribution = .fillEqually
+        
+        let rulesArr = axis == .vertical ?
+            rules.rowRules : rules.colRules
+        
+        for rule in rulesArr {
+            let labelStack = UIStackView()
+            labelStack.axis = axis == .vertical ?
+                .horizontal : .vertical
+            labelStack.spacing = spacing
+            labelStack.alignment = axis == .vertical ?
+                .trailing : .bottom
+            for int in rule {
+                let label = UILabel()
+                label.text = "\(int)"
+                labelStack.addArrangedSubview(label)
+            }
+            stackView.addArrangedSubview(labelStack)
+        }
+        return stackView
+    }
+    
+    private func setupPuzzle() {
+        // Clear main  stack view's arranged subviews
+        for subview in mainStackView.arrangedSubviews {
+            subview.removeFromSuperview()
+        }
+        
+        let ruleSpacing: CGFloat = 6
+        let topRules = makeRules(axis: .horizontal, spacing: ruleSpacing)
+        let leftRules = makeRules(axis: .horizontal, spacing: ruleSpacing)
+        leftRules.setContentCompressionResistancePriority(.defaultHigh,
+                                                          for: .horizontal)
+        leftRules.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        let top = UIStackView()
+        top.axis = .horizontal
+        top.setContentCompressionResistancePriority(.defaultHigh,
+                                                    for: .vertical)
+        top.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        let blankSquare = UIView()
+        NSLayoutConstraint.activate([
+            blankSquare.heightAnchor
+                .constraint(equalTo: blankSquare.widthAnchor)
+        ])
+        top.addArrangedSubview(blankSquare)
+        top.addArrangedSubview(topRules)
+        
+        let bottom = UIStackView()
+        bottom.axis = .horizontal
+        bottom.spacing = ruleSpacing
+        bottom.addArrangedSubview(leftRules)
+        bottom.addArrangedSubview(makeGrid())
+        
+        mainStackView.addArrangedSubview(top)
+        mainStackView.addArrangedSubview(bottom)
     }
     
     /// Determines which constraint needs to be activated
