@@ -12,25 +12,41 @@ struct FixedLengthArray<T: Equatable>: Equatable {
     private var storage: [T]
     var count: Int { storage.count }
     
-    subscript(index: Int) -> T {
-        get { storage[index] }
-        set { storage[index] = newValue }
-    }
-    
     init(repeating: T, count: Int) {
         storage = Array(repeating: repeating, count: count)
     }
     init(storage: [T]) {
         self.storage = storage
     }
-    
-    func contains(_ element: T) -> Bool {
-        storage.contains(element)
+}
+
+extension FixedLengthArray {
+    subscript(index: Int) -> T {
+        get { storage[index] }
+        set { storage[index] = newValue }
     }
 }
 
 extension FixedLengthArray: ExpressibleByArrayLiteral {
     init(arrayLiteral: T...) {
         self.init(storage: arrayLiteral)
+    }
+}
+
+extension FixedLengthArray: Sequence {
+    func makeIterator() -> FLAIterator<T> {
+        FLAIterator(fla: self)
+    }
+}
+
+struct FLAIterator<T: Equatable>: IteratorProtocol {
+    let fla: FixedLengthArray<T>
+    var currentIndex = 0
+    mutating func next() -> T? {
+        if currentIndex < fla.count {
+            defer { currentIndex += 1 }
+            return fla[currentIndex]
+        }
+        return nil
     }
 }

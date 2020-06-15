@@ -17,51 +17,49 @@ final class PuzzleView: UIView {
     /// A passthrough subject from `Combine` that emits a bool representing
     /// if the puzzle is valid every time a square is tapped.
     ///
-    /// Will always emit `false` if `rules` is not set.
     /// Emits `true` when puzzle is solved (each row and column
     /// meets the puzzle's `rules`)
     var puzzleValidity = PassthroughSubject<Bool, Never>()
     /// The rules of the puzzle. Used to create the grid and puzzle validator.
     ///
-    /// Must be set (either in `viewDidLoad` of parent view controller if using IB,
-    /// or using `.init(rules:)` programmatically) to gain validation functionality
-    var rules: PuzzleRules? {
+    /// Must be set (either in `viewDidLoad` of parent view controller if using IB, or
+    /// using `.init(rules:)` programmatically) if not planning on using default value.
+    var rules: PuzzleRules = PuzzleRules(
+            rowRules: [[2, 1], [2], [2], [1], [2]],
+            colRules: [[1, 1], [1, 1, 1], [3], [1], [1]]
+        ) {
         didSet {
-            guard let rules = rules else { return }
+            // Update validator and row rules counts
             validator = PuzzleValidator(from: rules)
-            setupGrid()
+            maxRowRulesCount = rules.rowRules
+                .reduce(0) { $0 < $1.count ? $1.count : $0 }
+            maxColRulesCount = rules.colRules
+                .reduce(0) { $0 < $1.count ? $1.count : $0 }
+            // Setup puzzle again with updated rules
+            setupPuzzle()
         }
     }
     /// The puzzle validator based off of the given` rules`
-    private var validator: PuzzleValidator?
-    /// The number of rows in the puzzle based off `rules`. Defaults to `10`
+    private lazy var validator: PuzzleValidator =
+        PuzzleValidator(from: rules)
+    /// The number of rows needed to display grid and rules
     private var numRows: Int {
-        validator?.numRows ?? 10
+        validator.numRows + maxColRulesCount
     }
-    /// The number of columns in the puzzle based off `rules`. Defaults to `10`
+    /// The number of columns needed to display grid and rules
     private var numCols: Int {
-        validator?.numCols ?? 10
+        validator.numCols + maxRowRulesCount
     }
+    /// Defaults to hard coded max in default rules
+    private var maxRowRulesCount: Int = 2
+    /// Defaults to hard coded max in default rules
+    private var maxColRulesCount: Int = 3
     
-    /// Padding desired on both sides of puzzle
+    /// Padding desired between puzzle grid and rules
     @IBInspectable
-    var horizontalPadding: CGFloat = 0 {
-        // Needs to update width constraint when updated in IB
-        didSet {
-            widthConstraint.constant = -horizontalPadding * 2
-        }
-    }
-    /// Padding desired on the top and bottom of puzzle
-    @IBInspectable
-    var verticalPadding: CGFloat = 0 {
-        // Needs to update height constraint when updated in IB
-        didSet {
-            heightConstraint.constant = -verticalPadding * 2
-        }
-    }
+    var rulesPadding: CGFloat = 16
     
-    /// Main stack view (vertical). Will hold each horizontal stack view to make a grid.
-    private var mainStackView: UIStackView = {
+    private lazy var gridStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 0
@@ -70,13 +68,11 @@ final class PuzzleView: UIView {
     }()
     /// Reference to main stack view's width constraint
     private lazy var widthConstraint: NSLayoutConstraint = {
-        mainStackView.widthAnchor
-            .constraint(equalTo: widthAnchor, constant: -horizontalPadding)
+        gridStackView.widthAnchor.constraint(equalTo: widthAnchor)
     }()
     /// Reference to main stack view's height constraint
     private lazy var heightConstraint: NSLayoutConstraint = {
-        mainStackView.heightAnchor
-            .constraint(equalTo: heightAnchor, constant: -verticalPadding)
+        gridStackView.heightAnchor.constraint(equalTo: heightAnchor)
     }()
     
     override init(frame: CGRect) {
@@ -96,12 +92,12 @@ final class PuzzleView: UIView {
     
     /// Makes sure main stack view is added to view and the puzzle grid is rendered
     private func sharedInit() {
-        addSubview(mainStackView)
-        setupGrid()
+        addSubview(gridStackView)
+        setupPuzzle()
         // Center main stackview within view
         NSLayoutConstraint.activate([
-            mainStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            mainStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            gridStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            gridStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
     }
     
@@ -113,45 +109,147 @@ final class PuzzleView: UIView {
         updateWidthHeightConstraints()
     }
     
-    /// Renders puzzle grid
-    /// - Note: Clears old grid before adding new one
+    /// Setsup stack view (vertical) that holds each horizontal stack view to make the grid.
     private func setupGrid() {
-        // Clear main stack view's arranged subviews
-        for subview in mainStackView.arrangedSubviews {
-            subview.removeFromSuperview()
-        }
         // Loop through the number of vertical rows desired
-        for col in 0..<numCols {
+        for y in 0..<numRows {
             // Create horizontal stack view for each desired row
             /// Stack view containing all squares in the row
             let stackView = UIStackView()
             stackView.axis = .horizontal
             stackView.spacing = 0
             
-            // Loop through number of horizontal rows desired
-            for row in 1...numRows {
-                /// Unique tag for each square (from 1 to `numRows` * `numCols`)
-                let number = row + (numRows * col)
-                let square = PuzzleSquare(tag: number) {
-                    [weak self] squareTag in
-                    guard let self = self else { return }
-                    let isValid = self.validator?
-                        .toggle(square: squareTag) ?? false
-                    self.puzzleValidity.send(isValid)
+            // Loop through number of horizontal rows desired (including rules)
+            for x in 0..<numCols {
+                
+                // If in col or row rules area (top or left respectively)
+                if y < maxColRulesCount || x < maxRowRulesCount {
+                    let invisSquare = UIView()
+                    invisSquare.backgroundColor = .clear
+                    invisSquare
+                        .translatesAutoresizingMaskIntoConstraints = false
+                    // Make invis square a square
+                    NSLayoutConstraint.activate([
+                        invisSquare.widthAnchor
+                            .constraint(equalTo: invisSquare.heightAnchor)
+                    ])
+                    
+                    let colIndex = x - maxRowRulesCount
+                    // If colIndex is __not__ negative,  we know x must be greater
+                    // than maxRowRulesCount and y must be less than maxColRulesCount
+                    // Meaning square is in col rules area (top right)
+                    if colIndex >= 0 {
+                        let colRule = rules.colRules[colIndex]
+                        let ruleIndex = colRule.count - (maxColRulesCount - y)
+                        if ruleIndex >= 0 {
+                            // Add rule label to invisible square
+                            let label = UILabel()
+                            label.translatesAutoresizingMaskIntoConstraints = false
+                            label.text = "\(colRule[ruleIndex])"
+                            label.textAlignment = .center
+                            invisSquare.addSubview(label)
+                            NSLayoutConstraint.activate([
+                                // Constrain invis square to be larger or equal to
+                                // label size
+                                invisSquare.widthAnchor
+                                    .constraint(greaterThanOrEqualTo:
+                                        label.widthAnchor),
+                                invisSquare.heightAnchor
+                                    .constraint(greaterThanOrEqualTo:
+                                        label.heightAnchor),
+                                // Constrain label to bottom center
+                                label.bottomAnchor
+                                    .constraint(equalTo:
+                                        invisSquare.bottomAnchor),
+                                label.centerXAnchor
+                                    .constraint(equalTo:
+                                        invisSquare.centerXAnchor)
+                            ])
+                        }
+                    }
+                    
+                    let rowIndex = y - maxColRulesCount
+                    // If rowIndex is __not__ negative,  we know y must be greater
+                    // than maxColRulesCount and x must be less than maxRowRulesCount
+                    // Meaning square is in row rules area (bottom left)
+                    if rowIndex >= 0 {
+                        let rowRule = rules.rowRules[rowIndex]
+                        let ruleIndex = rowRule.count - (maxRowRulesCount - x)
+                        if ruleIndex >= 0 {
+                            // Add rule label to invisible square
+                            let label = UILabel()
+                            label.translatesAutoresizingMaskIntoConstraints = false
+                            label.text = "\(rowRule[ruleIndex])"
+                            label.textAlignment = .center
+                            invisSquare.addSubview(label)
+                            NSLayoutConstraint.activate([
+                                // Constrain invis square to be larger or equal to
+                                // label size
+                                invisSquare.widthAnchor
+                                    .constraint(greaterThanOrEqualTo:
+                                        label.widthAnchor),
+                                invisSquare.heightAnchor
+                                    .constraint(greaterThanOrEqualTo:
+                                        label.heightAnchor),
+                                // Constrain label to right center
+                                label.rightAnchor
+                                    .constraint(equalTo:
+                                        invisSquare.rightAnchor),
+                                label.centerYAnchor
+                                    .constraint(equalTo:
+                                        invisSquare.centerYAnchor)
+                            ])
+                        }
+                    }
+                    
+                    stackView.addArrangedSubview(invisSquare)
+                    if x == maxRowRulesCount-1 {
+                        stackView.setCustomSpacing(rulesPadding,
+                                                   after: invisSquare)
+                    }
+                // Not in either rules area
+                } else {
+                    // Setup main grid
+                    /// Add 1 so tags are 1 indexed (not 0 which is default for view tags)
+                    let row = x - maxRowRulesCount + 1
+                    let col = y - maxColRulesCount
+                    /// Unique tag for each square
+                    /// (from 1 to `validator.numRows` * `validator.numCols`)
+                    let number = row + (validator.numRows * col)
+                    let square = PuzzleSquare(tag: number) {
+                        [weak self] squareTag in
+                        guard let self = self else { return }
+                        let isValid = self.validator
+                            .toggle(square: squareTag)
+                        self.puzzleValidity.send(isValid)
+                    }
+                    // Add square to horizontal stack view
+                    stackView.addArrangedSubview(square)
                 }
-                // Add square to horizontal stack view
-                stackView.addArrangedSubview(square)
             }
-            // Add row view to main stack view
-            mainStackView.addArrangedSubview(stackView)
+            // Add row view to grid stack view
+            gridStackView.addArrangedSubview(stackView)
+            if y == maxColRulesCount-1 {
+                gridStackView.setCustomSpacing(rulesPadding, after: stackView)
+            }
         }
+    }
+    
+    private func setupPuzzle() {
+        // Clear main  stack view's arranged subviews
+        for subview in gridStackView.arrangedSubviews {
+            subview.removeFromSuperview()
+        }
+        setupGrid()
     }
     
     /// Determines which constraint needs to be activated
     /// in order for entire puzzle view to be visible within view
     private func getRulingConstraint() -> NSLayoutConstraint {
-        let maximumSquareWidth = frame.width / CGFloat(numRows)
-        let maximumSqaureHeight = frame.height / CGFloat(numCols)
+        let numSquaresInRow = CGFloat(numCols + maxRowRulesCount)
+        let numSquaresInCol = CGFloat(numRows + maxColRulesCount)
+        let maximumSquareWidth = frame.width / numSquaresInRow
+        let maximumSqaureHeight = frame.height / numSquaresInCol
         // The smallest maximum length of a square rules which constraint
         // to activate so the puzzle fits within the parent view
         return maximumSquareWidth < maximumSqaureHeight ?
