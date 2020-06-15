@@ -18,6 +18,10 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        puzzleView.rules = PuzzleRules(
+            rowRules: [[1,1], [1,1,1], [1,1], [1,1], [1]],
+            colRules: [[2], [1,1], [1,1], [1,1], [2]]
+        )
         // Subscribe to updates to see if puzzle has been solved
         puzzleView.puzzleValidity.sink { [weak self] isValid in
             guard let self = self else { return }
@@ -26,8 +30,6 @@ final class ViewController: UIViewController {
                 let okayAction = UIAlertAction(title: "Okay", style: .default)
                 alert.addAction(okayAction)
                 self.present(alert, animated: true)
-            } else {
-                print("not solved")
             }
         }.store(in: &subscriptions)
     }
