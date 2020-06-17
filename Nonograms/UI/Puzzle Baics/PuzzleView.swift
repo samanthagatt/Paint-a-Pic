@@ -61,7 +61,8 @@ final class PuzzleView: UIView {
         stackView.spacing = 0
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
-    }()/// Row rules stack view (left rules)
+    }()
+    /// Row rules stack view (left rules)
     private var rowRulesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -124,7 +125,6 @@ final class PuzzleView: UIView {
             // Center grid in parent view
             centerXConstraint,
             centerYConstraint,
-            
             // Constrain rowRules to left of grid
             rowRulesStackView.topAnchor
                 .constraint(equalTo: gridStackView.topAnchor),
@@ -133,7 +133,6 @@ final class PuzzleView: UIView {
             rowRulesStackView.trailingAnchor
                 .constraint(equalTo: gridStackView.leadingAnchor,
                             constant: -rulesToGridPadding),
-            
             // Constrain colRules to top of grid
             colRulesStackView.leadingAnchor
                 .constraint(equalTo: gridStackView.leadingAnchor),
@@ -149,77 +148,90 @@ final class PuzzleView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        // Make sure puzzle view is still visible whenever view lays out its subviews
-        // e.g. when the device rotates or any time the view's frame changes
-        activateRulingConstraint()
-    }
-    /// Determines which constraint needs to be activated in order for entire puzzle
-    /// to be visible within view, and updates constraints based off rules stack views
-    private func getRulingConstraintAndSetConstants() -> NSLayoutConstraint {
-        let maxSquareWidth = frame.width /
-            CGFloat(validator.numCols)
-        let maxSqaureHeight = frame.height /
-            CGFloat(validator.numRows)
-        
-        let extraWidth = rowRulesStackView.frame.width +
+        /// Width of row rules and padding between rules and puzzle
+        let rowRulesWidth = rowRulesStackView.frame.width +
             rulesToGridPadding
-        let extraHeight = colRulesStackView.frame.height +
+        /// Height of column rules and padding between rules and puzzle
+        let colRulesHeight = colRulesStackView.frame.height +
             rulesToGridPadding
-        updateConstraintConstants(extraWidth: extraWidth,
-                                  extraHeight: extraHeight)
+        updateConstraintConstants(rowRulesWidth, colRulesHeight)
         
-        let maxWidth = maxSquareWidth + extraWidth
-        let maxHeight = maxSqaureHeight + extraHeight
-        
-        // The smallest maximum length rules which constraint
-        // to activate so the entire puzzle fits within the parent view
-        return maxWidth < maxHeight ?
-            widthConstraint : heightConstraint
-        // If ratios are equal, either constraint will work
-    }
-    /// Updates width, height, and centering constraint constants based off of given extra width and height
-    private func updateConstraintConstants(
-        extraWidth: CGFloat,
-        extraHeight: CGFloat
-    ) {
-        widthConstraint.constant = -extraWidth
-        heightConstraint.constant = -extraHeight
-        centerXConstraint.constant = extraWidth / 2
-        centerYConstraint.constant = extraHeight / 2
-    }
-    /// Deactivates old constraints and activates ruling constraint so entire puzzle is visible within view
-    private func activateRulingConstraint() {
-        // Make sure old constraints are deactivated
+        // Only one length constraint should be activated at a time
+        // Stack view will determine size of the other length
+        // Deactivate old constraints
         NSLayoutConstraint.deactivate([
             widthConstraint,
             heightConstraint
         ])
-        // Activate ruling constraint
+        // Activate ruling constraint so entire puzzle is visible within view
         NSLayoutConstraint.activate([
-            getRulingConstraintAndSetConstants()
+            getRulingConstraint(rowRulesWidth, colRulesHeight)
         ])
+    }
+    /// Determines which constraint needs to be activated in order for entire puzzle to be visible
+    /// - Parameter rowRulesWidth: The width of the row rules stack view
+    /// - Parameter colRulesHeight: The height of the column rules stack view
+    private func getRulingConstraint(
+        _ rowRulesWidth: CGFloat,
+        _ colRulesHeight: CGFloat
+    ) -> NSLayoutConstraint {
+        /// Maximum width of a single square depending on what's left over after rules are rendered
+        let maxSquareWidth = (frame.width - rowRulesWidth) /
+            CGFloat(validator.numCols)
+        /// Maximum height of a single square depending on what's left over after rules are rendered
+        let maxSqaureHeight = (frame.height - colRulesHeight) /
+            CGFloat(validator.numRows)
+        // The smallest maximum length rules which constraint to activate
+        // so the entire puzzle fits within the parent view
+        return maxSquareWidth < maxSqaureHeight ?
+            widthConstraint : heightConstraint
+        // If max lengths happen to be equal, either constraint will work
+    }
+    /// Updates width, height, and centering constraint constants based off of given width and height of rules
+    /// - Parameter rowRulesWidth: The width of the row rules stack view
+    /// - Parameter colRulesHeight: The height of the column rules stack view
+    private func updateConstraintConstants(
+        _ rowRulesWidth: CGFloat,
+        _ colRulesHeight: CGFloat
+    ) {
+        // Leave room for rules to be displayed
+        widthConstraint.constant = -rowRulesWidth
+        heightConstraint.constant = -colRulesHeight
+        // Center grid AND rules horizontally and vertically
+        centerXConstraint.constant = rowRulesWidth / 2
+        centerYConstraint.constant = colRulesHeight / 2
     }
     
     // MARK: - Puzzle Setup
+    /// Sets up puzzle. Removes old rules and grid before building and rendering them again.
+    ///
+    /// Should be called after `rules` changes
     private func setupPuzzle() {
         setupRules(rowRulesStackView)
         setupRules(colRulesStackView)
         setupGrid()
     }
-    func setupRules(_ rulesStackView: UIStackView) {
+    private func setupRules(_ rulesStackView: UIStackView) {
+        // Delete old rules
         for subView in rulesStackView.arrangedSubviews {
             subView.removeFromSuperview()
         }
+        // Get desired array of rule arrays
         let stackRules = rulesStackView == rowRulesStackView ?
             rules.rowRules : rules.colRules
+        // For each array of rules in desired rules array
         for rules in stackRules {
+            // Create stack view to hold every rule
             let innerStackView = UIStackView()
+            // Axis should be horizontal for row rules and vertically for column rules
             innerStackView.axis = rulesStackView == rowRulesStackView ?
                 .horizontal : .vertical
             innerStackView.spacing = innerRulesPadding
             for rule in rules {
                 let label = UILabel()
                 label.text = "\(rule)"
+                // Text alignment should be right for row rules and center for column rules
+                // so they line up nicely against the grid
                 label.textAlignment = rulesStackView == rowRulesStackView ?
                     .right : .center
                 innerStackView.addArrangedSubview(label)
@@ -229,6 +241,7 @@ final class PuzzleView: UIView {
     }
     /// Setsup stack view (vertical) that holds each horizontal stack view to make the grid.
     private func setupGrid() {
+        // Delete old grid
         for subview in gridStackView.arrangedSubviews {
             subview.removeFromSuperview()
         }
