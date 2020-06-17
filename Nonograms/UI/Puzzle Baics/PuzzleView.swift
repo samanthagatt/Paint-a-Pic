@@ -52,7 +52,7 @@ final class PuzzleView: UIView {
     var innerRulesPadding: CGFloat = 8
     
     // MARK: Sub Views
-    
+    /// Column rules stack view (top rules)
     private var colRulesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -61,7 +61,7 @@ final class PuzzleView: UIView {
         stackView.spacing = 0
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
-    }()
+    }()/// Row rules stack view (left rules)
     private var rowRulesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -70,6 +70,7 @@ final class PuzzleView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+    /// Grid stack view
     private var gridStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -201,50 +202,29 @@ final class PuzzleView: UIView {
     
     // MARK: - Puzzle Setup
     private func setupPuzzle() {
-        setupRules()
+        setupRules(rowRulesStackView)
+        setupRules(colRulesStackView)
         setupGrid()
     }
-    private func setupRules() {
-        let allSubviews = rowRulesStackView.arrangedSubviews +
-            colRulesStackView.arrangedSubviews
-        for subview in allSubviews {
-            subview.removeFromSuperview()
+    func setupRules(_ rulesStackView: UIStackView) {
+        for subView in rulesStackView.arrangedSubviews {
+            subView.removeFromSuperview()
         }
-        
-        for rowRules in rules.rowRules {
+        let stackRules = rulesStackView == rowRulesStackView ?
+            rules.rowRules : rules.colRules
+        for rules in stackRules {
             let innerStackView = UIStackView()
-            innerStackView.axis = .horizontal
+            innerStackView.axis = rulesStackView == rowRulesStackView ?
+                .horizontal : .vertical
             innerStackView.spacing = innerRulesPadding
-            innerStackView.translatesAutoresizingMaskIntoConstraints = false
-            for (i, rule) in rowRules.enumerated() {
+            for rule in rules {
                 let label = UILabel()
                 label.text = "\(rule)"
-                label.textAlignment = .right
-                if i == 0 {
-                    label.setContentHuggingPriority(.defaultLow,
-                                                    for: .horizontal)
-                }
+                label.textAlignment = rulesStackView == rowRulesStackView ?
+                    .right : .center
                 innerStackView.addArrangedSubview(label)
             }
-            rowRulesStackView.addArrangedSubview(innerStackView)
-        }
-        
-        for colRules in rules.colRules {
-            let innerStackView = UIStackView()
-            innerStackView.axis = .vertical
-            innerStackView.spacing = innerRulesPadding
-            innerStackView.translatesAutoresizingMaskIntoConstraints = false
-            for (i, rule) in colRules.enumerated() {
-                let label = UILabel()
-                label.text = "\(rule)"
-                label.textAlignment = .center
-                if i == colRules.count-1 {
-                    label.setContentHuggingPriority(.defaultLow,
-                                                    for: .horizontal)
-                }
-                innerStackView.addArrangedSubview(label)
-            }
-            colRulesStackView.addArrangedSubview(innerStackView)
+            rulesStackView.addArrangedSubview(innerStackView)
         }
     }
     /// Setsup stack view (vertical) that holds each horizontal stack view to make the grid.
