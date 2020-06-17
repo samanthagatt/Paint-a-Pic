@@ -19,8 +19,8 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         
         puzzleView.rules = PuzzleRules(
-            rowRules: [[1,1], [1,1,1], [1,1], [1,1], [1]],
-            colRules: [[2], [1,1], [1,1], [1,1], [2]]
+            rowRules: [[2, 1], [2], [2], [1], [2]],
+            colRules: [[1, 1], [1, 1, 1], [3], [1], [1]]
         )
         // Subscribe to updates to see if puzzle has been solved
         puzzleView.puzzleValidity.sink { [weak self] isValid in
