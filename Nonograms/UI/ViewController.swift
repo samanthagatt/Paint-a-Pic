@@ -22,6 +22,7 @@ final class ViewController: UIViewController {
             rowRules: [[2, 1], [2], [2], [1], [2]],
             colRules: [[1, 1], [1, 1, 1], [3], [1], [1]]
         )
+        puzzleView.fillMode = .fill
         // Subscribe to updates to see if puzzle has been solved
         puzzleView.puzzleValidity.sink { [weak self] isValid in
             guard let self = self else { return }
@@ -32,6 +33,10 @@ final class ViewController: UIViewController {
                 self.present(alert, animated: true)
             }
         }.store(in: &subscriptions)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.puzzleView.fillMode = .ex
+        }
     }
 }
 

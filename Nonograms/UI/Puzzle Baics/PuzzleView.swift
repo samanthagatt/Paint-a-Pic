@@ -42,6 +42,7 @@ final class PuzzleView: UIView {
     /// - Warning: Progress will be overwritten when `rules` is changed/updated
     private lazy var validator: PuzzleValidator =
         PuzzleValidator(from: rules)
+    var fillMode: PuzzleFillMode = .fill
     
     // MARK: IB Inspectable
     /// Padding desired between puzzle grid and rules
@@ -260,11 +261,14 @@ final class PuzzleView: UIView {
                 /// (from 1 to `validator.numRows` * `validator.numCols`)
                 let number = row + (validator.numRows * col)
                 let square = PuzzleSquare(tag: number) {
-                    [weak self] squareTag in
-                    guard let self = self else { return }
-                    let isValid = self.validator
-                        .toggle(square: squareTag)
-                    self.puzzleValidity.send(isValid)
+                    [weak self] squareTag, fillState in
+                    guard let self = self else { return .fill }
+                    if self.fillMode == .fill && fillState != .exed {
+                        let isValid = self.validator
+                            .toggle(square: squareTag)
+                        self.puzzleValidity.send(isValid)
+                    }
+                    return self.fillMode
                 }
                 // Add square to horizontal stack view
                 stackView.addArrangedSubview(square)
