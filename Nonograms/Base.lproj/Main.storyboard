@@ -16,20 +16,53 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HKE-da-qfb" customClass="PuzzleView" customModule="Nonograms" customModuleProvider="target">
-                                <rect key="frame" x="24" y="68" width="366" height="770"/>
+                                <rect key="frame" x="24" y="68" width="366" height="681"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cBQ-BI-f9g">
+                                <rect key="frame" x="134" y="773" width="146" height="65"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljH-e9-5Qn">
+                                        <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="65" id="ZBC-KF-Dwb"/>
+                                            <constraint firstAttribute="height" constant="65" id="ptO-Mo-wrO"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="xmark" catalog="system"/>
+                                        <connections>
+                                            <action selector="setExMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cEz-Gt-OXx"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Gd-f9-2jX">
+                                        <rect key="frame" x="81" y="0.0" width="65" height="65"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="65" id="I27-Ip-F7F"/>
+                                            <constraint firstAttribute="height" constant="65" id="Us3-nc-itl"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <state key="normal" image="square.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="setFillMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9ni-pp-xb3"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="HKE-da-qfb" secondAttribute="trailing" constant="24" id="H5M-Df-gnz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cBQ-BI-f9g" secondAttribute="bottom" constant="24" id="HFQ-nM-ctr"/>
                             <constraint firstItem="HKE-da-qfb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="24" id="VLV-b8-Lt1"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="HKE-da-qfb" secondAttribute="bottom" constant="24" id="gzU-sb-VVx"/>
+                            <constraint firstItem="cBQ-BI-f9g" firstAttribute="top" secondItem="HKE-da-qfb" secondAttribute="bottom" constant="24" id="gzU-sb-VVx"/>
                             <constraint firstItem="HKE-da-qfb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="lON-Dz-FYY"/>
+                            <constraint firstItem="cBQ-BI-f9g" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zDs-Jj-Sh6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="exButton" destination="ljH-e9-5Qn" id="hes-7Z-jBA"/>
+                        <outlet property="fillButton" destination="6Gd-f9-2jX" id="4Nr-nA-kH5"/>
                         <outlet property="puzzleView" destination="HKE-da-qfb" id="Dxl-Iv-XQR"/>
                     </connections>
                 </viewController>
@@ -38,4 +71,8 @@
             <point key="canvasLocation" x="137.68115942028987" y="126.5625"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="square.fill" catalog="system" width="128" height="114"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
+    </resources>
 </document>

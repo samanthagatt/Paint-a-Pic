@@ -14,15 +14,22 @@ final class ViewController: UIViewController {
     private var subscriptions = Set<AnyCancellable>()
 
     @IBOutlet weak var puzzleView: PuzzleView!
+    @IBOutlet weak var exButton: UIButton!
+    @IBOutlet weak var fillButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        exButton.layer.borderColor = UIColor.label.cgColor
+        exButton.layer.cornerRadius = 5
+        fillButton.layer.borderColor = UIColor.label.cgColor
+        fillButton.layer.borderWidth = 2
+        fillButton.layer.cornerRadius = 5
         
         puzzleView.rules = PuzzleRules(
             rowRules: [[2, 1], [2], [2], [1], [2]],
             colRules: [[1, 1], [1, 1, 1], [3], [1], [1]]
         )
-        puzzleView.fillMode = .fill
         // Subscribe to updates to see if puzzle has been solved
         puzzleView.puzzleValidity.sink { [weak self] isValid in
             guard let self = self else { return }
@@ -33,10 +40,17 @@ final class ViewController: UIViewController {
                 self.present(alert, animated: true)
             }
         }.store(in: &subscriptions)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            self.puzzleView.fillMode = .ex
-        }
+    }
+    
+    @IBAction func setExMode(_ sender: Any) {
+        exButton.layer.borderWidth = 2
+        fillButton.layer.borderWidth = 0
+        puzzleView.fillMode = .ex
+    }
+    @IBAction func setFillMode(_ sender: Any) {
+        fillButton.layer.borderWidth = 2
+        exButton.layer.borderWidth = 0
+        puzzleView.fillMode = .fill
     }
 }
 

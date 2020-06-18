@@ -45,6 +45,14 @@ final class PuzzleSquare: UIView {
     var wasTapped: (Int, PuzzleSquareFillState)
         -> PuzzleFillMode = { _,_ in .fill }
     
+    private let exImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "xmark")
+        imageView.tintColor = .lightGray
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         sharedInit()
@@ -68,6 +76,9 @@ final class PuzzleSquare: UIView {
     }
     /// Handles setting up view when initialized
     private func sharedInit() {
+        addSubview(exImageView)
+        exImageView.isHidden = true
+        
         backgroundColor = emptyColor
         layer.borderColor = UIColor.black.cgColor
         layer.borderWidth = 1
@@ -79,11 +90,15 @@ final class PuzzleSquare: UIView {
         )
         addGestureRecognizer(tapGesture)
         
-        // Constrain square view
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             // Make square view a square
-            widthAnchor.constraint(equalTo: heightAnchor)
+            widthAnchor.constraint(equalTo: heightAnchor),
+            // Constrain ex to view
+            exImageView.topAnchor.constraint(equalTo: topAnchor),
+            exImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            exImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            exImageView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
@@ -94,9 +109,15 @@ final class PuzzleSquare: UIView {
     }
     private func updateFill() {
         switch fillState {
-        case .empty: backgroundColor = emptyColor
-        case .filled: backgroundColor = filledColor
-        case .exed: backgroundColor = .lightGray
+        case .empty:
+            backgroundColor = emptyColor
+            exImageView.isHidden = true
+        case .filled:
+            backgroundColor = filledColor
+            exImageView.isHidden = true
+        case .exed:
+            backgroundColor = emptyColor
+            exImageView.isHidden = false
         }
     }
 }
