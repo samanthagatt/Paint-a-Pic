@@ -26,9 +26,15 @@ final class ViewController: UIViewController {
         fillButton.layer.borderWidth = 2
         fillButton.layer.cornerRadius = 5
         
+//        puzzleView.rules = PuzzleRules(
+//            rowRules: [[2, 1], [2], [2], [1], [2]],
+//            colRules: [[1, 1], [1, 1, 1], [3], [1], [1]]
+//        )
         puzzleView.rules = PuzzleRules(
-            rowRules: [[2, 1], [2], [2], [1], [2]],
-            colRules: [[1, 1], [1, 1, 1], [3], [1], [1]]
+            rowRules: [[2,2], [1,1,1,1], [1,1,1], [1,1], [1,1],
+                       [1,1], [1,1], [1,1], [1,1], [1]],
+            colRules: [[3], [1,1], [1,1], [1,1], [1,1],
+                       [1,1], [1,1], [1,1], [1,1], [1,1], [3]]
         )
         // Subscribe to updates to see if puzzle has been solved
         puzzleView.puzzleValidity.sink { [weak self] isValid in

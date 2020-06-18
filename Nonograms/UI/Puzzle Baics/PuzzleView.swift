@@ -259,7 +259,7 @@ final class PuzzleView: UIView {
                 /// Add 1 so tags are 1 indexed (not 0 which is default for view tags)
                 /// Unique tag for each square
                 /// (from 1 to `validator.numRows` * `validator.numCols`)
-                let number = row + (validator.numRows * col)
+                let number = row + (validator.numCols * col)
                 let square = PuzzleSquare(tag: number) {
                     [weak self] squareTag, fillState in
                     guard let self = self else { return .fill }

@@ -124,6 +124,6 @@ struct PuzzleValidator {
     }
     /// Calculates the tag number of a square given the row and column
     private func getTag(row: Int, col: Int) -> Int {
-        (numRows * row) + col + 1
+        (numCols * row) + col + 1
     }
 }
