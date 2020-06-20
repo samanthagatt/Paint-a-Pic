@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PuzzleViewController.swift
 //  Nonograms
 //
 //  Created by Samantha Gatt on 6/10/20.
@@ -12,10 +12,12 @@ import Combine
 final class PuzzleViewController: UIViewController {
     /// Set of all subscriptions. Each will be canceled on deallocation.
     private var subscriptions = Set<AnyCancellable>()
+    
+    var puzzleRule: PuzzleRules?
 
-    @IBOutlet weak var puzzleView: PuzzleView!
-    @IBOutlet weak var exButton: UIButton!
-    @IBOutlet weak var fillButton: UIButton!
+    @IBOutlet private weak var puzzleView: PuzzleView!
+    @IBOutlet private weak var exButton: UIButton!
+    @IBOutlet private weak var fillButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +28,10 @@ final class PuzzleViewController: UIViewController {
         fillButton.layer.borderWidth = 2
         fillButton.layer.cornerRadius = 5
         
-        puzzleView.rules = PuzzleRules(
-            rowRules: [[2, 1], [2], [2], [1], [2]],
-            colRules: [[1, 1], [1, 1, 1], [3], [1], [1]]
-        )
+        if let rules = puzzleRule {
+            puzzleView.rules = rules
+        }
+        
         // Subscribe to updates to see if puzzle has been solved
         puzzleView.puzzleValidity.sink { [weak self] isValid in
             guard let self = self else { return }

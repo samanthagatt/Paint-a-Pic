@@ -14,11 +14,17 @@
 		D62849F62492F96E0053F7D6 /* Set+Toggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849F52492F96E0053F7D6 /* Set+Toggle.swift */; };
 		D652C5A724911F99000FC445 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5A624911F99000FC445 /* AppDelegate.swift */; };
 		D652C5A924911F99000FC445 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5A824911F99000FC445 /* SceneDelegate.swift */; };
-		D652C5AB24911F99000FC445 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5AA24911F99000FC445 /* ViewController.swift */; };
-		D652C5AE24911F99000FC445 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D652C5AC24911F99000FC445 /* Main.storyboard */; };
+		D652C5AB24911F99000FC445 /* PuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5AA24911F99000FC445 /* PuzzleViewController.swift */; };
+		D652C5AE24911F99000FC445 /* Puzzle.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D652C5AC24911F99000FC445 /* Puzzle.storyboard */; };
 		D652C5B024911F9D000FC445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D652C5AF24911F9D000FC445 /* Assets.xcassets */; };
 		D652C5B324911F9D000FC445 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D652C5B124911F9D000FC445 /* LaunchScreen.storyboard */; };
 		D652C5BB24911FCC000FC445 /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5BA24911FCC000FC445 /* PuzzleView.swift */; };
+		D6822FEA249E5AFC002764E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6822FE9249E5AFC002764E8 /* Main.storyboard */; };
+		D6822FEC249E6016002764E8 /* PuzzleList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6822FEB249E6016002764E8 /* PuzzleList.storyboard */; };
+		D6822FF0249E6325002764E8 /* PuzzleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6822FEF249E6325002764E8 /* PuzzleListViewController.swift */; };
+		D6822FF3249E63DC002764E8 /* PuzzleListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6822FF2249E63DC002764E8 /* PuzzleListDataSource.swift */; };
+		D6822FF5249E64FE002764E8 /* PuzzleListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6822FF4249E64FE002764E8 /* PuzzleListCell.swift */; };
+		D6822FF7249E6624002764E8 /* puzzleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6822FF6249E6624002764E8 /* puzzleData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,12 +36,18 @@
 		D652C5A324911F99000FC445 /* Nonograms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nonograms.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D652C5A624911F99000FC445 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D652C5A824911F99000FC445 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D652C5AA24911F99000FC445 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D652C5AD24911F99000FC445 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D652C5AA24911F99000FC445 /* PuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleViewController.swift; sourceTree = "<group>"; };
+		D652C5AD24911F99000FC445 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Puzzle.storyboard; sourceTree = "<group>"; };
 		D652C5AF24911F9D000FC445 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D652C5B224911F9D000FC445 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D652C5B424911F9D000FC445 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D652C5BA24911FCC000FC445 /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
+		D6822FE9249E5AFC002764E8 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		D6822FEB249E6016002764E8 /* PuzzleList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PuzzleList.storyboard; sourceTree = "<group>"; };
+		D6822FEF249E6325002764E8 /* PuzzleListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleListViewController.swift; sourceTree = "<group>"; };
+		D6822FF2249E63DC002764E8 /* PuzzleListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleListDataSource.swift; sourceTree = "<group>"; };
+		D6822FF4249E64FE002764E8 /* PuzzleListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleListCell.swift; sourceTree = "<group>"; };
+		D6822FF6249E6624002764E8 /* puzzleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = puzzleData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,19 +82,21 @@
 		D62849F92493E9FD0053F7D6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				D62849FA2493EA190053F7D6 /* Puzzle Baics */,
-				D652C5AA24911F99000FC445 /* ViewController.swift */,
+				D6822FE9249E5AFC002764E8 /* Main.storyboard */,
+				D6822FED249E62CE002764E8 /* PuzzleList */,
+				D62849FA2493EA190053F7D6 /* Puzzle */,
 			);
 			path = UI;
 			sourceTree = "<group>";
 		};
-		D62849FA2493EA190053F7D6 /* Puzzle Baics */ = {
+		D62849FA2493EA190053F7D6 /* Puzzle */ = {
 			isa = PBXGroup;
 			children = (
-				D652C5BA24911FCC000FC445 /* PuzzleView.swift */,
-				D62849F32492AD510053F7D6 /* PuzzleSquare.swift */,
+				D6822FF1249E6330002764E8 /* Views */,
+				D652C5AC24911F99000FC445 /* Puzzle.storyboard */,
+				D652C5AA24911F99000FC445 /* PuzzleViewController.swift */,
 			);
-			path = "Puzzle Baics";
+			path = Puzzle;
 			sourceTree = "<group>";
 		};
 		D652C59A24911F99000FC445 = {
@@ -109,12 +123,32 @@
 				D62849F82493E9E20053F7D6 /* Utils and Extensions */,
 				D62849F72493E98C0053F7D6 /* Puzzle Logic */,
 				D62849F92493E9FD0053F7D6 /* UI */,
-				D652C5AC24911F99000FC445 /* Main.storyboard */,
+				D6822FF6249E6624002764E8 /* puzzleData.swift */,
 				D652C5AF24911F9D000FC445 /* Assets.xcassets */,
 				D652C5B124911F9D000FC445 /* LaunchScreen.storyboard */,
 				D652C5B424911F9D000FC445 /* Info.plist */,
 			);
 			path = Nonograms;
+			sourceTree = "<group>";
+		};
+		D6822FED249E62CE002764E8 /* PuzzleList */ = {
+			isa = PBXGroup;
+			children = (
+				D6822FEB249E6016002764E8 /* PuzzleList.storyboard */,
+				D6822FEF249E6325002764E8 /* PuzzleListViewController.swift */,
+				D6822FF4249E64FE002764E8 /* PuzzleListCell.swift */,
+				D6822FF2249E63DC002764E8 /* PuzzleListDataSource.swift */,
+			);
+			path = PuzzleList;
+			sourceTree = "<group>";
+		};
+		D6822FF1249E6330002764E8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D652C5BA24911FCC000FC445 /* PuzzleView.swift */,
+				D62849F32492AD510053F7D6 /* PuzzleSquare.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,9 +209,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6822FEC249E6016002764E8 /* PuzzleList.storyboard in Resources */,
 				D652C5B324911F9D000FC445 /* LaunchScreen.storyboard in Resources */,
 				D652C5B024911F9D000FC445 /* Assets.xcassets in Resources */,
-				D652C5AE24911F99000FC445 /* Main.storyboard in Resources */,
+				D652C5AE24911F99000FC445 /* Puzzle.storyboard in Resources */,
+				D6822FEA249E5AFC002764E8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,24 +227,28 @@
 				D62849F42492AD510053F7D6 /* PuzzleSquare.swift in Sources */,
 				D62849EE24927DF60053F7D6 /* PuzzleValidator.swift in Sources */,
 				D652C5BB24911FCC000FC445 /* PuzzleView.swift in Sources */,
-				D652C5AB24911F99000FC445 /* ViewController.swift in Sources */,
+				D652C5AB24911F99000FC445 /* PuzzleViewController.swift in Sources */,
+				D6822FF0249E6325002764E8 /* PuzzleListViewController.swift in Sources */,
 				D652C5A724911F99000FC445 /* AppDelegate.swift in Sources */,
+				D6822FF3249E63DC002764E8 /* PuzzleListDataSource.swift in Sources */,
 				D62849F0249286520053F7D6 /* FixedLengthArray.swift in Sources */,
 				D652C5A924911F99000FC445 /* SceneDelegate.swift in Sources */,
+				D6822FF5249E64FE002764E8 /* PuzzleListCell.swift in Sources */,
 				D62849F22492892F0053F7D6 /* PuzzleRules.swift in Sources */,
 				D62849F62492F96E0053F7D6 /* Set+Toggle.swift in Sources */,
+				D6822FF7249E6624002764E8 /* puzzleData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		D652C5AC24911F99000FC445 /* Main.storyboard */ = {
+		D652C5AC24911F99000FC445 /* Puzzle.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D652C5AD24911F99000FC445 /* Base */,
 			);
-			name = Main.storyboard;
+			name = Puzzle.storyboard;
 			sourceTree = "<group>";
 		};
 		D652C5B124911F9D000FC445 /* LaunchScreen.storyboard */ = {
