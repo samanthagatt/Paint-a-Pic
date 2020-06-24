@@ -25,15 +25,26 @@ final class PuzzleView: UIView {
     /// The rules of the puzzle. Used to create the grid and puzzle validator.
     ///
     /// Must be set (either in `viewDidLoad` of parent view controller if using IB, or
-    /// using `.init(rules:)` programmatically) if not planning on using default value.
+    /// using `.init(rules:)` programmatically) if `isForSolving` is true.
     var rules: PuzzleRules = PuzzleRules(
-            rowRules: [[1,1], [1,1,1], [1,1], [1,1], [1]],
-            colRules: [[2], [1,1], [1,1], [1,1], [2]]
-        ) {
+        name: "",
+        rowRules: [[], [], [], [], []],
+        colRules: [[], [], [], [], []]
+    ) {
         didSet {
-            // Update validator and row rules counts
+            // Makes sure name isn't the only thing that's changed
+            guard rules.rowRules != oldValue.rowRules ||
+                rules.colRules != oldValue.colRules else {
+                maker.name = rules.name
+                return
+            }
+            // Update validator
             // Overwrites old validator progress
             validator = PuzzleValidator(from: rules)
+            // Update maker
+            maker = PuzzleMaker(name: rules.name,
+                                numRows: rules.rowRules.count,
+                                numCols: rules.colRules.count)
             // Setup puzzle again based on new rules
             setupPuzzle()
         }
@@ -43,8 +54,14 @@ final class PuzzleView: UIView {
     private lazy var validator: PuzzleValidator =
         PuzzleValidator(from: rules)
     var fillMode: PuzzleFillMode = .fill
+    private lazy var maker: PuzzleMaker = PuzzleMaker(
+        name: rules.name,
+        numRows: rules.rowRules.count,
+        numCols: rules.colRules.count
+    )
     
     // MARK: IB Inspectable
+    @IBInspectable var isForSolving: Bool = true
     /// Padding desired between puzzle grid and rules
     @IBInspectable
     var rulesToGridPadding: CGFloat = 12
@@ -178,10 +195,10 @@ final class PuzzleView: UIView {
     ) -> NSLayoutConstraint {
         /// Maximum width of a single square depending on what's left over after rules are rendered
         let maxSquareWidth = (frame.width - rowRulesWidth) /
-            CGFloat(validator.numCols)
+            CGFloat(rules.colRules.count)
         /// Maximum height of a single square depending on what's left over after rules are rendered
         let maxSqaureHeight = (frame.height - colRulesHeight) /
-            CGFloat(validator.numRows)
+            CGFloat(rules.rowRules.count)
         // The smallest maximum length rules which constraint to activate
         // so the entire puzzle fits within the parent view
         return maxSquareWidth < maxSqaureHeight ?
@@ -247,7 +264,7 @@ final class PuzzleView: UIView {
             subview.removeFromSuperview()
         }
         // Loop through the number of vertical rows desired
-        for col in 0..<validator.numRows {
+        for col in 0..<rules.rowRules.count {
             // Create horizontal stack view for each desired row
             /// Stack view containing all squares in the row
             let stackView = UIStackView()
@@ -255,18 +272,22 @@ final class PuzzleView: UIView {
             stackView.spacing = 0
             
             // Loop through number of horizontal rows desired (including rules)
-            for row in 1...validator.numCols {
+            for row in 1...rules.colRules.count {
                 /// Add 1 so tags are 1 indexed (not 0 which is default for view tags)
                 /// Unique tag for each square
-                /// (from 1 to `validator.numRows` * `validator.numCols`)
-                let number = row + (validator.numCols * col)
+                /// (from 1 to `rules.rowRules.count` * `rules.colRules.count`)
+                let number = row + (rules.colRules.count * col)
                 let square = PuzzleSquare(tag: number) {
                     [weak self] squareTag, fillState in
                     guard let self = self else { return .fill }
-                    if self.fillMode == .fill && fillState != .exed {
-                        let isValid = self.validator
-                            .toggle(square: squareTag)
-                        self.puzzleValidity.send(isValid)
+                    if self.isForSolving {
+                        if self.fillMode == .fill && fillState != .exed {
+                            let isValid = self.validator
+                                .toggle(square: squareTag)
+                            self.puzzleValidity.send(isValid)
+                        }
+                    } else {
+                        self.maker.filled.toggle(squareTag)
                     }
                     return self.fillMode
                 }
@@ -276,5 +297,9 @@ final class PuzzleView: UIView {
             // Add row view to grid stack view
             gridStackView.addArrangedSubview(stackView)
         }
+    }
+    
+    func filledSquaresAsRules() -> PuzzleRules {
+        return maker.getRules()
     }
 }

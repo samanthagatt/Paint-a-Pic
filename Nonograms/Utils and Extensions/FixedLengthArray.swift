@@ -9,7 +9,7 @@
 import Foundation
 
 struct FixedLengthArray<T: Equatable>: Equatable {
-    private var storage: [T]
+    private(set) var storage: [T]
     var count: Int { storage.count }
     
     init(repeating: T, count: Int) {

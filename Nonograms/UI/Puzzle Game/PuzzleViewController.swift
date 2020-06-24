@@ -13,7 +13,15 @@ final class PuzzleViewController: UIViewController {
     /// Set of all subscriptions. Each will be canceled on deallocation.
     private var subscriptions = Set<AnyCancellable>()
     
-    var puzzleRule: PuzzleRules?
+    var puzzleRules: PuzzleRules? {
+        didSet {
+            if let rules = puzzleRules {
+                loadViewIfNeeded()
+                puzzleView.rules = rules
+            }
+            title = puzzleRules?.name
+        }
+    }
 
     @IBOutlet private weak var puzzleView: PuzzleView!
     @IBOutlet private weak var exButton: UIButton!
@@ -27,10 +35,6 @@ final class PuzzleViewController: UIViewController {
         fillButton.layer.borderColor = UIColor.label.cgColor
         fillButton.layer.borderWidth = 2
         fillButton.layer.cornerRadius = 5
-        
-        if let rules = puzzleRule {
-            puzzleView.rules = rules
-        }
         
         // Subscribe to updates to see if puzzle has been solved
         puzzleView.puzzleValidity.sink { [weak self] isValid in
