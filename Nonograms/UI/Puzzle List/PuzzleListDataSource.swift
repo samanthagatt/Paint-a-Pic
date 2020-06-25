@@ -11,7 +11,7 @@ import UIKit
 final class PuzzleListDataSource: NSObject, UICollectionViewDataSource {
     private static let cellID = "puzzleCell"
     
-    let puzzles: [PuzzleRules]
+    var puzzles: [PuzzleRules]
     
     init(puzzles: [PuzzleRules] = []) {
         self.puzzles = puzzles
@@ -32,6 +32,8 @@ final class PuzzleListDataSource: NSObject, UICollectionViewDataSource {
             for: indexPath
         ) as? PuzzleListCell else { return UICollectionViewCell() }
         cell.numberLabel.text = "\(indexPath.item + 1)"
+        let puzzle = puzzles[indexPath.item]
+        cell.isComplete = puzzle.isComplete
         return cell
     }
 }

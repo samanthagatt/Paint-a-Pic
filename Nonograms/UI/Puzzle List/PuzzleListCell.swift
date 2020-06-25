@@ -9,7 +9,20 @@
 import UIKit
 
 final class PuzzleListCell: UICollectionViewCell {
-    @IBOutlet weak var numberLabel: UILabel!
+    var isComplete: Bool = false {
+        didSet {
+            if isComplete {
+                numberLabel.isHidden = true
+                checkmarkImageView.isHidden = false
+            } else {
+                numberLabel.isHidden = false
+                checkmarkImageView.isHidden = true
+            }
+        }
+    }
+    
+    @IBOutlet weak var numberLabel: AccessibleLabel!
+    @IBOutlet weak var checkmarkImageView: UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

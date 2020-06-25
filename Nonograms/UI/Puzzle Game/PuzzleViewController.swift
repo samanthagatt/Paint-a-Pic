@@ -9,10 +9,15 @@
 import UIKit
 import Combine
 
+extension Notification.Name {
+    static let puzzleSolved = Notification.Name(rawValue: "puzzleSolved")
+}
+
 final class PuzzleViewController: UIViewController {
     /// Set of all subscriptions. Each will be canceled on deallocation.
     private var subscriptions = Set<AnyCancellable>()
     
+    var puzzleIndex: Int?
     var puzzleRules: PuzzleRules? {
         didSet {
             if let rules = puzzleRules {
@@ -40,6 +45,8 @@ final class PuzzleViewController: UIViewController {
         puzzleView.puzzleValidity.sink { [weak self] isValid in
             guard let self = self else { return }
             if isValid {
+                NotificationCenter.default.post(name: .puzzleSolved,
+                                                object: self.puzzleIndex)
                 let alert = UIAlertController(title: "Yay!", message: "You solved the puzzle :)", preferredStyle: .alert)
                 let okayAction = UIAlertAction(title: "Okay", style: .default)
                 alert.addAction(okayAction)

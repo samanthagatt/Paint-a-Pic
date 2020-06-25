@@ -35,8 +35,9 @@ final class PuzzleView: UIView {
             // Makes sure name isn't the only thing that's changed
             guard rules.rowRules != oldValue.rowRules ||
                 rules.colRules != oldValue.colRules else {
-                maker.name = rules.name
-                return
+                    // Update name
+                    maker.name = rules.name
+                    return
             }
             // Update validator
             // Overwrites old validator progress
@@ -59,6 +60,7 @@ final class PuzzleView: UIView {
         numRows: rules.rowRules.count,
         numCols: rules.colRules.count
     )
+    private var referenceSquare: UIView?
     
     // MARK: IB Inspectable
     @IBInspectable var isForSolving: Bool = true
@@ -199,6 +201,14 @@ final class PuzzleView: UIView {
         /// Maximum height of a single square depending on what's left over after rules are rendered
         let maxSqaureHeight = (frame.height - colRulesHeight) /
             CGFloat(rules.rowRules.count)
+        // Get smallest length
+        let squareLength = min(maxSquareWidth, maxSqaureHeight)
+        // Convert length to pixels
+        let pixels = squareLength * UIScreen.main.scale
+        // Check if squares will be less than 44 pixels (too hard to tap if true)
+        if pixels < 44 {
+            print(pixels)
+        }
         // The smallest maximum length rules which constraint to activate
         // so the entire puzzle fits within the parent view
         return maxSquareWidth < maxSqaureHeight ?
@@ -245,16 +255,24 @@ final class PuzzleView: UIView {
             innerStackView.axis = rulesStackView == rowRulesStackView ?
                 .horizontal : .vertical
             innerStackView.spacing = innerRulesPadding
-            for rule in rules {
-                let label = UILabel()
+            rulesStackView.addArrangedSubview(innerStackView)
+            /// Makes an returns a label with the `rule` as its text
+            func ruleLabel(_ rule: Int) -> AccessibleLabel {
+                let label = AccessibleLabel()
                 label.text = "\(rule)"
                 // Text alignment should be right for row rules and center for column rules
                 // so they line up nicely against the grid
                 label.textAlignment = rulesStackView == rowRulesStackView ?
                     .right : .center
-                innerStackView.addArrangedSubview(label)
+                return label
             }
-            rulesStackView.addArrangedSubview(innerStackView)
+            guard !rules.isEmpty else {
+                innerStackView.addArrangedSubview(ruleLabel(0))
+                continue
+            }
+            for rule in rules {
+                innerStackView.addArrangedSubview(ruleLabel(rule))
+            }
         }
     }
     /// Setsup stack view (vertical) that holds each horizontal stack view to make the grid.
@@ -291,6 +309,7 @@ final class PuzzleView: UIView {
                     }
                     return self.fillMode
                 }
+                if col == 0 && row == 1 { referenceSquare = square }
                 // Add square to horizontal stack view
                 stackView.addArrangedSubview(square)
             }

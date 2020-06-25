@@ -12,16 +12,7 @@ final class CreatePuzzleViewController: UIViewController {
     
     private var rowRules: [[Int]] = Array(repeating: [], count: 5)
     private var colRules: [[Int]] = Array(repeating: [], count: 5)
-    private lazy var puzzleData: [PuzzleRules] = {
-        do {
-            guard let path = Bundle.main.url(forResource: "puzzleData", withExtension: "json") else { return [] }
-            let data = try Data(contentsOf: path)
-            return try JSONDecoder().decode([PuzzleRules].self, from: data)
-        } catch {
-            print("Error! \(error)")
-            return []
-        }
-    }()
+    var puzzleData: [PuzzleRules] = []
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var rowCountLabel: UILabel!
@@ -54,15 +45,12 @@ final class CreatePuzzleViewController: UIViewController {
         puzzleData.append(rules)
         
         do {
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = .prettyPrinted
-            let data = try encoder.encode(puzzleData)
-            if let docDir = FileManager.default.urls(for: .documentDirectory,
-                                                     in: .userDomainMask).last {
-                let path = docDir.appendingPathComponent("puzzleData.json")
-                print(path)
-                try data.write(to: path)
-            }
+            let data = try JSONEncoder().encode(puzzleData)
+            let docsDir = FileManager.default.urls(for: .documentDirectory,
+                                                  in: .userDomainMask)[0]
+            let path = docsDir.appendingPathComponent("puzzleData.json")
+            print(path)
+            try data.write(to: path)
         } catch {
             print("Oops! ERROR: \(error)")
         }
