@@ -77,9 +77,9 @@
                         <viewLayoutGuide key="safeArea" id="DE3-yk-j1o"/>
                     </view>
                     <navigationItem key="navigationItem" title="Puzzle List" id="U5o-Fq-A73">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="JKE-XJ-wdU">
+                        <barButtonItem key="rightBarButtonItem" title="Reset" id="FnV-gO-UGR">
                             <connections>
-                                <segue destination="2ZQ-Nf-MTB" kind="show" identifier="createPuzzleSegue" id="mPT-ju-s43"/>
+                                <action selector="resetPuzzleProgress:" destination="5iG-a1-fLi" id="Eu6-f9-rMU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -91,16 +91,6 @@
             </objects>
             <point key="canvasLocation" x="1015.9420289855074" y="86.383928571428569"/>
         </scene>
-        <!--CreatePuzzle-->
-        <scene sceneID="pLg-du-XUZ">
-            <objects>
-                <viewControllerPlaceholder storyboardName="CreatePuzzle" id="2ZQ-Nf-MTB" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="vID-ZE-rmN"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="i45-BM-8ZC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1593" y="70"/>
-        </scene>
         <!--Puzzle-->
         <scene sceneID="Ntn-TW-dFP">
             <objects>
@@ -109,7 +99,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rjg-Gb-nwx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1574" y="104"/>
+            <point key="canvasLocation" x="1574" y="86"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qBR-Se-81h">

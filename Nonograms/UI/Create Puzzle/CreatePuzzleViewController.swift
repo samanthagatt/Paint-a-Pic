@@ -39,7 +39,6 @@ final class CreatePuzzleViewController: UIViewController {
                                        colRules: colRules)
     }
     @IBAction func createPuzzle(_ sender: Any) {
-        print(nameTextField.text ?? "No name!")
         puzzleView.rules.name = nameTextField.text ?? ""
         let rules = puzzleView.filledSquaresAsRules()
         puzzleData.append(rules)
@@ -49,10 +48,12 @@ final class CreatePuzzleViewController: UIViewController {
             let docsDir = FileManager.default.urls(for: .documentDirectory,
                                                   in: .userDomainMask)[0]
             let path = docsDir.appendingPathComponent("puzzleData.json")
-            print(path)
             try data.write(to: path)
         } catch {
-            print("Oops! ERROR: \(error)")
+            let alert = UIAlertController(title: "Uh oh", message: "An error ocurred. Your puzzle has not been saved.", preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Okay", style: .default)
+            alert.addAction(okayAction)
+            present(alert, animated: true)
         }
     }
 }

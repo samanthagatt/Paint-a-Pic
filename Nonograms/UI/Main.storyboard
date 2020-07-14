@@ -22,7 +22,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZa-gN-KoU" customClass="AccessibleButton" customModule="Nonograms" customModuleProvider="target">
-                                <rect key="frame" x="169.5" y="575.5" width="75" height="44"/>
+                                <rect key="frame" x="169.5" y="582" width="75" height="44"/>
                                 <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -40,10 +40,10 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="fZa-gN-KoU" firstAttribute="centerX" secondItem="78j-Za-zSx" secondAttribute="centerX" id="VYI-co-dmx"/>
+                            <constraint firstItem="fZa-gN-KoU" firstAttribute="centerY" secondItem="9XC-Fv-0Es" secondAttribute="centerY" multiplier="4:3" id="PEA-o3-0x1"/>
                             <constraint firstItem="N99-0P-ILJ" firstAttribute="centerX" secondItem="78j-Za-zSx" secondAttribute="centerX" id="eDR-EA-Klj"/>
+                            <constraint firstItem="fZa-gN-KoU" firstAttribute="centerX" secondItem="9XC-Fv-0Es" secondAttribute="centerX" id="gVQ-m6-Yc8"/>
                             <constraint firstItem="N99-0P-ILJ" firstAttribute="centerY" secondItem="78j-Za-zSx" secondAttribute="centerY" id="kz7-rN-Op7"/>
-                            <constraint firstItem="fZa-gN-KoU" firstAttribute="centerY" secondItem="78j-Za-zSx" secondAttribute="centerY" multiplier="4:3" id="ru5-Lb-Leg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9XC-Fv-0Es"/>
                     </view>

@@ -11,18 +11,15 @@ import UIKit
 final class PuzzleListViewController: UIViewController {
     private static let solveSegueID = "solvePuzzleSegue"
     private static let createSegueID = "createPuzzleSegue"
-    private lazy var docsPath: URL = {
-        FileManager.default
+    private lazy var puzzleDataSource: PuzzleListDataSource = {
+        let docsPath = FileManager.default
             .urls(for: .documentDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("puzzleData.json")
-    }()
-    private lazy var bundlePath: URL? = {
-        Bundle.main.url(forResource: "puzzleData", withExtension: "json")
-    }()
-    private lazy var puzzleDataSource: PuzzleListDataSource = {
+        let bundlePath = Bundle.main.url(forResource: "puzzleData",
+                                         withExtension: "json")
         do {
             let data: Data
-            if try docsPath.checkResourceIsReachable() &&
+            if FileManager.default.fileExists(atPath: docsPath.absoluteString) &&
                 UserDefaults.standard.bool(forKey: "hasGottenPuzzles") {
                 data = try Data(contentsOf: docsPath)
             } else {
@@ -37,7 +34,6 @@ final class PuzzleListViewController: UIViewController {
                                                       from: data)
             return PuzzleListDataSource(puzzles: puzzleData)
        } catch {
-            print("Error! \(error)")
             return PuzzleListDataSource(puzzles: [])
        }
     }()
@@ -60,8 +56,37 @@ final class PuzzleListViewController: UIViewController {
             let path = docsDir.appendingPathComponent("puzzleData.json")
             try data.write(to: path)
         } catch {
-            print("Oops! ERROR: \(error)")
+            let alert = UIAlertController(title: "Uh oh", message: "An error ocurred. Your puzzle completion status has not been saved.", preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Okay", style: .default)
+            alert.addAction(okayAction)
+            present(alert, animated: true)
         }
+    }
+    
+    @IBAction func resetPuzzleProgress(_ sender: Any) {
+        let alert = UIAlertController(title: "Reset puzzle progress?", message: "Are you sure you want all your progress to be reset?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+        alert.addAction(cancelAction)
+        let resetAction = UIAlertAction(title: "Reset",
+                                        style: .destructive) { _ in
+            self.puzzleDataSource.puzzles.mapInPlace { $0.isComplete = false }
+            do {
+                
+                let data = try JSONEncoder().encode(self.puzzleDataSource.puzzles)
+                let docsDir = FileManager.default.urls(for: .documentDirectory,
+                                                      in: .userDomainMask)[0]
+                let path = docsDir.appendingPathComponent("puzzleData.json")
+                try data.write(to: path)
+                self.puzzleCollectionView.reloadData()
+            } catch {
+                let alert = UIAlertController(title: "Uh oh", message: "An error ocurred. Your puzzle completion status has not been saved.", preferredStyle: .alert)
+                let okayAction = UIAlertAction(title: "Okay", style: .default)
+                alert.addAction(okayAction)
+                self.present(alert, animated: true)
+            }
+        }
+        alert.addAction(resetAction)
+        present(alert, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -71,10 +96,14 @@ final class PuzzleListViewController: UIViewController {
                     .indexPathsForSelectedItems?.first else { return }
             destVC.puzzleRules = puzzleDataSource.puzzles[indexPath.item]
             destVC.puzzleIndex = indexPath.item
-        } else if segue.identifier == Self.createSegueID {
-            guard let destVC = segue.destination as?
-                CreatePuzzleViewController else { return }
-            destVC.puzzleData = puzzleDataSource.puzzles
+        }
+    }
+}
+
+extension MutableCollection {
+    mutating func mapInPlace(_ x: (inout Element) -> ()) {
+        for i in indices {
+            x(&self[i])
         }
     }
 }

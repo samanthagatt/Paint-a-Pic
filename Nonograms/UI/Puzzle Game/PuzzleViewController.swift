@@ -93,6 +93,17 @@ final class PuzzleViewController: UIViewController {
                 self.hasBeenEdited = false
             }
         }.store(in: &subscriptions)
+        puzzleView.squaresTooSmall.sink { [weak self] isTooSmall in
+            guard let self = self else { return }
+            if isTooSmall {
+                let alert = UIAlertController(title: "Uh oh", message: "It looks like your device might be too small. Tapping the correct square might be harder than normal", preferredStyle: .alert)
+                let okayAction = UIAlertAction(title: "Okay", style: .default)
+                alert.addAction(okayAction)
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true)
+                }
+            }
+        }.store(in: &subscriptions)
     }
     
     @objc func back() {

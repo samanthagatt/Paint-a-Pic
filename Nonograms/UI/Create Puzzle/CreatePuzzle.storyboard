@@ -17,6 +17,9 @@
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name of puzzle" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rbs-WE-5Wf">
                                 <rect key="frame" x="52" y="80" width="310.5" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="DKq-5i-FoI"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>

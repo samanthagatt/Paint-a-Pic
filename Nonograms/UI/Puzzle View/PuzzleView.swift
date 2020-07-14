@@ -22,6 +22,7 @@ final class PuzzleView: UIView {
     /// Emits `true` when puzzle is solved (each row and column
     /// meets the puzzle's `rules`)
     var puzzleValidity = PassthroughSubject<Bool, Never>()
+    var squaresTooSmall = PassthroughSubject<Bool, Never>()
     /// The rules of the puzzle. Used to create the grid and puzzle validator.
     ///
     /// Must be set (either in `viewDidLoad` of parent view controller if using IB, or
@@ -205,10 +206,8 @@ final class PuzzleView: UIView {
         let squareLength = min(maxSquareWidth, maxSqaureHeight)
         // Convert length to pixels
         let pixels = squareLength * UIScreen.main.scale
-        // Check if squares will be less than 44 pixels (too hard to tap if true)
-        if pixels < 44 {
-            print(pixels)
-        }
+        // Check if squares will be less than 44 pixels and send to subscribers (too hard to tap if true)
+        squaresTooSmall.send(pixels < 44)
         // The smallest maximum length rules which constraint to activate
         // so the entire puzzle fits within the parent view
         return maxSquareWidth < maxSqaureHeight ?
