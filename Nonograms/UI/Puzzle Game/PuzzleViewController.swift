@@ -17,13 +17,13 @@ final class PuzzleViewController: UIViewController {
     private var hasBeenEdited = false
     /// Index of current puzzle
     var puzzleIndex: Int?
-    /// Rules for the current puzzle
-    var puzzleRules: PuzzleRules? {
+    /// Clues for the current puzzle
+    var puzzleClues: PuzzleClues? {
         didSet {
-            if let rules = puzzleRules {
+            if let clues = puzzleClues {
                 loadViewIfNeeded()
-                puzzleView.rules = rules
-                title = rules.name.capitalized
+                puzzleView.clues = clues
+                title = clues.name.capitalized
             }
         }
     }
@@ -69,6 +69,11 @@ final class PuzzleViewController: UIViewController {
         fillButton.layer.borderColor = UIColor.label.cgColor
         fillButton.layer.borderWidth = 2
         fillButton.layer.cornerRadius = 5
+        
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save,
+                                         target: self,
+                                         action: #selector(saveImage))
+        navigationItem.setRightBarButton(saveButton, animated: true)
     }
     
     @objc private func back() {
@@ -102,5 +107,20 @@ final class PuzzleViewController: UIViewController {
         fillButton.layer.borderWidth = 2
         exButton.layer.borderWidth = 0
         puzzleView.fillMode = .fill
+    }
+    
+    @objc func saveImage() {
+        guard let image = puzzleView.image else { return }
+        do {
+            let docsDir = FileManager.default.urls(for: .documentDirectory,
+                                                  in: .userDomainMask)[0]
+            let path = docsDir.appendingPathComponent("\(title ?? "no title").jpg")
+            print(path)
+            try image.jpegData(compressionQuality: 1)?.write(to: path)
+        } catch {
+            alert(title: "Uh oh",
+                  message: "An error ocurred. Your puzzle has not been saved.",
+                  dismissTitle: "Okay")
+        }
     }
 }

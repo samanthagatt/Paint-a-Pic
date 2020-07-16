@@ -11,7 +11,7 @@
 		D623179D24C0972D005F13F1 /* UIView+addSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D623179C24C0972D005F13F1 /* UIView+addSubViews.swift */; };
 		D62849EE24927DF60053F7D6 /* PuzzleValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849ED24927DF60053F7D6 /* PuzzleValidator.swift */; };
 		D62849F0249286520053F7D6 /* FixedLengthArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849EF249286520053F7D6 /* FixedLengthArray.swift */; };
-		D62849F22492892F0053F7D6 /* PuzzleRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849F12492892F0053F7D6 /* PuzzleRules.swift */; };
+		D62849F22492892F0053F7D6 /* PuzzleClues.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849F12492892F0053F7D6 /* PuzzleClues.swift */; };
 		D62849F42492AD510053F7D6 /* PuzzleSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849F32492AD510053F7D6 /* PuzzleSquare.swift */; };
 		D62849F62492F96E0053F7D6 /* Set+Toggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849F52492F96E0053F7D6 /* Set+Toggle.swift */; };
 		D631598924BE22D600CCCCC9 /* puzzleData.json in Resources */ = {isa = PBXBuildFile; fileRef = D631598824BE22D600CCCCC9 /* puzzleData.json */; };
@@ -46,7 +46,7 @@
 		D623179C24C0972D005F13F1 /* UIView+addSubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addSubViews.swift"; sourceTree = "<group>"; };
 		D62849ED24927DF60053F7D6 /* PuzzleValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleValidator.swift; sourceTree = "<group>"; };
 		D62849EF249286520053F7D6 /* FixedLengthArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedLengthArray.swift; sourceTree = "<group>"; };
-		D62849F12492892F0053F7D6 /* PuzzleRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleRules.swift; sourceTree = "<group>"; };
+		D62849F12492892F0053F7D6 /* PuzzleClues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleClues.swift; sourceTree = "<group>"; };
 		D62849F32492AD510053F7D6 /* PuzzleSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleSquare.swift; sourceTree = "<group>"; };
 		D62849F52492F96E0053F7D6 /* Set+Toggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+Toggle.swift"; sourceTree = "<group>"; };
 		D631598824BE22D600CCCCC9 /* puzzleData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = puzzleData.json; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				D62849ED24927DF60053F7D6 /* PuzzleValidator.swift */,
-				D62849F12492892F0053F7D6 /* PuzzleRules.swift */,
+				D62849F12492892F0053F7D6 /* PuzzleClues.swift */,
 				D68C2BB024A2EC8000270031 /* PuzzleMaker.swift */,
 			);
 			path = "Puzzle Logic";
@@ -320,7 +320,7 @@
 				D68C2BBC24A5085300270031 /* AccessibleButton.swift in Sources */,
 				D6822FF5249E64FE002764E8 /* PuzzleListCell.swift in Sources */,
 				D6FCA20A24BF7D0A007E73EC /* UIViewController+alert.swift in Sources */,
-				D62849F22492892F0053F7D6 /* PuzzleRules.swift in Sources */,
+				D62849F22492892F0053F7D6 /* PuzzleClues.swift in Sources */,
 				D6FCA20824BF7A2F007E73EC /* Notification+Names.swift in Sources */,
 				D6FCA20C24BF842E007E73EC /* BackNavButton.swift in Sources */,
 				D6822FFC24A2DC7C002764E8 /* CreatePuzzleViewController.swift in Sources */,

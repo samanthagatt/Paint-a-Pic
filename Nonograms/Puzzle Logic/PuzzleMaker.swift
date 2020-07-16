@@ -20,9 +20,9 @@ struct PuzzleMaker {
         self.numCols = numCols
     }
     
-    func getRules() -> PuzzleRules {
-        var rowRules: [[Int]] = []
-        var colRules: [[Int]] = []
+    func getClues() -> PuzzleClues {
+        var rowClues: [[Int]] = []
+        var colClues: [[Int]] = []
         for col in 0..<numCols {
             var stretches: [Int] = []
             var currentStretch = 0
@@ -36,7 +36,7 @@ struct PuzzleMaker {
                 }
             }
             if currentStretch > 0 { stretches.append(currentStretch) }
-            colRules.append(stretches)
+            colClues.append(stretches)
         }
         for row in 0..<numRows {
             var stretches: [Int] = []
@@ -51,8 +51,8 @@ struct PuzzleMaker {
                 }
             }
             if currentStretch > 0 { stretches.append(currentStretch) }
-            rowRules.append(stretches)
+            rowClues.append(stretches)
         }
-        return PuzzleRules(name: name, rowRules: rowRules, colRules: colRules)
+        return PuzzleClues(name: name, rowClues: rowClues, colClues: colClues)
     }
 }

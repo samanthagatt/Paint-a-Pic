@@ -1,5 +1,5 @@
 //
-//  PuzzleRules.swift
+//  PuzzleClues.swift
 //  Nonograms
 //
 //  Created by Samantha Gatt on 6/11/20.
@@ -8,45 +8,45 @@
 
 import Foundation
 
-struct PuzzleRules: Equatable, Codable {
+struct PuzzleClues: Equatable, Codable {
     var name: String
-    let rowRules: FixedLengthArray<[Int]>
-    let colRules: FixedLengthArray<[Int]>
+    let rowClues: FixedLengthArray<[Int]>
+    let colClues: FixedLengthArray<[Int]>
     var isComplete: Bool = false
     init(
         name: String,
-        rowRules: FixedLengthArray<[Int]>,
-        colRules: FixedLengthArray<[Int]>,
+        rowClues: FixedLengthArray<[Int]>,
+        colClues: FixedLengthArray<[Int]>,
         isComplete: Bool = false
     ) {
         self.name = name
-        self.rowRules = rowRules
-        self.colRules = colRules
+        self.rowClues = rowClues
+        self.colClues = colClues
         self.isComplete = isComplete
     }
     init(
         name: String,
-        rowRules: [[Int]],
-        colRules: [[Int]],
+        rowClues: [[Int]],
+        colClues: [[Int]],
         isComplete: Bool = false
     ) {
         self.init(name: name,
-                  rowRules: FixedLengthArray(storage: rowRules),
-                  colRules: FixedLengthArray(storage: colRules),
+                  rowClues: FixedLengthArray(storage: rowClues),
+                  colClues: FixedLengthArray(storage: colClues),
                   isComplete: isComplete)
     }
 }
 
 // MARK: Codable
-extension PuzzleRules {
+extension PuzzleClues {
     enum CodingKeys: String, CodingKey {
-        case name, rowRules, colRules, isComplete
+        case name, rowClues, colClues, isComplete
     }
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
-        try container.encode(rowRules.storage, forKey: .rowRules)
-        try container.encode(colRules.storage, forKey: .colRules)
+        try container.encode(rowClues.storage, forKey: .rowClues)
+        try container.encode(colClues.storage, forKey: .colClues)
         try container.encode(isComplete, forKey: .isComplete)
     }
     init(from decoder: Decoder) throws {
@@ -54,9 +54,9 @@ extension PuzzleRules {
         name = try values.decode(String.self, forKey: .name)
         isComplete = try values.decodeIfPresent(Bool.self,
                                                 forKey: .isComplete) ?? false
-        let rowRulesStorage = try values.decode([[Int]].self, forKey: .rowRules)
-        let colRulesStorage = try values.decode([[Int]].self, forKey: .colRules)
-        rowRules = FixedLengthArray(storage: rowRulesStorage)
-        colRules = FixedLengthArray(storage: colRulesStorage)
+        let rowCluesStorage = try values.decode([[Int]].self, forKey: .rowClues)
+        let colCluesStorage = try values.decode([[Int]].self, forKey: .colClues)
+        rowClues = FixedLengthArray(storage: rowCluesStorage)
+        colClues = FixedLengthArray(storage: colCluesStorage)
     }
 }

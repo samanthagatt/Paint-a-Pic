@@ -13,12 +13,12 @@ struct PuzzleValidator {
     private var rows: FixedLengthArray<Bool>
     /// Keeps track of validity of each column in order
     private var cols: FixedLengthArray<Bool>
-    /// The rules for the current puzzle. Used to check validity of rows and cols
-    private let rules: PuzzleRules
-    /// Computed property of number of rows based off of rules
-    var numRows: Int { rules.rowRules.count }
-    /// Computed property of number of cols based off of rules
-    var numCols: Int { rules.colRules.count }
+    /// The clues for the current puzzle. Used to check validity of rows and cols
+    private let clues: PuzzleClues
+    /// Computed property of number of rows based off of `clues`
+    var numRows: Int { clues.rowClues.count }
+    /// Computed property of number of cols based off of `clues`
+    var numCols: Int { clues.colClues.count }
     /// Set of all filled in square tags for easy lookup
     private var filled: Set<Int> = []
     /// Computed property determining the validity of the current state of puzzle
@@ -27,13 +27,13 @@ struct PuzzleValidator {
             !cols.contains(false)
     }
     
-    /// Initialize a new puzzle validator with no progress from a `PuzzleRules`
-    init(from rules: PuzzleRules) {
-        self.rules = rules
+    /// Initialize a new puzzle validator with no progress from a `PuzzleClues`
+    init(from clues: PuzzleClues) {
+        self.clues = clues
         rows = FixedLengthArray(repeating: false,
-                                count: rules.rowRules.count)
+                                count: clues.rowClues.count)
         cols = FixedLengthArray(repeating: false,
-                                count: rules.colRules.count)
+                                count: clues.colClues.count)
     }
     
     /// Fills or unfills square and returns the validity of the entire puzzle
@@ -52,20 +52,20 @@ struct PuzzleValidator {
         return isValid
     }
 
-    /// Returns the validity of a row or column based off the given rule.
+    /// Returns the validity of a row or column based off the given clue.
     /// Only to be used in `validate(row:)` and `validate(col:)`.
     /// - Parameters:
-    ///     - rule: The rule for the column or row
+    ///     - clues: The clues for the column or row
     ///     - numSquares: The number of squres in column if validating a row,
     ///                     or row if validating a column
     ///     - tag: Function returning the tag number of current square in for loop
     ///     - index: The current index in the for loop
     private func _validate(
-        rule: [Int],
+        clues: [Int],
         numSquares: Int,
         tag: (_ index: Int) -> Int
     ) -> Bool {
-        /// Array of stretches. Should exactly equal rule if valid.
+        /// Array of stretches. Should exactly equal `clue` if valid.
         var stretches: [Int] = []
         /// Length of current stretch of filled squares
         var stretch = 0
@@ -74,28 +74,27 @@ struct PuzzleValidator {
             let tag = tag(i)
             // See if current square is filled
             let squareIsFilled = filled.contains(tag)
-            // If it is, add 1 to stretch and check to see if it breaks rule
+            // If it is, add 1 to stretch and check to see if it's larger than the clue
             if squareIsFilled {
-                // Make sure stretches count is smaller than rowRule's
-                // If it's not then we know the rule is broken since there will be
-                // more stretches in the user's puzzle than the rules
-                guard stretches.count < rule.count else {
+                // Make sure stretches count is smaller than clue's
+                // If it's larger, we know the row or column isn't correct/valid
+                guard stretches.count < clues.count else {
                     return false
                 }
                 stretch += 1
-                // If stretch is longer than corresponding row rule then it breaks the rules
-                if stretch > rule[stretches.count] {
+                // If stretch is longer than corresponding clue then it's not correct
+                if stretch > clues[stretches.count] {
                     return false
                 }
             // If the current square is not filled
             } else {
                 // If last square was filled that means the stretch was just broken
                 if stretch > 0 {
-                    // Make sure the stretch that was just broken matches row rule
-                    // (Don't have to worry about stretches and rowRule counts since
+                    // Make sure the stretch that was just broken matches the clue
+                    // (Don't have to worry about stretches and clues counts since
                     // it's taken into account when square is filled, and stretch can't break
                     // if a square was never filled)
-                    guard rule[stretches.count] == stretch else {
+                    guard clues[stretches.count] == stretch else {
                         return false
                     }
                     stretches.append(stretch)
@@ -104,11 +103,11 @@ struct PuzzleValidator {
             }
         }
         if stretch > 0 { stretches.append(stretch) }
-        return rule == stretches
+        return clues == stretches
     }
     /// Returns the validity of a row
     private func validate(row: Int) -> Bool {
-        _validate(rule: rules.rowRules[row],
+        _validate(clues: clues.rowClues[row],
                   numSquares: numCols,
                   tag: { col in
                     getTag(row: row, col: col)
@@ -116,7 +115,7 @@ struct PuzzleValidator {
     }
     /// Returns the validity of a column
     private func validate(col: Int) -> Bool {
-        _validate(rule: rules.colRules[col],
+        _validate(clues: clues.colClues[col],
                   numSquares: numRows,
                   tag: { row in
                     getTag(row: row, col: col)

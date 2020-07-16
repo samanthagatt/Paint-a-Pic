@@ -11,9 +11,9 @@ import UIKit
 final class PuzzleListDataSource: NSObject, UICollectionViewDataSource {
     private static let cellID = "puzzleCell"
     
-    var puzzles: [PuzzleRules]
+    var puzzles: [PuzzleClues]
     
-    init(puzzles: [PuzzleRules] = []) {
+    init(puzzles: [PuzzleClues] = []) {
         self.puzzles = puzzles
         super.init()
     }

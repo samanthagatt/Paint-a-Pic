@@ -30,7 +30,7 @@ final class PuzzleListViewController: UIViewController {
                 try data.write(to: docsPath)
                 UserDefaults.standard.set(true, forKey: "hasGottenPuzzles")
             }
-            let puzzleData = try JSONDecoder().decode([PuzzleRules].self,
+            let puzzleData = try JSONDecoder().decode([PuzzleClues].self,
                                                       from: data)
             return PuzzleListDataSource(puzzles: puzzleData)
        } catch {
@@ -98,7 +98,7 @@ final class PuzzleListViewController: UIViewController {
             guard let destVC = segue.destination as? PuzzleViewController,
                 let indexPath = puzzleCollectionView
                     .indexPathsForSelectedItems?.first else { return }
-            destVC.puzzleRules = puzzleDataSource.puzzles[indexPath.item]
+            destVC.puzzleClues = puzzleDataSource.puzzles[indexPath.item]
             destVC.puzzleIndex = indexPath.item
         }
     }

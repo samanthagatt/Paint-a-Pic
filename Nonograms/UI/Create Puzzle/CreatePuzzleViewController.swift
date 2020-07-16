@@ -10,9 +10,9 @@ import UIKit
 
 final class CreatePuzzleViewController: UIViewController {
     
-    private var rowRules: [[Int]] = Array(repeating: [], count: 5)
-    private var colRules: [[Int]] = Array(repeating: [], count: 5)
-    var puzzleData: [PuzzleRules] = []
+    private var rowClues: [[Int]] = Array(repeating: [], count: 5)
+    private var colClues: [[Int]] = Array(repeating: [], count: 5)
+    var puzzleData: [PuzzleClues] = []
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var rowCountLabel: UILabel!
@@ -27,21 +27,21 @@ final class CreatePuzzleViewController: UIViewController {
     @IBAction func changeCount(_ sender: UIStepper) {
         switch sender {
         case rowCountStepper:
-            rowRules = Array(repeating: [], count: Int(rowCountStepper.value))
+            rowClues = Array(repeating: [], count: Int(rowCountStepper.value))
             rowCountLabel.text = "\(Int(rowCountStepper.value))"
         case colCountStepper:
-            colRules = Array(repeating: [], count: Int(colCountStepper.value))
+            colClues = Array(repeating: [], count: Int(colCountStepper.value))
             colCountLabel.text = "\(Int(colCountStepper.value))"
         default: ()
         }
-        puzzleView.rules = PuzzleRules(name: nameTextField.text ?? "",
-                                       rowRules: rowRules,
-                                       colRules: colRules)
+        puzzleView.clues = PuzzleClues(name: nameTextField.text ?? "",
+                                       rowClues: rowClues,
+                                       colClues: colClues)
     }
     @IBAction func createPuzzle(_ sender: Any) {
-        puzzleView.rules.name = nameTextField.text ?? ""
-        let rules = puzzleView.filledSquaresAsRules()
-        puzzleData.append(rules)
+        puzzleView.clues.name = nameTextField.text ?? ""
+        let clues = puzzleView.filledSquaresAsClues()
+        puzzleData.append(clues)
         
         do {
             let data = try JSONEncoder().encode(puzzleData)

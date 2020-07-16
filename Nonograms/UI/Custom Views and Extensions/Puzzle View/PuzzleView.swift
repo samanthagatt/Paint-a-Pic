@@ -18,70 +18,70 @@ final class PuzzleView: UIView {
     var image: UIImage? {
         gridStackView.asImage()
     }
-    // MARK: Rules and validation
+    // MARK: Clues and validation
     /// A passthrough subject from `Combine` that emits a bool representing
     /// if the puzzle is valid every time a square is tapped.
     ///
     /// Emits `true` when puzzle is solved (each row and column
-    /// meets the puzzle's `rules`)
+    /// meets the puzzle's `clues`)
     var puzzleValidity = PassthroughSubject<Bool, Never>()
     var squaresTooSmall = PassthroughSubject<Bool, Never>()
-    /// The rules of the puzzle. Used to create the grid and puzzle validator.
+    /// The clues for the puzzle. Used to create the grid and puzzle validator.
     ///
     /// Must be set (either in `viewDidLoad` of parent view controller if using IB, or
-    /// using `.init(rules:)` programmatically) if `isForSolving` is true.
-    var rules: PuzzleRules = PuzzleRules(
+    /// using `.init(clues:)` programmatically) if `isForSolving` is true.
+    var clues: PuzzleClues = PuzzleClues(
         name: "",
-        rowRules: [[], [], [], [], []],
-        colRules: [[], [], [], [], []]
+        rowClues: [[], [], [], [], []],
+        colClues: [[], [], [], [], []]
     ) {
         didSet {
             // Makes sure name isn't the only thing that's changed
-            guard rules.rowRules != oldValue.rowRules ||
-                rules.colRules != oldValue.colRules else {
+            guard clues.rowClues != oldValue.rowClues ||
+                clues.colClues != oldValue.colClues else {
                     // Update name
-                    maker.name = rules.name
+                    maker.name = clues.name
                     return
             }
             // Update validator
             // Overwrites old validator progress
-            validator = PuzzleValidator(from: rules)
+            validator = PuzzleValidator(from: clues)
             // Update maker
-            maker = PuzzleMaker(name: rules.name,
-                                numRows: rules.rowRules.count,
-                                numCols: rules.colRules.count)
-            // Setup puzzle again based on new rules
+            maker = PuzzleMaker(name: clues.name,
+                                numRows: clues.rowClues.count,
+                                numCols: clues.colClues.count)
+            // Setup puzzle again based on new clues
             setupPuzzle()
         }
     }
-    /// The puzzle validator based off of the given` rules`
-    /// - Warning: Progress will be overwritten when `rules` is changed/updated
+    /// The puzzle validator based off of the given` clues`
+    /// - Warning: Progress will be overwritten when `clues` is changed/updated
     private lazy var validator: PuzzleValidator =
-        PuzzleValidator(from: rules)
+        PuzzleValidator(from: clues)
     var fillMode: PuzzleFillMode = .fill
     private lazy var maker: PuzzleMaker = PuzzleMaker(
-        name: rules.name,
-        numRows: rules.rowRules.count,
-        numCols: rules.colRules.count
+        name: clues.name,
+        numRows: clues.rowClues.count,
+        numCols: clues.colClues.count
     )
     private var referenceSquare: UIView?
     
     // MARK: IB Inspectable
     @IBInspectable var isForSolving: Bool = true
-    /// Padding desired between puzzle grid and rules
+    /// Padding desired between puzzle grid and clues
     @IBInspectable
-    var rulesToGridPadding: CGFloat = 12
-    /// Padding desired between each rule in a given row or column
+    var cluesToGridPadding: CGFloat = 12
+    /// Padding desired between each clue in a given row or column
     @IBInspectable
-    var innerRulesPadding: CGFloat = 8
+    var innerCluesPadding: CGFloat = 8
     
     // MARK: Sub Views
-    /// Column rules stack view (top rules)
-    private var colRulesStackView = UIStackView(axis: .horizontal,
+    /// Column clues stack view (top clues)
+    private var colCluesStackView = UIStackView(axis: .horizontal,
                                                 distribution: .fillEqually,
                                                 alignment: .bottom)
-    /// Row rules stack view (left rules)
-    private var rowRulesStackView = UIStackView(axis: .vertical,
+    /// Row clues stack view (left clues)
+    private var rowCluesStackView = UIStackView(axis: .vertical,
                                                 distribution: .fillEqually)
     /// Grid stack view
     private var gridStackView = UIStackView(axis: .vertical)
@@ -113,38 +113,38 @@ final class PuzzleView: UIView {
         super.init(coder: coder)
         sharedInit()
     }
-    /// Initializes new instance and sets `rules`.
+    /// Initializes new instance and sets `clues`.
     ///
     /// Use `puzzleValidity.sink()` to track when puzzle is solved.
-    convenience init(_ rules: PuzzleRules) {
+    convenience init(_ clues: PuzzleClues) {
         self.init()
-        self.rules = rules
+        self.clues = clues
     }
     
     /// Makes sure stack views are added to view and the puzzle grid is rendered
     private func sharedInit() {
-        addSubviews(gridStackView, colRulesStackView, rowRulesStackView)
+        addSubviews(gridStackView, colCluesStackView, rowCluesStackView)
         setupPuzzle()
         NSLayoutConstraint.activate([
             // Center grid in parent view
             centerXConstraint,
             centerYConstraint,
-            // Constrain rowRules to left of grid
-            rowRulesStackView.topAnchor
+            // Constrain rowClues to left of grid
+            rowCluesStackView.topAnchor
                 .constraint(equalTo: gridStackView.topAnchor),
-            rowRulesStackView.bottomAnchor
+            rowCluesStackView.bottomAnchor
                 .constraint(equalTo: gridStackView.bottomAnchor),
-            rowRulesStackView.trailingAnchor
+            rowCluesStackView.trailingAnchor
                 .constraint(equalTo: gridStackView.leadingAnchor,
-                            constant: -rulesToGridPadding),
-            // Constrain colRules to top of grid
-            colRulesStackView.leadingAnchor
+                            constant: -cluesToGridPadding),
+            // Constrain colClues to top of grid
+            colCluesStackView.leadingAnchor
                 .constraint(equalTo: gridStackView.leadingAnchor),
-            colRulesStackView.trailingAnchor
+            colCluesStackView.trailingAnchor
                 .constraint(equalTo: gridStackView.trailingAnchor),
-            colRulesStackView.bottomAnchor
+            colCluesStackView.bottomAnchor
                 .constraint(equalTo: gridStackView.topAnchor,
-                            constant: -rulesToGridPadding),
+                            constant: -cluesToGridPadding),
         ])
     }
     
@@ -152,13 +152,13 @@ final class PuzzleView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        /// Width of row rules and padding between rules and puzzle
-        let rowRulesWidth = rowRulesStackView.frame.width +
-            rulesToGridPadding
-        /// Height of column rules and padding between rules and puzzle
-        let colRulesHeight = colRulesStackView.frame.height +
-            rulesToGridPadding
-        updateConstraintConstants(rowRulesWidth, colRulesHeight)
+        /// Width of row clues and padding between clues and puzzle
+        let rowCluesWidth = rowCluesStackView.frame.width +
+            cluesToGridPadding
+        /// Height of column clues and padding between clues and puzzle
+        let colCluesHeight = colCluesStackView.frame.height +
+            cluesToGridPadding
+        updateConstraintConstants(rowCluesWidth, colCluesHeight)
         
         // Only one length constraint should be activated at a time
         // Stack view will determine size of the other length
@@ -169,91 +169,91 @@ final class PuzzleView: UIView {
         ])
         // Activate ruling constraint so entire puzzle is visible within view
         NSLayoutConstraint.activate([
-            getRulingConstraint(rowRulesWidth, colRulesHeight)
+            getRulingConstraint(rowCluesWidth, colCluesHeight)
         ])
     }
     /// Determines which constraint needs to be activated in order for entire puzzle to be visible
-    /// - Parameter rowRulesWidth: The width of the row rules stack view
-    /// - Parameter colRulesHeight: The height of the column rules stack view
+    /// - Parameter rowCluesWidth: The width of the row clues stack view
+    /// - Parameter colCluesHeight: The height of the column clues stack view
     private func getRulingConstraint(
-        _ rowRulesWidth: CGFloat,
-        _ colRulesHeight: CGFloat
+        _ rowCluesWidth: CGFloat,
+        _ colCluesHeight: CGFloat
     ) -> NSLayoutConstraint {
-        /// Maximum width of a single square depending on what's left over after rules are rendered
-        let maxSquareWidth = (frame.width - rowRulesWidth) /
-            CGFloat(rules.colRules.count)
-        /// Maximum height of a single square depending on what's left over after rules are rendered
-        let maxSqaureHeight = (frame.height - colRulesHeight) /
-            CGFloat(rules.rowRules.count)
+        /// Maximum width of a single square depending on what's left over after clues are rendered
+        let maxSquareWidth = (frame.width - rowCluesWidth) /
+            CGFloat(clues.colClues.count)
+        /// Maximum height of a single square depending on what's left over after clues are rendered
+        let maxSqaureHeight = (frame.height - colCluesHeight) /
+            CGFloat(clues.rowClues.count)
         // Get smallest length
         let squareLength = min(maxSquareWidth, maxSqaureHeight)
         // Convert length to pixels
         let pixels = squareLength * UIScreen.main.scale
         // Check if squares will be less than 44 pixels and send to subscribers (too hard to tap if true)
         squaresTooSmall.send(pixels < 44)
-        // The smallest maximum length rules which constraint to activate
+        // The smallest maximum length determines which constraint to activate
         // so the entire puzzle fits within the parent view
         return maxSquareWidth < maxSqaureHeight ?
             widthConstraint : heightConstraint
         // If max lengths happen to be equal, either constraint will work
     }
-    /// Updates width, height, and centering constraint constants based off of given width and height of rules
-    /// - Parameter rowRulesWidth: The width of the row rules stack view
-    /// - Parameter colRulesHeight: The height of the column rules stack view
+    /// Updates width, height, and centering constraint constants based off of given width and height of clues
+    /// - Parameter rowCluesWidth: The width of the row clues stack view
+    /// - Parameter colCluesHeight: The height of the column clues stack view
     private func updateConstraintConstants(
-        _ rowRulesWidth: CGFloat,
-        _ colRulesHeight: CGFloat
+        _ rowCluesWidth: CGFloat,
+        _ colCluesHeight: CGFloat
     ) {
-        // Leave room for rules to be displayed
-        widthConstraint.constant = -rowRulesWidth
-        heightConstraint.constant = -colRulesHeight
-        // Center grid AND rules horizontally and vertically
-        centerXConstraint.constant = rowRulesWidth / 2
-        centerYConstraint.constant = colRulesHeight / 2
+        // Leave room for clues to be displayed
+        widthConstraint.constant = -rowCluesWidth
+        heightConstraint.constant = -colCluesHeight
+        // Center grid and clues horizontally and vertically
+        centerXConstraint.constant = rowCluesWidth / 2
+        centerYConstraint.constant = colCluesHeight / 2
     }
     
     // MARK: - Puzzle Setup
-    /// Sets up puzzle. Removes old rules and grid before building and rendering them again.
+    /// Sets up puzzle. Removes old clues and grid before building and rendering them again.
     ///
-    /// Should be called after `rules` changes
+    /// Should be called after `clues` changes
     private func setupPuzzle() {
-        setupRules(rowRulesStackView)
-        setupRules(colRulesStackView)
+        setupClues(rowCluesStackView)
+        setupClues(colCluesStackView)
         setupGrid()
     }
-    private func setupRules(_ rulesStackView: UIStackView) {
-        // Delete old rules
-        for subView in rulesStackView.arrangedSubviews {
+    private func setupClues(_ cluesStackView: UIStackView) {
+        // Delete old clues
+        for subView in cluesStackView.arrangedSubviews {
             subView.removeFromSuperview()
         }
-        // Get desired array of rule arrays
-        let stackRules = rulesStackView == rowRulesStackView ?
-            rules.rowRules : rules.colRules
-        // For each array of rules in desired rules array
-        for rules in stackRules {
-            // Create stack view to hold every rule
+        // Get desired array of clues
+        let stackClues = cluesStackView == rowCluesStackView ?
+            clues.rowClues : clues.colClues
+        // For each array of clues in desired clues array
+        for clues in stackClues {
+            // Create stack view to hold every clue
             let innerStackView = UIStackView()
-            // Axis should be horizontal for row rules and vertically for column rules
-            innerStackView.axis = rulesStackView == rowRulesStackView ?
+            // Axis should be horizontal for row clues and vertically for column clues
+            innerStackView.axis = cluesStackView == rowCluesStackView ?
                 .horizontal : .vertical
-            innerStackView.spacing = innerRulesPadding
-            rulesStackView.addArrangedSubview(innerStackView)
-            /// Makes an returns a label with the `rule` as its text
-            func ruleLabel(_ rule: Int) -> AccessibleLabel {
+            innerStackView.spacing = innerCluesPadding
+            cluesStackView.addArrangedSubview(innerStackView)
+            /// Makes an returns a label with the `clue` as its text
+            func clueLabel(_ clue: Int) -> AccessibleLabel {
                 let label = AccessibleLabel()
-                label.text = "\(rule)"
-                // Text alignment should be right for row rules and center for column rules
+                label.text = "\(clue)"
+                // Text alignment should be right for row clues and center for column clues
                 // so they line up nicely against the grid
-                label.textAlignment = rulesStackView == rowRulesStackView ?
+                label.textAlignment = cluesStackView == rowCluesStackView ?
                     .right : .center
                 return label
             }
-            guard !rules.isEmpty else {
-                innerStackView.addArrangedSubview(ruleLabel(0))
+            guard !clues.isEmpty else {
+                innerStackView.addArrangedSubview(clueLabel(0))
                 continue
             }
-            for rule in rules {
-                innerStackView.addArrangedSubview(ruleLabel(rule))
+            for clue in clues {
+                innerStackView.addArrangedSubview(clueLabel(clue))
             }
         }
     }
@@ -264,19 +264,18 @@ final class PuzzleView: UIView {
             subview.removeFromSuperview()
         }
         // Loop through the number of vertical rows desired
-        for col in 0..<rules.rowRules.count {
+        for col in 0..<clues.rowClues.count {
             // Create horizontal stack view for each desired row
             /// Stack view containing all squares in the row
             let stackView = UIStackView()
             stackView.axis = .horizontal
             stackView.spacing = 0
             
-            // Loop through number of horizontal rows desired (including rules)
-            for row in 1...rules.colRules.count {
-                /// Add 1 so tags are 1 indexed (not 0 which is default for view tags)
-                /// Unique tag for each square
-                /// (from 1 to `rules.rowRules.count` * `rules.colRules.count`)
-                let number = row + (rules.colRules.count * col)
+            // Loop through number of horizontal rows desired
+            // Starting at 1 so tags are 1 indexed (not 0 which is default for view tags)
+            for row in 1...clues.colClues.count {
+                /// Unique tag for each square (starting with 1)
+                let number = row + (clues.colClues.count * col)
                 let square = PuzzleSquare(tag: number) {
                     [weak self] squareTag, fillState in
                     guard let self = self else { return .fill }
@@ -300,7 +299,7 @@ final class PuzzleView: UIView {
         }
     }
     
-    func filledSquaresAsRules() -> PuzzleRules {
-        return maker.getRules()
+    func filledSquaresAsClues() -> PuzzleClues {
+        return maker.getClues()
     }
 }
