@@ -9,9 +9,9 @@
 import Foundation
 
 extension MutableCollection {
-    mutating func mapInPlace(_ x: (inout Element) -> ()) {
-        for i in indices {
-            x(&self[i])
-        }
+    /// Allows elements in arrays of `struct`s to be mutated during mapping
+    /// - parameter closure: Block of code to be run during iteration
+    mutating func mapInPlace(_ closure: (inout Element) -> ()) {
+        for i in indices { closure(&self[i]) }
     }
 }

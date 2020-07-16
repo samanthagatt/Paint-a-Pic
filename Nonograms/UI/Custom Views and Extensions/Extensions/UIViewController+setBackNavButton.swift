@@ -9,6 +9,8 @@
 import UIKit
 
 extension UIViewController {
+    /// Overrides default back button to allow for code to be run before navigating backwards
+    /// - Note: You must manually navigate backwards in the selector
     func setBackNavButton(selector: Selector) {
         let backButton = BackNavButton()
         backButton.addTarget(self,

@@ -9,6 +9,7 @@
 import UIKit
 
 extension UIView {
+    /// Returns an image based off `layer`
     func asImage() -> UIImage? {
         if #available(iOS 10.0, *) {
             let renderer = UIGraphicsImageRenderer(bounds: bounds)

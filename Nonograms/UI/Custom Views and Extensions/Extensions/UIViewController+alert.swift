@@ -9,6 +9,13 @@
 import UIKit
 
 extension UIViewController {
+    /// Presents alert controller
+    /// - Parameters:
+    ///     - title: Title of alert controller
+    ///     - message: Message of alert controller
+    ///     - preferredStyle: PreferredStyle of alert controller
+    ///     - animated: Alert controller is animated during presentation if `true`
+    ///     - actions: Array of actions to be added to alert controller
     func alert(
         title: String?,
         message: String?,
@@ -24,6 +31,14 @@ extension UIViewController {
         }
         present(alert, animated: true)
     }
+    // Presents alert controller with only a dismiss action
+    /// - Parameters:
+    ///     - title: Title of alert controller
+    ///     - message: Message of alert controller
+    ///     - preferredStyle: PreferredStyle of alert controller
+    ///     - animated: Alert controller is animated during presentation if `true`
+    ///     - dismissTitle: Title of dismiss action
+    ///     - dismissStyle: Style of dismiss action
     func alert(
         title: String?,
         message: String?,

@@ -9,6 +9,8 @@
 import Foundation
 
 extension Set {
+    /// Removes item from set if present, and adds it if absent
+    /// - Parameter item: The item to be added or removed from set
     mutating func toggle(_ item: Element) {
         if contains(item) {
             remove(item)
