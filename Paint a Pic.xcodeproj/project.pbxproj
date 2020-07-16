@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D623179A24C08D39005F13F1 /* UIView+asImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D623179924C08D39005F13F1 /* UIView+asImage.swift */; };
+		D623179D24C0972D005F13F1 /* UIView+addSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D623179C24C0972D005F13F1 /* UIView+addSubViews.swift */; };
 		D62849EE24927DF60053F7D6 /* PuzzleValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849ED24927DF60053F7D6 /* PuzzleValidator.swift */; };
 		D62849F0249286520053F7D6 /* FixedLengthArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849EF249286520053F7D6 /* FixedLengthArray.swift */; };
 		D62849F22492892F0053F7D6 /* PuzzleRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849F12492892F0053F7D6 /* PuzzleRules.swift */; };
 		D62849F42492AD510053F7D6 /* PuzzleSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849F32492AD510053F7D6 /* PuzzleSquare.swift */; };
 		D62849F62492F96E0053F7D6 /* Set+Toggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62849F52492F96E0053F7D6 /* Set+Toggle.swift */; };
 		D631598924BE22D600CCCCC9 /* puzzleData.json in Resources */ = {isa = PBXBuildFile; fileRef = D631598824BE22D600CCCCC9 /* puzzleData.json */; };
+		D631598B24BE3A7200CCCCC9 /* MutableCollection+MapInPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = D631598A24BE3A7200CCCCC9 /* MutableCollection+MapInPlace.swift */; };
 		D652C5A724911F99000FC445 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5A624911F99000FC445 /* AppDelegate.swift */; };
 		D652C5A924911F99000FC445 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5A824911F99000FC445 /* SceneDelegate.swift */; };
 		D652C5AB24911F99000FC445 /* PuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5AA24911F99000FC445 /* PuzzleViewController.swift */; };
@@ -31,16 +34,24 @@
 		D68C2BB124A2EC8000270031 /* PuzzleMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68C2BB024A2EC8000270031 /* PuzzleMaker.swift */; };
 		D68C2BBA24A5056000270031 /* AccessibleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68C2BB924A5056000270031 /* AccessibleLabel.swift */; };
 		D68C2BBC24A5085300270031 /* AccessibleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68C2BBB24A5085300270031 /* AccessibleButton.swift */; };
+		D696868E24C099C000888D7B /* UIStackView+convenienceInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696868D24C099C000888D7B /* UIStackView+convenienceInit.swift */; };
+		D6FCA20824BF7A2F007E73EC /* Notification+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20724BF7A2F007E73EC /* Notification+Names.swift */; };
+		D6FCA20A24BF7D0A007E73EC /* UIViewController+alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20924BF7D0A007E73EC /* UIViewController+alert.swift */; };
+		D6FCA20C24BF842E007E73EC /* BackNavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20B24BF842E007E73EC /* BackNavButton.swift */; };
+		D6FCA20E24BF84EE007E73EC /* UIViewController+setBackNavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20D24BF84EE007E73EC /* UIViewController+setBackNavButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D623179924C08D39005F13F1 /* UIView+asImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+asImage.swift"; sourceTree = "<group>"; };
+		D623179C24C0972D005F13F1 /* UIView+addSubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addSubViews.swift"; sourceTree = "<group>"; };
 		D62849ED24927DF60053F7D6 /* PuzzleValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleValidator.swift; sourceTree = "<group>"; };
 		D62849EF249286520053F7D6 /* FixedLengthArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedLengthArray.swift; sourceTree = "<group>"; };
 		D62849F12492892F0053F7D6 /* PuzzleRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleRules.swift; sourceTree = "<group>"; };
 		D62849F32492AD510053F7D6 /* PuzzleSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleSquare.swift; sourceTree = "<group>"; };
 		D62849F52492F96E0053F7D6 /* Set+Toggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+Toggle.swift"; sourceTree = "<group>"; };
 		D631598824BE22D600CCCCC9 /* puzzleData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = puzzleData.json; sourceTree = "<group>"; };
-		D652C5A324911F99000FC445 /* Nonograms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nonograms.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D631598A24BE3A7200CCCCC9 /* MutableCollection+MapInPlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MutableCollection+MapInPlace.swift"; sourceTree = "<group>"; };
+		D652C5A324911F99000FC445 /* Paint a Pic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Paint a Pic.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D652C5A624911F99000FC445 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D652C5A824911F99000FC445 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D652C5AA24911F99000FC445 /* PuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +71,11 @@
 		D68C2BB024A2EC8000270031 /* PuzzleMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleMaker.swift; sourceTree = "<group>"; };
 		D68C2BB924A5056000270031 /* AccessibleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleLabel.swift; sourceTree = "<group>"; };
 		D68C2BBB24A5085300270031 /* AccessibleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleButton.swift; sourceTree = "<group>"; };
+		D696868D24C099C000888D7B /* UIStackView+convenienceInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+convenienceInit.swift"; sourceTree = "<group>"; };
+		D6FCA20724BF7A2F007E73EC /* Notification+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Names.swift"; sourceTree = "<group>"; };
+		D6FCA20924BF7D0A007E73EC /* UIViewController+alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+alert.swift"; sourceTree = "<group>"; };
+		D6FCA20B24BF842E007E73EC /* BackNavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackNavButton.swift; sourceTree = "<group>"; };
+		D6FCA20D24BF84EE007E73EC /* UIViewController+setBackNavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+setBackNavButton.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +89,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D623179B24C096D0005F13F1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D6FCA20924BF7D0A007E73EC /* UIViewController+alert.swift */,
+				D6FCA20D24BF84EE007E73EC /* UIViewController+setBackNavButton.swift */,
+				D623179924C08D39005F13F1 /* UIView+asImage.swift */,
+				D623179C24C0972D005F13F1 /* UIView+addSubViews.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		D62849F72493E98C0053F7D6 /* Puzzle Logic */ = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +116,8 @@
 				D62849F52492F96E0053F7D6 /* Set+Toggle.swift */,
 				D62849EF249286520053F7D6 /* FixedLengthArray.swift */,
 				D6832B7A24A50BDB00DDC90D /* TextStyle.swift */,
+				D631598A24BE3A7200CCCCC9 /* MutableCollection+MapInPlace.swift */,
+				D6FCA20724BF7A2F007E73EC /* Notification+Names.swift */,
 			);
 			path = "Utils and Extensions";
 			sourceTree = "<group>";
@@ -97,8 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				D6822FE9249E5AFC002764E8 /* Main.storyboard */,
-				D68C2BB824A5054500270031 /* Customized Views */,
-				D6822FF1249E6330002764E8 /* Puzzle View */,
+				D68C2BB824A5054500270031 /* Custom Views and Extensions */,
 				D62849FA2493EA190053F7D6 /* Puzzle Game */,
 				D6822FFA24A2DC41002764E8 /* Create Puzzle */,
 				D6822FED249E62CE002764E8 /* Puzzle List */,
@@ -109,6 +137,7 @@
 		D62849FA2493EA190053F7D6 /* Puzzle Game */ = {
 			isa = PBXGroup;
 			children = (
+				D6FCA20624BF7246007E73EC /* Tutorial */,
 				D652C5AC24911F99000FC445 /* Puzzle.storyboard */,
 				D652C5AA24911F99000FC445 /* PuzzleViewController.swift */,
 			);
@@ -126,7 +155,7 @@
 		D652C5A424911F99000FC445 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D652C5A324911F99000FC445 /* Nonograms.app */,
+				D652C5A324911F99000FC445 /* Paint a Pic.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -176,21 +205,32 @@
 			path = "Create Puzzle";
 			sourceTree = "<group>";
 		};
-		D68C2BB824A5054500270031 /* Customized Views */ = {
+		D68C2BB824A5054500270031 /* Custom Views and Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D623179B24C096D0005F13F1 /* Extensions */,
+				D6822FF1249E6330002764E8 /* Puzzle View */,
 				D68C2BB924A5056000270031 /* AccessibleLabel.swift */,
 				D68C2BBB24A5085300270031 /* AccessibleButton.swift */,
+				D6FCA20B24BF842E007E73EC /* BackNavButton.swift */,
+				D696868D24C099C000888D7B /* UIStackView+convenienceInit.swift */,
 			);
-			path = "Customized Views";
+			path = "Custom Views and Extensions";
+			sourceTree = "<group>";
+		};
+		D6FCA20624BF7246007E73EC /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D652C5A224911F99000FC445 /* Nonograms */ = {
+		D652C5A224911F99000FC445 /* Paint a Pic */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D652C5B724911F9D000FC445 /* Build configuration list for PBXNativeTarget "Nonograms" */;
+			buildConfigurationList = D652C5B724911F9D000FC445 /* Build configuration list for PBXNativeTarget "Paint a Pic" */;
 			buildPhases = (
 				D652C59F24911F99000FC445 /* Sources */,
 				D652C5A024911F99000FC445 /* Frameworks */,
@@ -200,9 +240,9 @@
 			);
 			dependencies = (
 			);
-			name = Nonograms;
+			name = "Paint a Pic";
 			productName = Nonograms;
-			productReference = D652C5A324911F99000FC445 /* Nonograms.app */;
+			productReference = D652C5A324911F99000FC445 /* Paint a Pic.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -220,7 +260,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D652C59E24911F99000FC445 /* Build configuration list for PBXProject "Nonograms" */;
+			buildConfigurationList = D652C59E24911F99000FC445 /* Build configuration list for PBXProject "Paint a Pic" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -233,7 +273,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D652C5A224911F99000FC445 /* Nonograms */,
+				D652C5A224911F99000FC445 /* Paint a Pic */,
 			);
 		};
 /* End PBXProject section */
@@ -261,20 +301,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				D62849F42492AD510053F7D6 /* PuzzleSquare.swift in Sources */,
+				D696868E24C099C000888D7B /* UIStackView+convenienceInit.swift in Sources */,
 				D62849EE24927DF60053F7D6 /* PuzzleValidator.swift in Sources */,
 				D652C5BB24911FCC000FC445 /* PuzzleView.swift in Sources */,
 				D652C5AB24911F99000FC445 /* PuzzleViewController.swift in Sources */,
 				D6832B7B24A50BDB00DDC90D /* TextStyle.swift in Sources */,
 				D6822FF0249E6325002764E8 /* PuzzleListViewController.swift in Sources */,
+				D623179A24C08D39005F13F1 /* UIView+asImage.swift in Sources */,
 				D652C5A724911F99000FC445 /* AppDelegate.swift in Sources */,
+				D623179D24C0972D005F13F1 /* UIView+addSubViews.swift in Sources */,
 				D6822FF3249E63DC002764E8 /* PuzzleListDataSource.swift in Sources */,
+				D631598B24BE3A7200CCCCC9 /* MutableCollection+MapInPlace.swift in Sources */,
 				D62849F0249286520053F7D6 /* FixedLengthArray.swift in Sources */,
 				D68C2BBA24A5056000270031 /* AccessibleLabel.swift in Sources */,
 				D68C2BB124A2EC8000270031 /* PuzzleMaker.swift in Sources */,
 				D652C5A924911F99000FC445 /* SceneDelegate.swift in Sources */,
+				D6FCA20E24BF84EE007E73EC /* UIViewController+setBackNavButton.swift in Sources */,
 				D68C2BBC24A5085300270031 /* AccessibleButton.swift in Sources */,
 				D6822FF5249E64FE002764E8 /* PuzzleListCell.swift in Sources */,
+				D6FCA20A24BF7D0A007E73EC /* UIViewController+alert.swift in Sources */,
 				D62849F22492892F0053F7D6 /* PuzzleRules.swift in Sources */,
+				D6FCA20824BF7A2F007E73EC /* Notification+Names.swift in Sources */,
+				D6FCA20C24BF842E007E73EC /* BackNavButton.swift in Sources */,
 				D6822FFC24A2DC7C002764E8 /* CreatePuzzleViewController.swift in Sources */,
 				D62849F62492F96E0053F7D6 /* Set+Toggle.swift in Sources */,
 			);
@@ -427,8 +475,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.samanthagatt.Nonograms;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.samanthagatt.nonograms;
+				PRODUCT_NAME = "Paint a Pic";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -445,8 +493,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.samanthagatt.Nonograms;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.samanthagatt.nonograms;
+				PRODUCT_NAME = "Paint a Pic";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -455,7 +503,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D652C59E24911F99000FC445 /* Build configuration list for PBXProject "Nonograms" */ = {
+		D652C59E24911F99000FC445 /* Build configuration list for PBXProject "Paint a Pic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D652C5B524911F9D000FC445 /* Debug */,
@@ -464,7 +512,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D652C5B724911F9D000FC445 /* Build configuration list for PBXNativeTarget "Nonograms" */ = {
+		D652C5B724911F9D000FC445 /* Build configuration list for PBXNativeTarget "Paint a Pic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D652C5B824911F9D000FC445 /* Debug */,

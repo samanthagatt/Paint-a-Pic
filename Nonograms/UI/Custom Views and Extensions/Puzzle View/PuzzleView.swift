@@ -15,6 +15,9 @@ import Combine
 @IBDesignable
 final class PuzzleView: UIView {
     // MARK: - Properties
+    var image: UIImage? {
+        gridStackView.asImage()
+    }
     // MARK: Rules and validation
     /// A passthrough subject from `Combine` that emits a bool representing
     /// if the puzzle is valid every time a square is tapped.
@@ -74,32 +77,14 @@ final class PuzzleView: UIView {
     
     // MARK: Sub Views
     /// Column rules stack view (top rules)
-    private var colRulesStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.alignment = .bottom
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
+    private var colRulesStackView = UIStackView(axis: .horizontal,
+                                                distribution: .fillEqually,
+                                                alignment: .bottom)
     /// Row rules stack view (left rules)
-    private var rowRulesStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
+    private var rowRulesStackView = UIStackView(axis: .vertical,
+                                                distribution: .fillEqually)
     /// Grid stack view
-    private var gridStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
+    private var gridStackView = UIStackView(axis: .vertical)
     
     // MARK: Constraint Refs
     /// Reference to grid stack view's width constraint
@@ -138,9 +123,7 @@ final class PuzzleView: UIView {
     
     /// Makes sure stack views are added to view and the puzzle grid is rendered
     private func sharedInit() {
-        addSubview(gridStackView)
-        addSubview(colRulesStackView)
-        addSubview(rowRulesStackView)
+        addSubviews(gridStackView, colRulesStackView, rowRulesStackView)
         setupPuzzle()
         NSLayoutConstraint.activate([
             // Center grid in parent view

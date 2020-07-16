@@ -9,22 +9,22 @@
 import UIKit
 import Combine
 
-extension Notification.Name {
-    static let puzzleSolved = Notification.Name(rawValue: "puzzleSolved")
-}
-
 final class PuzzleViewController: UIViewController {
     /// Set of all subscriptions. Each will be canceled on deallocation.
     private var subscriptions = Set<AnyCancellable>()
+    /// Bool to keep track if the puzzle has been edited
+    /// Should be reset once puzzle has been solved
     private var hasBeenEdited = false
+    /// Index of current puzzle
     var puzzleIndex: Int?
+    /// Rules for the current puzzle
     var puzzleRules: PuzzleRules? {
         didSet {
             if let rules = puzzleRules {
                 loadViewIfNeeded()
                 puzzleView.rules = rules
+                title = rules.name.capitalized
             }
-            title = puzzleRules?.name
         }
     }
 
@@ -35,49 +35,7 @@ final class PuzzleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        exButton.layer.borderColor = UIColor.label.cgColor
-        exButton.layer.cornerRadius = 5
-        fillButton.layer.borderColor = UIColor.label.cgColor
-        fillButton.layer.borderWidth = 2
-        fillButton.layer.cornerRadius = 5
-        
-        let backImage = UIImage(systemName: "chevron.left")
-        let buttonImageView = UIImageView(image: backImage)
-        buttonImageView.contentMode = .scaleAspectFit
-        buttonImageView.translatesAutoresizingMaskIntoConstraints = false
-        let buttonLabel = UILabel()
-        buttonLabel.translatesAutoresizingMaskIntoConstraints = false
-        buttonLabel.text = "Back"
-        let backButton = UIButton(type: .custom)
-        buttonLabel.textColor = backButton.tintColor
-        backButton.addSubview(buttonImageView)
-        backButton.addSubview(buttonLabel)
-        
-        NSLayoutConstraint.activate([
-            buttonImageView.centerYAnchor
-                .constraint(equalTo: backButton.centerYAnchor),
-            buttonLabel.centerYAnchor
-                .constraint(equalTo: backButton.centerYAnchor),
-            buttonImageView.heightAnchor
-                .constraint(equalTo: buttonLabel.heightAnchor),
-            buttonLabel.leadingAnchor
-                .constraint(equalTo: buttonImageView.trailingAnchor,
-                            constant: 6),
-            buttonImageView.leadingAnchor
-                .constraint(equalTo: backButton.leadingAnchor),
-            buttonImageView.topAnchor
-                .constraint(equalTo: backButton.topAnchor),
-            buttonImageView.bottomAnchor
-                .constraint(equalTo: backButton.bottomAnchor),
-            buttonLabel.trailingAnchor
-                .constraint(equalTo: backButton.trailingAnchor)
-        ])
-        
-        backButton.addTarget(self,
-                             action: #selector(back),
-                             for: .touchUpInside)
-        let backBarButton = UIBarButtonItem(customView: backButton)
-        self.navigationItem.leftBarButtonItem = backBarButton
+        setupViews()
         
         // Subscribe to updates to see if puzzle has been solved
         puzzleView.puzzleValidity.sink { [weak self] isValid in
@@ -86,43 +44,50 @@ final class PuzzleViewController: UIViewController {
             if isValid {
                 NotificationCenter.default.post(name: .puzzleSolved,
                                                 object: self.puzzleIndex)
-                let alert = UIAlertController(title: "Yay!", message: "You solved the puzzle :)", preferredStyle: .alert)
-                let okayAction = UIAlertAction(title: "Okay", style: .default)
-                alert.addAction(okayAction)
-                self.present(alert, animated: true)
+                self.alert(title: "Yay!",
+                           message: "You solved the puzzle :)",
+                           dismissTitle: "Okay")
                 self.hasBeenEdited = false
             }
         }.store(in: &subscriptions)
         puzzleView.squaresTooSmall.sink { [weak self] isTooSmall in
             guard let self = self else { return }
             if isTooSmall {
-                let alert = UIAlertController(title: "Uh oh", message: "It looks like your device might be too small. Tapping the correct square might be harder than normal", preferredStyle: .alert)
-                let okayAction = UIAlertAction(title: "Okay", style: .default)
-                alert.addAction(okayAction)
-                DispatchQueue.main.async {
-                    self.present(alert, animated: true)
-                }
+                self.alert(title: "Uh oh",
+                           message: """
+                           It looks like your device might be too small.\
+                           Tapping the correct square might be harder than normal
+                           """,
+                           dismissTitle: "Okay")
             }
         }.store(in: &subscriptions)
     }
     
-    @objc func back() {
+    private func setupViews() {
+        exButton.layer.borderColor = UIColor.label.cgColor
+        exButton.layer.cornerRadius = 5
+        fillButton.layer.borderColor = UIColor.label.cgColor
+        fillButton.layer.borderWidth = 2
+        fillButton.layer.cornerRadius = 5
+    }
+    
+    @objc private func back() {
         if hasBeenEdited {
-            let alert = UIAlertController(
-                title: "Go back?",
+            alert(title: "Go back?",
                 message: """
                 You've already started this puzzle. \
                 Are you sure you want to go back? \
                 All your progress will be lost.
                 """,
-                preferredStyle: .alert
+                actions: [
+                    UIAlertAction(title: "Cancel", style: .cancel),
+                    UIAlertAction(title: "Go Back",
+                                  style: .destructive) { _ in
+                        self.navigationController?
+                            .popViewController(animated: true)
+                    }
+                ]
             )
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            alert.addAction(UIAlertAction(title: "Go Back",
-                                          style: .destructive) { _ in
-                self.navigationController?.popViewController(animated: true)
-            })
-            present(alert, animated: true)
         } else {
             self.navigationController?.popViewController(animated: true)
         }

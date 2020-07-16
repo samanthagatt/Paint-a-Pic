@@ -56,19 +56,17 @@ final class PuzzleListViewController: UIViewController {
             let path = docsDir.appendingPathComponent("puzzleData.json")
             try data.write(to: path)
         } catch {
-            let alert = UIAlertController(title: "Uh oh", message: "An error ocurred. Your puzzle completion status has not been saved.", preferredStyle: .alert)
-            let okayAction = UIAlertAction(title: "Okay", style: .default)
-            alert.addAction(okayAction)
-            present(alert, animated: true)
+            alert(title: "Uh oh",
+                  message: "An error ocurred. Your puzzle completion status has not been saved.",
+                  dismissTitle: "Okay")
         }
     }
     
     @IBAction func resetPuzzleProgress(_ sender: Any) {
-        let alert = UIAlertController(title: "Reset puzzle progress?", message: "Are you sure you want all your progress to be reset?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
-        alert.addAction(cancelAction)
-        let resetAction = UIAlertAction(title: "Reset",
-                                        style: .destructive) { _ in
+        let resetAction = UIAlertAction(
+            title: "Reset",
+            style: .destructive
+        ) { _ in
             self.puzzleDataSource.puzzles.mapInPlace { $0.isComplete = false }
             do {
                 
@@ -79,14 +77,20 @@ final class PuzzleListViewController: UIViewController {
                 try data.write(to: path)
                 self.puzzleCollectionView.reloadData()
             } catch {
-                let alert = UIAlertController(title: "Uh oh", message: "An error ocurred. Your puzzle completion status has not been saved.", preferredStyle: .alert)
-                let okayAction = UIAlertAction(title: "Okay", style: .default)
-                alert.addAction(okayAction)
-                self.present(alert, animated: true)
+                self.alert(title: "Uh oh",
+                           message: """
+                           An error ocurred. Your puzzle completion status\
+                           has not been saved.
+                           """,
+                           dismissTitle: "Okay")
             }
         }
-        alert.addAction(resetAction)
-        present(alert, animated: true)
+        alert(title: "Reset puzzle progress?",
+              message: "Are you sure you want all your progress to be reset?",
+              actions: [
+                UIAlertAction(title: "Cancel", style: .default),
+                resetAction
+        ])
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -96,14 +100,6 @@ final class PuzzleListViewController: UIViewController {
                     .indexPathsForSelectedItems?.first else { return }
             destVC.puzzleRules = puzzleDataSource.puzzles[indexPath.item]
             destVC.puzzleIndex = indexPath.item
-        }
-    }
-}
-
-extension MutableCollection {
-    mutating func mapInPlace(_ x: (inout Element) -> ()) {
-        for i in indices {
-            x(&self[i])
         }
     }
 }

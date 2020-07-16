@@ -50,10 +50,9 @@ final class CreatePuzzleViewController: UIViewController {
             let path = docsDir.appendingPathComponent("puzzleData.json")
             try data.write(to: path)
         } catch {
-            let alert = UIAlertController(title: "Uh oh", message: "An error ocurred. Your puzzle has not been saved.", preferredStyle: .alert)
-            let okayAction = UIAlertAction(title: "Okay", style: .default)
-            alert.addAction(okayAction)
-            present(alert, animated: true)
+            alert(title: "Uh oh",
+                  message: "An error ocurred. Your puzzle has not been saved.",
+                  dismissTitle: "Okay")
         }
     }
 }

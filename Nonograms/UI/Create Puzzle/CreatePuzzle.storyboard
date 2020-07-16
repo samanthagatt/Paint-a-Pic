@@ -10,7 +10,7 @@
         <!--Title-->
         <scene sceneID="fSs-DB-wX5">
             <objects>
-                <viewController id="1K5-6n-nvw" customClass="CreatePuzzleViewController" customModule="Nonograms" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1K5-6n-nvw" customClass="CreatePuzzleViewController" customModule="Paint_a_Pic" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KG9-4M-ogN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -69,8 +69,8 @@
                                     </stepper>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="44C-vA-wh4" customClass="PuzzleView" customModule="Nonograms" customModuleProvider="target">
-                                <rect key="frame" x="20" y="245" width="374" height="617"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="44C-vA-wh4" customClass="PuzzleView" customModule="Paint_a_Pic" customModuleProvider="target">
+                                <rect key="frame" x="20" y="245" width="374" height="605"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isForSolving" value="NO"/>
@@ -80,7 +80,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="44C-vA-wh4" firstAttribute="bottom" secondItem="g5J-jX-r6I" secondAttribute="bottom" id="9jw-6j-Wmc"/>
+                            <constraint firstItem="44C-vA-wh4" firstAttribute="bottom" secondItem="g5J-jX-r6I" secondAttribute="bottom" constant="-12" id="9jw-6j-Wmc"/>
                             <constraint firstItem="9Y4-R7-2Ai" firstAttribute="centerX" secondItem="KG9-4M-ogN" secondAttribute="centerX" id="H0M-Oi-qdj"/>
                             <constraint firstItem="9Y4-R7-2Ai" firstAttribute="top" secondItem="rbs-WE-5Wf" secondAttribute="bottom" constant="16" id="IwC-en-DPK"/>
                             <constraint firstItem="rbs-WE-5Wf" firstAttribute="centerX" secondItem="KG9-4M-ogN" secondAttribute="centerX" id="JW3-qw-bLj"/>
