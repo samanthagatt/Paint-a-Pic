@@ -70,10 +70,10 @@ final class PuzzleViewController: UIViewController {
         fillButton.layer.borderWidth = 2
         fillButton.layer.cornerRadius = 5
         
-        let saveButton = UIBarButtonItem(barButtonSystemItem: .save,
-                                         target: self,
-                                         action: #selector(saveImage))
-        navigationItem.setRightBarButton(saveButton, animated: true)
+//        let saveButton = UIBarButtonItem(barButtonSystemItem: .save,
+//                                         target: self,
+//                                         action: #selector(saveImage))
+//        navigationItem.setRightBarButton(saveButton, animated: true)
     }
     
     @objc private func back() {
@@ -114,9 +114,9 @@ final class PuzzleViewController: UIViewController {
         do {
             let docsDir = FileManager.default.urls(for: .documentDirectory,
                                                   in: .userDomainMask)[0]
-            let path = docsDir.appendingPathComponent("\(title ?? "no title").jpg")
+            let path = docsDir.appendingPathComponent("\(title ?? "no title").png")
             print(path)
-            try image.jpegData(compressionQuality: 1)?.write(to: path)
+            try image.pngData()?.write(to: path)
         } catch {
             alert(title: "Uh oh",
                   message: "An error ocurred. Your puzzle has not been saved.",

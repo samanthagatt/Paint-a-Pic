@@ -8,34 +8,13 @@
 
 import UIKit
 
-enum PuzzleFillMode {
-    case ex, fill
-}
-enum PuzzleSquareFillState {
-    case filled, empty, exed
-    mutating func setNewState(for mode: PuzzleFillMode) {
-        switch mode {
-        case .fill: switch self {
-            case .filled: self = .empty
-            case .empty: self = .filled
-            case .exed: self = .exed
-            }
-        case .ex: switch self {
-            case .empty: self = .exed
-            case .exed: self = .empty
-            case .filled: self = .filled
-            }
-        }
-    }
-}
-
 @IBDesignable
 final class PuzzleSquare: UIView {
     
     /// Color to assign background when square is **not** filled
-    private var emptyColor: UIColor = .white
+    private var emptyColor: UIColor = .clear
     /// Color to assign background when square is filled
-    private var filledColor: UIColor = .black
+    private var filledColor: UIColor = .label
     /// Enum representing if the square is filled in, empty, or marked with an `x`
     private(set) var fillState: PuzzleSquareFillState = .empty {
         didSet { updateFill() }
@@ -64,7 +43,7 @@ final class PuzzleSquare: UIView {
     convenience init(
         tag: Int,
         emptyColor: UIColor = .clear,
-        filledColor: UIColor = .black,
+        filledColor: UIColor = .label,
         wasTapped: @escaping (Int, PuzzleSquareFillState)
             -> PuzzleFillMode = { _,_ in .fill }
     ) {
@@ -80,7 +59,7 @@ final class PuzzleSquare: UIView {
         exImageView.isHidden = true
         
         backgroundColor = emptyColor
-        layer.borderColor = UIColor.black.cgColor
+        layer.borderColor = UIColor.label.cgColor
         layer.borderWidth = 1
         
         // Add tap gesture

@@ -98,11 +98,18 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="Mqi-Hn-g16">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="OIT-IJ-bFg">
-                            <connections>
-                                <action selector="createPuzzle:" destination="1K5-6n-nvw" id="nNx-MJ-Wxv"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="save" id="OIT-IJ-bFg">
+                                <connections>
+                                    <action selector="createPuzzle:" destination="1K5-6n-nvw" id="nNx-MJ-Wxv"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Pic" id="r0E-zV-JJC">
+                                <connections>
+                                    <action selector="savePic:" destination="1K5-6n-nvw" id="c9A-RA-FdS"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="colCountLabel" destination="Z2M-tx-TiW" id="I4e-yv-OBW"/>

@@ -55,4 +55,19 @@ final class CreatePuzzleViewController: UIViewController {
                   dismissTitle: "Okay")
         }
     }
+    @IBAction func savePic(_ sender: Any) {
+        guard let image = puzzleView.image else { return }
+        do {
+            let docsDir = FileManager.default.urls(for: .documentDirectory,
+                                                   in: .userDomainMask)[0]
+            let path = docsDir.appendingPathComponent(
+                "\(nameTextField.text?.capitalized ?? "no title").png")
+            print(path)
+            try image.pngData()?.write(to: path)
+        } catch {
+            alert(title: "Uh oh",
+                  message: "An error ocurred. Your puzzle has not been saved.",
+                  dismissTitle: "Okay")
+        }
+    }
 }

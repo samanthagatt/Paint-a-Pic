@@ -23,7 +23,6 @@
 		D652C5B024911F9D000FC445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D652C5AF24911F9D000FC445 /* Assets.xcassets */; };
 		D652C5B324911F9D000FC445 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D652C5B124911F9D000FC445 /* LaunchScreen.storyboard */; };
 		D652C5BB24911FCC000FC445 /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D652C5BA24911FCC000FC445 /* PuzzleView.swift */; };
-		D6822FEA249E5AFC002764E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6822FE9249E5AFC002764E8 /* Main.storyboard */; };
 		D6822FEC249E6016002764E8 /* PuzzleList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6822FEB249E6016002764E8 /* PuzzleList.storyboard */; };
 		D6822FF0249E6325002764E8 /* PuzzleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6822FEF249E6325002764E8 /* PuzzleListViewController.swift */; };
 		D6822FF3249E63DC002764E8 /* PuzzleListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6822FF2249E63DC002764E8 /* PuzzleListDataSource.swift */; };
@@ -35,6 +34,14 @@
 		D68C2BBA24A5056000270031 /* AccessibleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68C2BB924A5056000270031 /* AccessibleLabel.swift */; };
 		D68C2BBC24A5085300270031 /* AccessibleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68C2BBB24A5085300270031 /* AccessibleButton.swift */; };
 		D696868E24C099C000888D7B /* UIStackView+convenienceInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696868D24C099C000888D7B /* UIStackView+convenienceInit.swift */; };
+		D696869224C22C1E00888D7B /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D696869124C22C1E00888D7B /* Home.storyboard */; };
+		D696869424C359E600888D7B /* PuzzleSquareFillState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696869324C359E600888D7B /* PuzzleSquareFillState.swift */; };
+		D696869624C383DD00888D7B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696869524C383DC00888D7B /* HomeViewController.swift */; };
+		D696869824C3845D00888D7B /* HomeCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696869724C3845D00888D7B /* HomeCollectionViewHeader.swift */; };
+		D696869A24C3891D00888D7B /* HomeCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696869924C3891D00888D7B /* HomeCollectionViewFlowLayout.swift */; };
+		D696869C24C3892B00888D7B /* HomeCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696869B24C3892B00888D7B /* HomeCollectionViewDataSource.swift */; };
+		D696869E24C3A3D700888D7B /* FullyRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696869D24C3A3D700888D7B /* FullyRoundedView.swift */; };
+		D69686A024C3A49C00888D7B /* SquovalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696869F24C3A49C00888D7B /* SquovalView.swift */; };
 		D6FCA20824BF7A2F007E73EC /* Notification+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20724BF7A2F007E73EC /* Notification+Names.swift */; };
 		D6FCA20A24BF7D0A007E73EC /* UIViewController+alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20924BF7D0A007E73EC /* UIViewController+alert.swift */; };
 		D6FCA20C24BF842E007E73EC /* BackNavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20B24BF842E007E73EC /* BackNavButton.swift */; };
@@ -60,7 +67,6 @@
 		D652C5B224911F9D000FC445 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D652C5B424911F9D000FC445 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D652C5BA24911FCC000FC445 /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
-		D6822FE9249E5AFC002764E8 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D6822FEB249E6016002764E8 /* PuzzleList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PuzzleList.storyboard; sourceTree = "<group>"; };
 		D6822FEF249E6325002764E8 /* PuzzleListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleListViewController.swift; sourceTree = "<group>"; };
 		D6822FF2249E63DC002764E8 /* PuzzleListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleListDataSource.swift; sourceTree = "<group>"; };
@@ -72,6 +78,14 @@
 		D68C2BB924A5056000270031 /* AccessibleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleLabel.swift; sourceTree = "<group>"; };
 		D68C2BBB24A5085300270031 /* AccessibleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleButton.swift; sourceTree = "<group>"; };
 		D696868D24C099C000888D7B /* UIStackView+convenienceInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+convenienceInit.swift"; sourceTree = "<group>"; };
+		D696869124C22C1E00888D7B /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		D696869324C359E600888D7B /* PuzzleSquareFillState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleSquareFillState.swift; sourceTree = "<group>"; };
+		D696869524C383DC00888D7B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		D696869724C3845D00888D7B /* HomeCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewHeader.swift; sourceTree = "<group>"; };
+		D696869924C3891D00888D7B /* HomeCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		D696869B24C3892B00888D7B /* HomeCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		D696869D24C3A3D700888D7B /* FullyRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullyRoundedView.swift; sourceTree = "<group>"; };
+		D696869F24C3A49C00888D7B /* SquovalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquovalView.swift; sourceTree = "<group>"; };
 		D6FCA20724BF7A2F007E73EC /* Notification+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Names.swift"; sourceTree = "<group>"; };
 		D6FCA20924BF7D0A007E73EC /* UIViewController+alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+alert.swift"; sourceTree = "<group>"; };
 		D6FCA20B24BF842E007E73EC /* BackNavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackNavButton.swift; sourceTree = "<group>"; };
@@ -125,8 +139,8 @@
 		D62849F92493E9FD0053F7D6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				D6822FE9249E5AFC002764E8 /* Main.storyboard */,
 				D68C2BB824A5054500270031 /* Custom Views and Extensions */,
+				D696869024C22C1100888D7B /* Home */,
 				D62849FA2493EA190053F7D6 /* Puzzle Game */,
 				D6822FFA24A2DC41002764E8 /* Create Puzzle */,
 				D6822FED249E62CE002764E8 /* Puzzle List */,
@@ -137,7 +151,6 @@
 		D62849FA2493EA190053F7D6 /* Puzzle Game */ = {
 			isa = PBXGroup;
 			children = (
-				D6FCA20624BF7246007E73EC /* Tutorial */,
 				D652C5AC24911F99000FC445 /* Puzzle.storyboard */,
 				D652C5AA24911F99000FC445 /* PuzzleViewController.swift */,
 			);
@@ -192,6 +205,7 @@
 			children = (
 				D652C5BA24911FCC000FC445 /* PuzzleView.swift */,
 				D62849F32492AD510053F7D6 /* PuzzleSquare.swift */,
+				D696869324C359E600888D7B /* PuzzleSquareFillState.swift */,
 			);
 			path = "Puzzle View";
 			sourceTree = "<group>";
@@ -214,15 +228,22 @@
 				D68C2BBB24A5085300270031 /* AccessibleButton.swift */,
 				D6FCA20B24BF842E007E73EC /* BackNavButton.swift */,
 				D696868D24C099C000888D7B /* UIStackView+convenienceInit.swift */,
+				D696869D24C3A3D700888D7B /* FullyRoundedView.swift */,
+				D696869F24C3A49C00888D7B /* SquovalView.swift */,
 			);
 			path = "Custom Views and Extensions";
 			sourceTree = "<group>";
 		};
-		D6FCA20624BF7246007E73EC /* Tutorial */ = {
+		D696869024C22C1100888D7B /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				D696869124C22C1E00888D7B /* Home.storyboard */,
+				D696869524C383DC00888D7B /* HomeViewController.swift */,
+				D696869724C3845D00888D7B /* HomeCollectionViewHeader.swift */,
+				D696869924C3891D00888D7B /* HomeCollectionViewFlowLayout.swift */,
+				D696869B24C3892B00888D7B /* HomeCollectionViewDataSource.swift */,
 			);
-			path = Tutorial;
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,13 +304,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D696869224C22C1E00888D7B /* Home.storyboard in Resources */,
 				D6822FEC249E6016002764E8 /* PuzzleList.storyboard in Resources */,
 				D631598924BE22D600CCCCC9 /* puzzleData.json in Resources */,
 				D652C5B324911F9D000FC445 /* LaunchScreen.storyboard in Resources */,
 				D652C5B024911F9D000FC445 /* Assets.xcassets in Resources */,
 				D6822FF924A2D8F3002764E8 /* CreatePuzzle.storyboard in Resources */,
 				D652C5AE24911F99000FC445 /* Puzzle.storyboard in Resources */,
-				D6822FEA249E5AFC002764E8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,24 +324,31 @@
 				D62849F42492AD510053F7D6 /* PuzzleSquare.swift in Sources */,
 				D696868E24C099C000888D7B /* UIStackView+convenienceInit.swift in Sources */,
 				D62849EE24927DF60053F7D6 /* PuzzleValidator.swift in Sources */,
+				D696869A24C3891D00888D7B /* HomeCollectionViewFlowLayout.swift in Sources */,
+				D696869424C359E600888D7B /* PuzzleSquareFillState.swift in Sources */,
 				D652C5BB24911FCC000FC445 /* PuzzleView.swift in Sources */,
 				D652C5AB24911F99000FC445 /* PuzzleViewController.swift in Sources */,
 				D6832B7B24A50BDB00DDC90D /* TextStyle.swift in Sources */,
 				D6822FF0249E6325002764E8 /* PuzzleListViewController.swift in Sources */,
 				D623179A24C08D39005F13F1 /* UIView+asImage.swift in Sources */,
 				D652C5A724911F99000FC445 /* AppDelegate.swift in Sources */,
+				D696869824C3845D00888D7B /* HomeCollectionViewHeader.swift in Sources */,
 				D623179D24C0972D005F13F1 /* UIView+addSubViews.swift in Sources */,
 				D6822FF3249E63DC002764E8 /* PuzzleListDataSource.swift in Sources */,
 				D631598B24BE3A7200CCCCC9 /* MutableCollection+MapInPlace.swift in Sources */,
 				D62849F0249286520053F7D6 /* FixedLengthArray.swift in Sources */,
+				D696869624C383DD00888D7B /* HomeViewController.swift in Sources */,
 				D68C2BBA24A5056000270031 /* AccessibleLabel.swift in Sources */,
+				D69686A024C3A49C00888D7B /* SquovalView.swift in Sources */,
 				D68C2BB124A2EC8000270031 /* PuzzleMaker.swift in Sources */,
 				D652C5A924911F99000FC445 /* SceneDelegate.swift in Sources */,
+				D696869C24C3892B00888D7B /* HomeCollectionViewDataSource.swift in Sources */,
 				D6FCA20E24BF84EE007E73EC /* UIViewController+setBackNavButton.swift in Sources */,
 				D68C2BBC24A5085300270031 /* AccessibleButton.swift in Sources */,
 				D6822FF5249E64FE002764E8 /* PuzzleListCell.swift in Sources */,
 				D6FCA20A24BF7D0A007E73EC /* UIViewController+alert.swift in Sources */,
 				D62849F22492892F0053F7D6 /* PuzzleClues.swift in Sources */,
+				D696869E24C3A3D700888D7B /* FullyRoundedView.swift in Sources */,
 				D6FCA20824BF7A2F007E73EC /* Notification+Names.swift in Sources */,
 				D6FCA20C24BF842E007E73EC /* BackNavButton.swift in Sources */,
 				D6822FFC24A2DC7C002764E8 /* CreatePuzzleViewController.swift in Sources */,

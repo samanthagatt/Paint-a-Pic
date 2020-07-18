@@ -10,14 +10,28 @@
         <!--Puzzle View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="PuzzleViewController" customModule="Nonograms" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="PuzzleViewController" customModule="Paint_a_Pic" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HKE-da-qfb" customClass="PuzzleView" customModule="Nonograms" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HKE-da-qfb" customClass="PuzzleView" customModule="Paint_a_Pic" customModuleProvider="target">
                                 <rect key="frame" x="24" y="68" width="366" height="701"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H92-fc-LmB">
+                                        <rect key="frame" x="312" y="8" width="46" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="H92-fc-LmB" secondAttribute="height" multiplier="1:1" id="Mym-k9-nui"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                                        <state key="normal" image="gear" catalog="system"/>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="H92-fc-LmB" secondAttribute="trailing" constant="8" id="70N-qT-xGv"/>
+                                    <constraint firstItem="H92-fc-LmB" firstAttribute="top" secondItem="HKE-da-qfb" secondAttribute="top" constant="8" id="vqG-lr-olw"/>
+                                </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cBQ-BI-f9g">
                                 <rect key="frame" x="154" y="793" width="106" height="45"/>
@@ -72,6 +86,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="gear" catalog="system" width="128" height="119"/>
         <image name="square.fill" catalog="system" width="128" height="114"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
     </resources>
