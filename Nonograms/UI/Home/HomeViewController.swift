@@ -18,5 +18,6 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         collectionView.dataSource = dataSource
+        collectionView.alwaysBounceVertical = true
     }
 }

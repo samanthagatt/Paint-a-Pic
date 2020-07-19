@@ -42,6 +42,7 @@
 		D696869C24C3892B00888D7B /* HomeCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696869B24C3892B00888D7B /* HomeCollectionViewDataSource.swift */; };
 		D696869E24C3A3D700888D7B /* FullyRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696869D24C3A3D700888D7B /* FullyRoundedView.swift */; };
 		D69686A024C3A49C00888D7B /* SquovalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D696869F24C3A49C00888D7B /* SquovalView.swift */; };
+		D69686A224C4927600888D7B /* MonoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69686A124C4927600888D7B /* MonoLabel.swift */; };
 		D6FCA20824BF7A2F007E73EC /* Notification+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20724BF7A2F007E73EC /* Notification+Names.swift */; };
 		D6FCA20A24BF7D0A007E73EC /* UIViewController+alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20924BF7D0A007E73EC /* UIViewController+alert.swift */; };
 		D6FCA20C24BF842E007E73EC /* BackNavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20B24BF842E007E73EC /* BackNavButton.swift */; };
@@ -86,6 +87,7 @@
 		D696869B24C3892B00888D7B /* HomeCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		D696869D24C3A3D700888D7B /* FullyRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullyRoundedView.swift; sourceTree = "<group>"; };
 		D696869F24C3A49C00888D7B /* SquovalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquovalView.swift; sourceTree = "<group>"; };
+		D69686A124C4927600888D7B /* MonoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonoLabel.swift; sourceTree = "<group>"; };
 		D6FCA20724BF7A2F007E73EC /* Notification+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Names.swift"; sourceTree = "<group>"; };
 		D6FCA20924BF7D0A007E73EC /* UIViewController+alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+alert.swift"; sourceTree = "<group>"; };
 		D6FCA20B24BF842E007E73EC /* BackNavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackNavButton.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				D696868D24C099C000888D7B /* UIStackView+convenienceInit.swift */,
 				D696869D24C3A3D700888D7B /* FullyRoundedView.swift */,
 				D696869F24C3A49C00888D7B /* SquovalView.swift */,
+				D69686A124C4927600888D7B /* MonoLabel.swift */,
 			);
 			path = "Custom Views and Extensions";
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				D696869A24C3891D00888D7B /* HomeCollectionViewFlowLayout.swift in Sources */,
 				D696869424C359E600888D7B /* PuzzleSquareFillState.swift in Sources */,
 				D652C5BB24911FCC000FC445 /* PuzzleView.swift in Sources */,
+				D69686A224C4927600888D7B /* MonoLabel.swift in Sources */,
 				D652C5AB24911F99000FC445 /* PuzzleViewController.swift in Sources */,
 				D6832B7B24A50BDB00DDC90D /* TextStyle.swift in Sources */,
 				D6822FF0249E6325002764E8 /* PuzzleListViewController.swift in Sources */,
