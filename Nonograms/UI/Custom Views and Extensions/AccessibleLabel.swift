@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable class AccessibleLabel: UILabel {
-    var startingFont: UIFont = .preferredFont(forTextStyle: .body)
+    var regularFont: UIFont = .preferredFont(forTextStyle: .body)
     var textStyle: TextStyle = .body {
         didSet { scaleFont() }
     }
@@ -22,17 +22,17 @@ import UIKit
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        startingFont = font
+        regularFont = font
         scaleFont()
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
-        startingFont = font
+        regularFont = font
         scaleFont()
     }
     
     func scaleFont() {
         font = UIFontMetrics(forTextStyle: textStyle.toUIFontTextStyle())
-            .scaledFont(for: startingFont)
+            .scaledFont(for: regularFont)
     }
 }

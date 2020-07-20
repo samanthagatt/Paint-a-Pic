@@ -57,7 +57,7 @@ class HomeCollectionViewFlowLayout: UICollectionViewFlowLayout {
         /// Amount overscrolled
         let diff = abs(offset.y)
         // Add the overscroll amount to the header height
-        frame.size.height = max(0, headerReferenceSize.height + diff)
+        frame.size.height = max(0, frame.size.height + diff)
         // Make sure the header's origin is still at the very top of the collection view
         frame.origin.y = frame.minY - diff
         attrs?.frame = frame

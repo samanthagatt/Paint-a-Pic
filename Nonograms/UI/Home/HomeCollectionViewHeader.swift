@@ -10,7 +10,17 @@ import UIKit
 
 final class HomeCollectionViewHeader: UICollectionReusableView {
     
+    @IBOutlet weak var coloredView: UIView!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var selectionView: UIView!
-    @IBOutlet weak var selectionLabel: UILabel!
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var spacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomPaddingConstraint: NSLayoutConstraint!
+    
+    override var intrinsicContentSize: CGSize {
+        CGSize(width: .infinity,
+               height: coloredView.frame.height +
+                    spacingConstraint.constant +
+                    stackView.frame.height +
+                    bottomPaddingConstraint.constant)
+    }
 }

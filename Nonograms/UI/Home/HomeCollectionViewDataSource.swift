@@ -10,15 +10,17 @@ import UIKit
 
 final class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     
-    var puzzles: [String: [PuzzleClues]] = [:]
-    var selection: String = ""
+    var puzzles: [IntPairStruct: [PuzzleClues]] = [:]
+    var selection: (Int, Int) = (5, 5)
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        17
-        // puzzles[selection]?.count ?? 0
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        puzzles[selection]?.count ?? 17
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         let cell = collectionView
             .dequeueReusableCell(withReuseIdentifier: "collectionViewCell",
                                  for: indexPath)
@@ -26,13 +28,14 @@ final class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
             withReuseIdentifier: "collectionViewHeader",
             for: indexPath
-        ) as? HomeCollectionViewHeader else { return UICollectionReusableView() }
+        )
         return header
     }
 }
-

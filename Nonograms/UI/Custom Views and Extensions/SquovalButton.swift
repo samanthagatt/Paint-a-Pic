@@ -1,5 +1,5 @@
 //
-//  FullyRoundedView.swift
+//  SquovalButton.swift
 //  Paint a Pic
 //
 //  Created by Samantha Gatt on 7/18/20.
@@ -9,9 +9,9 @@
 import UIKit
 
 @IBDesignable
-final class FullyRoundedView: UIView {
+final class SquovalButton: AccessibleButton {
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.cornerRadius = min(frame.width, frame.height) / 2
+        layer.cornerRadius = min(frame.width, frame.height) / 4
     }
 }

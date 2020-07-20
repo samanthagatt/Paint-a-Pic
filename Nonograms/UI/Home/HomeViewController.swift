@@ -13,11 +13,13 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     private let dataSource = HomeCollectionViewDataSource()
+    private let delegate = HomeCollectionViewDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.dataSource = dataSource
         collectionView.alwaysBounceVertical = true
+        collectionView.delegate = delegate
     }
 }
