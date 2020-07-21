@@ -36,6 +36,7 @@ final class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
             withReuseIdentifier: "collectionViewHeader",
             for: indexPath
         )
+        header.clipsToBounds = false
         return header
     }
 }

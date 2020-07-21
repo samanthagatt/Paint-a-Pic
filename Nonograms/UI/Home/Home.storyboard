@@ -63,20 +63,33 @@
                                                     <rect key="frame" x="16" y="16" width="382" height="227.5"/>
                                                     <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e00-Mp-mej" customClass="SquovalButton" customModule="Paint_a_Pic" customModuleProvider="target">
+                                                    <rect key="frame" x="327" y="201.5" width="71" height="38"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <inset key="contentEdgeInsets" minX="16" minY="10" maxX="16" maxY="10"/>
+                                                    <state key="normal" title="PLAY"/>
+                                                    <connections>
+                                                        <action selector="play:" destination="mvl-9O-QEJ" eventType="touchUpInside" id="5He-ps-Rta"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="4cs-F0-OAv" secondAttribute="trailing" constant="16" id="Adz-jF-Twn"/>
+                                                <constraint firstAttribute="bottom" secondItem="e00-Mp-mej" secondAttribute="bottom" constant="20" id="BBh-Tp-Al5"/>
                                                 <constraint firstItem="4cs-F0-OAv" firstAttribute="leading" secondItem="DbO-be-vJc" secondAttribute="leading" constant="16" id="EgU-8A-E6C"/>
+                                                <constraint firstAttribute="trailing" secondItem="e00-Mp-mej" secondAttribute="trailing" constant="16" id="PRC-8t-nc5"/>
                                                 <constraint firstAttribute="bottom" secondItem="4cs-F0-OAv" secondAttribute="bottom" constant="16" id="fJP-0Q-t15"/>
                                                 <constraint firstItem="4cs-F0-OAv" firstAttribute="top" secondItem="DbO-be-vJc" secondAttribute="top" constant="16" id="h5S-UI-Vu5"/>
                                             </constraints>
                                         </view>
-                                        <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="761" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="12S-qk-soM">
-                                            <rect key="frame" x="18" y="285.5" width="372" height="20.5"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="761" verticalCompressionResistancePriority="800" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="12S-qk-soM">
+                                            <rect key="frame" x="18" y="285.5" width="380" height="20.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="800" text="SELECT LEVEL" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HSR-ie-JXJ" customClass="AccessibleLabel" customModule="Paint_a_Pic" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="269" height="20.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="277" height="20.5"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="32"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -85,40 +98,44 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="761" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o5Y-wS-rMY" customClass="SquovalButton" customModule="Paint_a_Pic" customModuleProvider="target">
-                                                    <rect key="frame" x="284" y="0.0" width="88" height="20.5"/>
+                                                    <rect key="frame" x="292" y="0.0" width="88" height="20.5"/>
                                                     <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <inset key="contentEdgeInsets" minX="16" minY="10" maxX="16" maxY="10"/>
                                                     <state key="normal" title="05 x 05"/>
+                                                    <connections>
+                                                        <action selector="openMenu:" destination="mvl-9O-QEJ" eventType="touchUpInside" id="jTy-4j-bJ0"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>
-                                        <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e00-Mp-mej" customClass="SquovalButton" customModule="Paint_a_Pic" customModuleProvider="target">
-                                            <rect key="frame" x="319" y="197.5" width="71" height="38"/>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                            <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <inset key="contentEdgeInsets" minX="16" minY="10" maxX="16" maxY="10"/>
-                                            <state key="normal" title="PLAY"/>
-                                        </button>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Yqj-Ys-8d2">
+                                            <rect key="frame" x="310" y="306" width="88" height="128"/>
+                                            <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="128" id="bqg-Iv-lj3"/>
+                                            </constraints>
+                                        </tableView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="e00-Mp-mej" secondAttribute="trailing" constant="16" id="1eT-z0-k76"/>
-                                        <constraint firstItem="DbO-be-vJc" firstAttribute="bottom" secondItem="e00-Mp-mej" secondAttribute="bottom" constant="24" id="BfW-7l-IUP"/>
                                         <constraint firstItem="DbO-be-vJc" firstAttribute="top" secondItem="mvl-9O-QEJ" secondAttribute="top" id="EBo-1B-G7y"/>
                                         <constraint firstItem="DbO-be-vJc" firstAttribute="leading" secondItem="mvl-9O-QEJ" secondAttribute="leading" id="Hnj-Uv-nPk"/>
+                                        <constraint firstItem="Yqj-Ys-8d2" firstAttribute="leading" secondItem="o5Y-wS-rMY" secondAttribute="leading" id="IHq-HR-rSa"/>
                                         <constraint firstAttribute="trailing" secondItem="DbO-be-vJc" secondAttribute="trailing" id="Kjy-od-TDo"/>
-                                        <constraint firstItem="12S-qk-soM" firstAttribute="trailing" secondItem="e00-Mp-mej" secondAttribute="trailing" id="OOV-jo-hnf"/>
                                         <constraint firstItem="12S-qk-soM" firstAttribute="leading" secondItem="mvl-9O-QEJ" secondAttribute="leading" constant="18" id="Usg-Jg-D5t"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="e00-Mp-mej" secondAttribute="trailing" constant="16" id="XPo-s8-eYD"/>
                                         <constraint firstItem="12S-qk-soM" firstAttribute="top" secondItem="DbO-be-vJc" secondAttribute="bottom" constant="26" id="cRZ-XP-Ugj"/>
+                                        <constraint firstItem="Yqj-Ys-8d2" firstAttribute="top" secondItem="o5Y-wS-rMY" secondAttribute="bottom" id="ciM-5m-J0o"/>
+                                        <constraint firstItem="12S-qk-soM" firstAttribute="trailing" secondItem="e00-Mp-mej" secondAttribute="trailing" id="e8s-C2-the"/>
                                         <constraint firstAttribute="bottom" secondItem="12S-qk-soM" secondAttribute="bottom" constant="13" id="pHu-ls-FhT"/>
+                                        <constraint firstItem="Yqj-Ys-8d2" firstAttribute="trailing" secondItem="o5Y-wS-rMY" secondAttribute="trailing" id="sDL-mh-TuY"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="bottomPaddingConstraint" destination="pHu-ls-FhT" id="nXg-WC-Nv9"/>
                                         <outlet property="coloredView" destination="DbO-be-vJc" id="07h-jA-nMr"/>
-                                        <outlet property="imageView" destination="4cs-F0-OAv" id="0ze-Pu-oGB"/>
+                                        <outlet property="imageView" destination="4cs-F0-OAv" id="ekm-MU-wyg"/>
+                                        <outlet property="selectLevelLabel" destination="HSR-ie-JXJ" id="ZpU-CF-v1K"/>
+                                        <outlet property="selectionButton" destination="o5Y-wS-rMY" id="KF8-I6-baM"/>
                                         <outlet property="spacingConstraint" destination="cRZ-XP-Ugj" id="q6y-7w-HPX"/>
                                         <outlet property="stackView" destination="12S-qk-soM" id="SvT-7h-HQq"/>
                                     </connections>

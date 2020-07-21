@@ -44,6 +44,7 @@
 		D69686A224C4927600888D7B /* MonoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69686A124C4927600888D7B /* MonoLabel.swift */; };
 		D69686A424C4DCEE00888D7B /* Dictionary+TupleKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69686A324C4DCEE00888D7B /* Dictionary+TupleKey.swift */; };
 		D69686A624C5E9B100888D7B /* HomeCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69686A524C5E9B100888D7B /* HomeCollectionViewDelegate.swift */; };
+		D69686A824C664AF00888D7B /* UILabel+HeightAndWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69686A724C664AE00888D7B /* UILabel+HeightAndWidth.swift */; };
 		D6FCA20824BF7A2F007E73EC /* Notification+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20724BF7A2F007E73EC /* Notification+Names.swift */; };
 		D6FCA20A24BF7D0A007E73EC /* UIViewController+alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20924BF7D0A007E73EC /* UIViewController+alert.swift */; };
 		D6FCA20C24BF842E007E73EC /* BackNavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20B24BF842E007E73EC /* BackNavButton.swift */; };
@@ -90,6 +91,7 @@
 		D69686A124C4927600888D7B /* MonoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonoLabel.swift; sourceTree = "<group>"; };
 		D69686A324C4DCEE00888D7B /* Dictionary+TupleKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+TupleKey.swift"; sourceTree = "<group>"; };
 		D69686A524C5E9B100888D7B /* HomeCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewDelegate.swift; sourceTree = "<group>"; };
+		D69686A724C664AE00888D7B /* UILabel+HeightAndWidth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+HeightAndWidth.swift"; sourceTree = "<group>"; };
 		D6FCA20724BF7A2F007E73EC /* Notification+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Names.swift"; sourceTree = "<group>"; };
 		D6FCA20924BF7D0A007E73EC /* UIViewController+alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+alert.swift"; sourceTree = "<group>"; };
 		D6FCA20B24BF842E007E73EC /* BackNavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackNavButton.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				D6FCA20D24BF84EE007E73EC /* UIViewController+setBackNavButton.swift */,
 				D623179924C08D39005F13F1 /* UIView+asImage.swift */,
 				D623179C24C0972D005F13F1 /* UIView+addSubViews.swift */,
+				D69686A724C664AE00888D7B /* UILabel+HeightAndWidth.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				D696869C24C3892B00888D7B /* HomeCollectionViewDataSource.swift in Sources */,
 				D6FCA20E24BF84EE007E73EC /* UIViewController+setBackNavButton.swift in Sources */,
 				D68C2BBC24A5085300270031 /* AccessibleButton.swift in Sources */,
+				D69686A824C664AF00888D7B /* UILabel+HeightAndWidth.swift in Sources */,
 				D69686A624C5E9B100888D7B /* HomeCollectionViewDelegate.swift in Sources */,
 				D6822FF5249E64FE002764E8 /* PuzzleListCell.swift in Sources */,
 				D6FCA20A24BF7D0A007E73EC /* UIViewController+alert.swift in Sources */,
