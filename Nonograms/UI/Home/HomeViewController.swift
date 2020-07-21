@@ -22,4 +22,9 @@ final class HomeViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.delegate = delegate
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
+    }
 }

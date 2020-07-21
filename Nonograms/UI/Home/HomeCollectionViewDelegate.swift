@@ -21,4 +21,7 @@ class HomeCollectionViewDelegate: NSObject, UICollectionViewDelegateFlowLayout {
         return CGSize(width: collectionView.frame.width,
                       height: headerView?.intrinsicContentSize.height ?? 300)
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
 }

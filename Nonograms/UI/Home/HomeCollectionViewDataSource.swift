@@ -10,12 +10,12 @@ import UIKit
 
 final class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     
-    var puzzles: [IntPairStruct: [PuzzleClues]] = [:]
+    var puzzleLoader = PuzzleLoader()
     var selection: (Int, Int) = (5, 5)
 
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        puzzles[selection]?.count ?? 17
+        puzzleLoader.getPuzzles(for: section).count
     }
     
     func collectionView(_ collectionView: UICollectionView,

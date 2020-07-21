@@ -24,21 +24,21 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="14" id="fcz-zL-DWQ" customClass="HomeCollectionViewFlowLayout" customModule="Paint_a_Pic" customModuleProvider="target">
-                                    <size key="itemSize" width="84" height="84"/>
+                                    <size key="itemSize" width="60" height="60"/>
                                     <size key="headerReferenceSize" width="50" height="319"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="17" minY="17" maxX="17" maxY="17"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionViewCell" id="D8P-ZC-tpa">
-                                        <rect key="frame" x="17" y="336" width="84" height="84"/>
+                                        <rect key="frame" x="17" y="336" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eG0-st-hjv">
-                                            <rect key="frame" x="0.0" y="0.0" width="84" height="84"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="s9N-R8-BUV">
-                                                    <rect key="frame" x="12" y="12.5" width="60" height="58.5"/>
+                                                    <rect key="frame" x="12" y="12.5" width="36" height="34.5"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -57,14 +57,14 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DbO-be-vJc">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="259.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="236"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Number 9" translatesAutoresizingMaskIntoConstraints="NO" id="4cs-F0-OAv">
-                                                    <rect key="frame" x="16" y="16" width="382" height="227.5"/>
+                                                    <rect key="frame" x="16" y="16" width="382" height="204"/>
                                                     <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e00-Mp-mej" customClass="SquovalButton" customModule="Paint_a_Pic" customModuleProvider="target">
-                                                    <rect key="frame" x="327" y="201.5" width="71" height="38"/>
+                                                    <rect key="frame" x="327" y="178" width="71" height="38"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -86,10 +86,10 @@
                                             </constraints>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="761" verticalCompressionResistancePriority="800" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="12S-qk-soM">
-                                            <rect key="frame" x="18" y="285.5" width="380" height="20.5"/>
+                                            <rect key="frame" x="18" y="262" width="380" height="44"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="800" text="SELECT LEVEL" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HSR-ie-JXJ" customClass="AccessibleLabel" customModule="Paint_a_Pic" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="277" height="20.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="277" height="44"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="32"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -97,21 +97,21 @@
                                                         <userDefinedRuntimeAttribute type="string" keyPath="fontTextStyle" value="title"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="761" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o5Y-wS-rMY" customClass="SquovalButton" customModule="Paint_a_Pic" customModuleProvider="target">
-                                                    <rect key="frame" x="292" y="0.0" width="88" height="20.5"/>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="761" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o5Y-wS-rMY">
+                                                    <rect key="frame" x="292" y="0.0" width="88" height="38"/>
                                                     <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <inset key="contentEdgeInsets" minX="16" minY="10" maxX="16" maxY="10"/>
                                                     <state key="normal" title="05 x 05"/>
                                                     <connections>
-                                                        <action selector="openMenu:" destination="mvl-9O-QEJ" eventType="touchUpInside" id="jTy-4j-bJ0"/>
+                                                        <action selector="toggleMenu:" destination="mvl-9O-QEJ" eventType="touchUpInside" id="jTy-4j-bJ0"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>
-                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Yqj-Ys-8d2">
-                                            <rect key="frame" x="310" y="306" width="88" height="128"/>
+                                        <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Yqj-Ys-8d2">
+                                            <rect key="frame" x="310" y="300" width="88" height="128"/>
                                             <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="128" id="bqg-Iv-lj3"/>
@@ -136,8 +136,10 @@
                                         <outlet property="imageView" destination="4cs-F0-OAv" id="ekm-MU-wyg"/>
                                         <outlet property="selectLevelLabel" destination="HSR-ie-JXJ" id="ZpU-CF-v1K"/>
                                         <outlet property="selectionButton" destination="o5Y-wS-rMY" id="KF8-I6-baM"/>
+                                        <outlet property="selectionTableView" destination="Yqj-Ys-8d2" id="2Tq-kr-Nv1"/>
                                         <outlet property="spacingConstraint" destination="cRZ-XP-Ugj" id="q6y-7w-HPX"/>
                                         <outlet property="stackView" destination="12S-qk-soM" id="SvT-7h-HQq"/>
+                                        <outlet property="tableViewHeightConstraint" destination="bqg-Iv-lj3" id="Drc-rU-dtF"/>
                                     </connections>
                                 </collectionReusableView>
                             </collectionView>
@@ -157,11 +159,22 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="wmv-dH-VXd" id="ghs-SI-Wqk"/>
+                        <segue destination="Z7F-6a-Y0A" kind="show" identifier="showPuzzle" id="cTd-QK-c9B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6rL-lv-yDq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="111.59420289855073" y="172.76785714285714"/>
+        </scene>
+        <!--Puzzle-->
+        <scene sceneID="sTO-uC-s0D">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Puzzle" id="Z7F-6a-Y0A" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="1YD-oR-hgT"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dYz-Tj-S8n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="630" y="173"/>
         </scene>
     </scenes>
     <resources>
