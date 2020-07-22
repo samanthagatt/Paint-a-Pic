@@ -46,8 +46,8 @@ final class PuzzleListViewController: UIViewController {
     }
     
     @objc private func completePuzzle(_ notif: Notification) {
-        guard let index = notif.object as? Int else { return }
-        puzzleDataSource.puzzles[index].isComplete = true
+//        guard let index = notif.object as? Int else { return }
+//        puzzleDataSource.puzzles[index].isComplete = true
         puzzleCollectionView.reloadData()
         do {
             let data = try JSONEncoder().encode(puzzleDataSource.puzzles)
@@ -67,7 +67,7 @@ final class PuzzleListViewController: UIViewController {
             title: "Reset",
             style: .destructive
         ) { _ in
-            self.puzzleDataSource.puzzles.mapInPlace { $0.isComplete = false }
+//            self.puzzleDataSource.puzzles.mapInPlace { $0.isComplete = false }
             do {
                 
                 let data = try JSONEncoder().encode(self.puzzleDataSource.puzzles)

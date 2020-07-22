@@ -46,6 +46,7 @@
 		D69686A624C5E9B100888D7B /* HomeCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69686A524C5E9B100888D7B /* HomeCollectionViewDelegate.swift */; };
 		D69686A824C664AF00888D7B /* UILabel+HeightAndWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69686A724C664AE00888D7B /* UILabel+HeightAndWidth.swift */; };
 		D69686AA24C6707300888D7B /* PuzzleLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69686A924C6707200888D7B /* PuzzleLoader.swift */; };
+		D69686AF24C79B0400888D7B /* PuzzleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69686AE24C79B0400888D7B /* PuzzleData.swift */; };
 		D6FCA20824BF7A2F007E73EC /* Notification+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20724BF7A2F007E73EC /* Notification+Names.swift */; };
 		D6FCA20A24BF7D0A007E73EC /* UIViewController+alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20924BF7D0A007E73EC /* UIViewController+alert.swift */; };
 		D6FCA20C24BF842E007E73EC /* BackNavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FCA20B24BF842E007E73EC /* BackNavButton.swift */; };
@@ -94,6 +95,7 @@
 		D69686A524C5E9B100888D7B /* HomeCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		D69686A724C664AE00888D7B /* UILabel+HeightAndWidth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+HeightAndWidth.swift"; sourceTree = "<group>"; };
 		D69686A924C6707200888D7B /* PuzzleLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleLoader.swift; sourceTree = "<group>"; };
+		D69686AE24C79B0400888D7B /* PuzzleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleData.swift; sourceTree = "<group>"; };
 		D6FCA20724BF7A2F007E73EC /* Notification+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Names.swift"; sourceTree = "<group>"; };
 		D6FCA20924BF7D0A007E73EC /* UIViewController+alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+alert.swift"; sourceTree = "<group>"; };
 		D6FCA20B24BF842E007E73EC /* BackNavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackNavButton.swift; sourceTree = "<group>"; };
@@ -123,21 +125,22 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		D62849F72493E98C0053F7D6 /* Puzzle Logic */ = {
+		D62849F72493E98C0053F7D6 /* Puzzle */ = {
 			isa = PBXGroup;
 			children = (
 				D62849ED24927DF60053F7D6 /* PuzzleValidator.swift */,
 				D62849F12492892F0053F7D6 /* PuzzleClues.swift */,
 				D68C2BB024A2EC8000270031 /* PuzzleMaker.swift */,
 				D69686A924C6707200888D7B /* PuzzleLoader.swift */,
+				D69686AE24C79B0400888D7B /* PuzzleData.swift */,
 			);
-			path = "Puzzle Logic";
+			path = Puzzle;
 			sourceTree = "<group>";
 		};
 		D62849F82493E9E20053F7D6 /* Utils and Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				D62849F72493E98C0053F7D6 /* Puzzle Logic */,
+				D62849F72493E98C0053F7D6 /* Puzzle */,
 				D62849F52492F96E0053F7D6 /* Set+Toggle.swift */,
 				D62849EF249286520053F7D6 /* FixedLengthArray.swift */,
 				D6832B7A24A50BDB00DDC90D /* TextStyle.swift */,
@@ -335,6 +338,7 @@
 			files = (
 				D62849F42492AD510053F7D6 /* PuzzleSquare.swift in Sources */,
 				D696868E24C099C000888D7B /* UIStackView+convenienceInit.swift in Sources */,
+				D69686AF24C79B0400888D7B /* PuzzleData.swift in Sources */,
 				D62849EE24927DF60053F7D6 /* PuzzleValidator.swift in Sources */,
 				D696869A24C3891D00888D7B /* HomeCollectionViewFlowLayout.swift in Sources */,
 				D696869424C359E600888D7B /* PuzzleSquareFillState.swift in Sources */,

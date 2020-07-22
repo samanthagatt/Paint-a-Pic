@@ -21,7 +21,6 @@ final class HomeCollectionViewHeader: UICollectionReusableView {
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     
     private var allCorners: Bool = true
-    
     private var startingImageHeight: CGFloat = 180
     
     override var intrinsicContentSize: CGSize {

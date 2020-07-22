@@ -32,8 +32,8 @@ final class PuzzleListDataSource: NSObject, UICollectionViewDataSource {
             for: indexPath
         ) as? PuzzleListCell else { return UICollectionViewCell() }
         cell.numberLabel.text = "\(indexPath.item + 1)"
-        let puzzle = puzzles[indexPath.item]
-        cell.isComplete = puzzle.isComplete
+//        let puzzle = puzzles[indexPath.item]
+//        cell.isComplete = puzzle.isComplete
         return cell
     }
 }
