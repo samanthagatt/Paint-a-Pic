@@ -1,8 +1,11 @@
 # Paint a Pic
-An app for solving fun picture puzzles https://en.wikipedia.org/wiki/Nonogram
+A fun puzzle game where you reveal a pixelated picture by logically filling in squares on a grid based on the puzzle's rules<br>
+[Nonogram Wiki](https://en.wikipedia.org/wiki/Nonogram)
+
+[![Download on the App Store](downloadOnTheAppStore.png)](https://apps.apple.com/us/app/paint-a-pic/id1523554689 "Download on the App Store")
 
 ## Demo
-[![Paint a Pic demo](http://img.youtube.com/vi/3SHUtTX1PpU/0.jpg)](https://youtu.be/3SHUtTX1PpU "Paint a Pic demo")
+[![Paint a Pic demo](http://img.youtube.com/vi/hYEzuq8VLZ4/0.jpg)](https://youtu.be/hYEzuq8VLZ4 "Paint a Pic demo")
 
 ## Medium Articles
 ### Nonograms and My Software Development Journey
