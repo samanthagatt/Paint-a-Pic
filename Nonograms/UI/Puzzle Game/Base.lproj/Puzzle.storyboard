@@ -18,13 +18,19 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HKE-da-qfb" customClass="PuzzleView" customModule="Paint_a_Pic" customModuleProvider="target">
                                 <rect key="frame" x="24" y="68" width="366" height="701"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H92-fc-LmB">
-                                        <rect key="frame" x="312" y="8" width="46" height="46"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H92-fc-LmB" customClass="SquovalButton" customModule="Paint_a_Pic" customModuleProvider="target">
+                                        <rect key="frame" x="310" y="8" width="48" height="48"/>
+                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
+                                            <constraint firstAttribute="width" constant="48" id="Aou-DQ-SWm"/>
                                             <constraint firstAttribute="width" secondItem="H92-fc-LmB" secondAttribute="height" multiplier="1:1" id="Mym-k9-nui"/>
                                         </constraints>
-                                        <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
-                                        <state key="normal" image="gear" catalog="system"/>
+                                        <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                        <state key="normal" image="list.dash" catalog="system"/>
+                                        <connections>
+                                            <action selector="alertMenu:" destination="BYZ-38-t0r" eventType="touchUpInside" id="k0O-jH-It5"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -77,6 +83,7 @@
                     <connections>
                         <outlet property="exButton" destination="ljH-e9-5Qn" id="hes-7Z-jBA"/>
                         <outlet property="fillButton" destination="6Gd-f9-2jX" id="4Nr-nA-kH5"/>
+                        <outlet property="menuButton" destination="H92-fc-LmB" id="yaW-Vr-8bc"/>
                         <outlet property="puzzleView" destination="HKE-da-qfb" id="Dxl-Iv-XQR"/>
                     </connections>
                 </viewController>
@@ -86,7 +93,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="gear" catalog="system" width="128" height="119"/>
+        <image name="list.dash" catalog="system" width="128" height="85"/>
         <image name="square.fill" catalog="system" width="128" height="114"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
     </resources>

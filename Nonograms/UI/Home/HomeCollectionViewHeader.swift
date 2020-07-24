@@ -42,6 +42,7 @@ final class HomeCollectionViewHeader: UICollectionReusableView {
         
     }
     @IBAction func toggleMenu(_ sender: Any) {
+        /*
         let shouldHide = !selectionTableView.isHidden
         tableViewHeightConstraint.constant = shouldHide ? 128 : 0
         selectionTableView.isHidden = false
@@ -57,6 +58,7 @@ final class HomeCollectionViewHeader: UICollectionReusableView {
                 self.roundSelectionButton()
             }
         })
+        */
     }
     
     private func roundSelectionButton() {

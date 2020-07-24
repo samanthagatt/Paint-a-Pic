@@ -302,4 +302,8 @@ final class PuzzleView: UIView {
     func filledSquaresAsClues() -> PuzzleClues {
         return maker.getClues()
     }
+    func clear() {
+        setupGrid()
+        validator = PuzzleValidator(from: clues)
+    }
 }

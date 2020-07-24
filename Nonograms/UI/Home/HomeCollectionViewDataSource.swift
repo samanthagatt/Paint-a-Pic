@@ -10,24 +10,25 @@ import UIKit
 
 final class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     
-    private var puzzleLoader = PuzzleLoader()
-    private var selection = 0
-    
-    func changeSelection(to newSelection: Int) {
-        selection = newSelection
-    }
-
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        puzzleLoader.getPuzzles(for: selection)?.count ?? 0
+        guard let collectionView = collectionView as? HomeCollectionView else {
+            return 0
+        }
+        return collectionView.progressTracker
+            .getPuzzles(for: collectionView.selection)?.count ?? 0
     }
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: "collectionViewCell",
-                                 for: indexPath)
+        guard let collectionView = collectionView as? HomeCollectionView,
+            let cell = collectionView
+                .dequeueReusableCell(withReuseIdentifier: "collectionViewCell",
+                                     for: indexPath) as? HomeCollectionViewCell
+            else { return UICollectionViewCell() }
         cell.layer.cornerRadius = min(cell.frame.height, cell.frame.width) / 5
+        cell.isLocked = collectionView.progressTracker
+            .getState(for: indexPath.item, in: collectionView.selection) == .locked
         return cell
     }
     func collectionView(_ collectionView: UICollectionView,

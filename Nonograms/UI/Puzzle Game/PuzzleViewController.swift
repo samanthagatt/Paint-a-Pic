@@ -12,25 +12,23 @@ import Combine
 final class PuzzleViewController: UIViewController {
     /// Set of all subscriptions. Each will be canceled on deallocation.
     private var subscriptions = Set<AnyCancellable>()
-    /// Bool to keep track if the puzzle has been edited
-    /// Should be reset once puzzle has been solved
-    private var hasBeenEdited = false
     /// Index of current puzzle
-    var puzzleIndex: Int?
-    /// Clues for the current puzzle
-    var puzzleClues: PuzzleClues? {
+    var puzzleIndex: Int? {
         didSet {
-            if let clues = puzzleClues {
+            if let i = puzzleIndex, let clues = puzzles?[i] {
                 loadViewIfNeeded()
                 puzzleView.clues = clues
-                title = clues.name.capitalized
             }
         }
     }
-
-    @IBOutlet private weak var puzzleView: PuzzleView!
+    /// Clues for the current puzzle
+    var puzzles: [PuzzleClues]?
+    var shouldShowNext: () -> Bool = { false }
+    
+    @IBOutlet weak var puzzleView: PuzzleView!
     @IBOutlet private weak var exButton: UIButton!
     @IBOutlet private weak var fillButton: UIButton!
+    @IBOutlet weak var menuButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,26 +37,16 @@ final class PuzzleViewController: UIViewController {
         
         // Subscribe to updates to see if puzzle has been solved
         puzzleView.puzzleValidity.sink { [weak self] isValid in
-            guard let self = self else { return }
-            if !self.hasBeenEdited { self.hasBeenEdited = true }
-            if isValid {
-                NotificationCenter.default.post(name: .puzzleSolved,
-                                                object: self.puzzleIndex)
-                self.alert(title: "Yay!",
-                           message: "You solved the puzzle :)",
-                           dismissTitle: "Okay")
-                self.hasBeenEdited = false
-            }
+            if isValid { self?.alertPuzzleCompleted() }
         }.store(in: &subscriptions)
         puzzleView.squaresTooSmall.sink { [weak self] isTooSmall in
-            guard let self = self else { return }
             if isTooSmall {
-                self.alert(title: "Uh oh",
-                           message: """
-                           It looks like your device might be too small.\
-                           Tapping the correct square might be harder than normal
-                           """,
-                           dismissTitle: "Okay")
+                self?.alert(title: "Uh oh",
+                            message: """
+                            It looks like your device might be too small.\
+                            Tapping the correct square might be harder than normal
+                            """,
+                            dismissTitle: "Okay")
             }
         }.store(in: &subscriptions)
     }
@@ -70,32 +58,14 @@ final class PuzzleViewController: UIViewController {
         fillButton.layer.borderWidth = 2
         fillButton.layer.cornerRadius = 5
         
-//        let saveButton = UIBarButtonItem(barButtonSystemItem: .save,
-//                                         target: self,
-//                                         action: #selector(saveImage))
-//        navigationItem.setRightBarButton(saveButton, animated: true)
-    }
-    
-    @objc private func back() {
-        if hasBeenEdited {
-            alert(title: "Go back?",
-                message: """
-                You've already started this puzzle. \
-                Are you sure you want to go back? \
-                All your progress will be lost.
-                """,
-                actions: [
-                    UIAlertAction(title: "Cancel", style: .cancel),
-                    UIAlertAction(title: "Go Back",
-                                  style: .destructive) { _ in
-                        self.navigationController?
-                            .popViewController(animated: true)
-                    }
-                ]
-            )
-        } else {
-            self.navigationController?.popViewController(animated: true)
-        }
+        menuButton.contentVerticalAlignment = .fill
+        menuButton.contentHorizontalAlignment = .fill
+        menuButton.imageView?.contentMode = .scaleAspectFit
+        
+        //  let saveButton = UIBarButtonItem(barButtonSystemItem: .save,
+        //                                   target: self,
+        //                                   action: #selector(saveImage))
+        //  navigationItem.setRightBarButton(saveButton, animated: true)
     }
     
     @IBAction func setExMode(_ sender: Any) {
@@ -113,7 +83,7 @@ final class PuzzleViewController: UIViewController {
         guard let image = puzzleView.image else { return }
         do {
             let docsDir = FileManager.default.urls(for: .documentDirectory,
-                                                  in: .userDomainMask)[0]
+                                                   in: .userDomainMask)[0]
             let path = docsDir.appendingPathComponent("\(title ?? "no title").png")
             print(path)
             try image.pngData()?.write(to: path)
@@ -122,5 +92,38 @@ final class PuzzleViewController: UIViewController {
                   message: "An error ocurred. Your puzzle has not been saved.",
                   dismissTitle: "Okay")
         }
+    }
+    func alertPuzzleCompleted() {
+        guard let i = puzzleIndex, let puzzles = puzzles else { return }
+        let message = i < puzzles.count ? "You solved the puzzle :)" :
+            "You completed all the puzzles in this collection :)"
+        let title = i < puzzles.count ? "Next" : "Exit"
+        let handler = i < puzzles.count ? { (_: UIAlertAction) in
+            self.puzzleIndex = i + 1
+        } : { _ in
+            self.dismiss(animated: true)
+        }
+        alert(title: "Yay!",
+              message: message,
+              actions: [
+                UIAlertAction(title: "Okay", style: .cancel),
+                UIAlertAction(title: title, style: .default,  handler: handler)
+            ]
+        )
+    }
+    @IBAction func alertMenu(_ sender: UIButton) {
+        alert(title: "Menu", preferredStyle: .actionSheet, source: sender,
+              animated: true, actions: [
+                UIAlertAction(title: "Cancel", style: .cancel),
+                UIAlertAction(title: "Quit", style: .default,
+                              handler: { _ in self.dismiss(animated: true) }),
+                UIAlertAction(title: "Restart", style: .default,
+                              handler: { _ in self.puzzleView.clear() }),
+                shouldShowNext() ?
+                    UIAlertAction(title: "Next", style: .default,
+                                  handler: { _ in self.puzzleIndex =
+                                    (self.puzzleIndex ?? 0) + 1 }) : nil
+                ].compactMap() { $0 }
+        )
     }
 }

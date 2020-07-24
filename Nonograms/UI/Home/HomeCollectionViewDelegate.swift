@@ -21,7 +21,16 @@ class HomeCollectionViewDelegate: NSObject, UICollectionViewDelegateFlowLayout {
         return CGSize(width: collectionView.frame.width,
                       height: headerView?.intrinsicContentSize.height ?? 300)
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        guard let collectionView = collectionView as? HomeCollectionView else {
+            return
+        }
+        if collectionView.progressTracker
+            .getState(for: indexPath.item,
+                      in: collectionView.selection) != .locked {
+            collectionView.parentVC()?.performSegue(withIdentifier: "showPuzzle",
+                                                    sender: nil)
+        }
     }
 }

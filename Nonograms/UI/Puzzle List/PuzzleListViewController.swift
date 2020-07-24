@@ -93,13 +93,13 @@ final class PuzzleListViewController: UIViewController {
         ])
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Self.solveSegueID {
-            guard let destVC = segue.destination as? PuzzleViewController,
-                let indexPath = puzzleCollectionView
-                    .indexPathsForSelectedItems?.first else { return }
-            destVC.puzzleClues = puzzleDataSource.puzzles[indexPath.item]
-            destVC.puzzleIndex = indexPath.item
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == Self.solveSegueID {
+//            guard let destVC = segue.destination as? PuzzleViewController,
+//                let indexPath = puzzleCollectionView
+//                    .indexPathsForSelectedItems?.first else { return }
+//            destVC.puzzleClues = puzzleDataSource.puzzles[indexPath.item]
+//            destVC.puzzleIndex = indexPath.item
+//        }
+//    }
 }
