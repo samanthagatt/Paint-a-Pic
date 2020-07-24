@@ -1,5 +1,5 @@
 # Paint a Pic
-A fun puzzle game where you reveal a pixelated picture by logically filling in squares on a grid based on the puzzle's rules<br>
+A fun puzzle game where you reveal a pixelated picture by logically filling in squares on a grid based on the puzzle's clues<br>
 [Nonogram Wiki](https://en.wikipedia.org/wiki/Nonogram)
 
 [![Download on the App Store](downloadOnTheAppStore.png)](https://apps.apple.com/us/app/paint-a-pic/id1523554689 "Download on the App Store")
