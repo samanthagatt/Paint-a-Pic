@@ -19,10 +19,7 @@ final class PuzzleSquare: UIView {
     private(set) var fillState: PuzzleSquareFillState = .empty {
         didSet { updateFill() }
     }
-    /// Closure called when square view is tapped
-    /// - Returns: Success of closure as a `Bool`
-    var wasTapped: (Int, PuzzleSquareFillState)
-        -> PuzzleFillMode = { _,_ in .fill }
+    private var beforeTempFillState: PuzzleSquareFillState?
     
     private let exImageView: UIImageView = {
         let imageView = UIImageView()
@@ -43,15 +40,12 @@ final class PuzzleSquare: UIView {
     convenience init(
         tag: Int,
         emptyColor: UIColor = .clear,
-        filledColor: UIColor = .label,
-        wasTapped: @escaping (Int, PuzzleSquareFillState)
-            -> PuzzleFillMode = { _,_ in .fill }
+        filledColor: UIColor = .label
     ) {
         self.init()
         self.tag = tag
         self.emptyColor = emptyColor
         self.filledColor = filledColor
-        self.wasTapped = wasTapped
     }
     /// Handles setting up view when initialized
     private func sharedInit() {
@@ -61,13 +55,6 @@ final class PuzzleSquare: UIView {
         backgroundColor = emptyColor
         layer.borderColor = UIColor.label.cgColor
         layer.borderWidth = 1
-        
-        // Add tap gesture
-        let tapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(handleTap(_:))
-        )
-        addGestureRecognizer(tapGesture)
         
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -81,11 +68,6 @@ final class PuzzleSquare: UIView {
         ])
     }
     
-    /// Toggles background of view that was tapped
-    @objc private func handleTap(_ sender: UITapGestureRecognizer) {
-        let mode = wasTapped(tag, fillState)
-        fillState.setNewState(for: mode)
-    }
     private func updateFill() {
         switch fillState {
         case .empty:
@@ -98,5 +80,23 @@ final class PuzzleSquare: UIView {
             backgroundColor = emptyColor
             exImageView.isHidden = false
         }
+    }
+    
+    func setState(for mode: PuzzleFillMode) {
+        fillState.setNewState(for: mode)
+    }
+    func tempFill(for mode: PuzzleTempFillMode) -> Bool {
+        guard let temp = fillState.getNewState(for: mode) else { return false }
+        beforeTempFillState = fillState
+        fillState = temp
+        return true
+    }
+    func cancelTempFill() {
+        guard let beforeTemp = beforeTempFillState else { return }
+        fillState = beforeTemp
+        beforeTempFillState = nil
+    }
+    func confirmTempFill() {
+        beforeTempFillState = nil
     }
 }
