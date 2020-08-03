@@ -16,13 +16,10 @@ final class PuzzleSquare: UIView {
     /// Color to assign background when square is filled
     private var filledColor: UIColor = .label
     /// Enum representing if the square is filled in, empty, or marked with an `x`
-    private(set) var fillState: PuzzleSquareFillState = .empty {
+    var fillState: PuzzleSquareFillState = .empty {
         didSet { updateFill() }
     }
-    /// Closure called when square view is tapped
-    /// - Returns: Success of closure as a `Bool`
-    var wasTapped: (Int, PuzzleSquareFillState)
-        -> PuzzleFillMode = { _,_ in .fill }
+    private var stateBeforeTemp: PuzzleSquareFillState?
     
     private let exImageView: UIImageView = {
         let imageView = UIImageView()
@@ -43,15 +40,12 @@ final class PuzzleSquare: UIView {
     convenience init(
         tag: Int,
         emptyColor: UIColor = .clear,
-        filledColor: UIColor = .label,
-        wasTapped: @escaping (Int, PuzzleSquareFillState)
-            -> PuzzleFillMode = { _,_ in .fill }
+        filledColor: UIColor = .label
     ) {
         self.init()
         self.tag = tag
         self.emptyColor = emptyColor
         self.filledColor = filledColor
-        self.wasTapped = wasTapped
     }
     /// Handles setting up view when initialized
     private func sharedInit() {
@@ -62,12 +56,7 @@ final class PuzzleSquare: UIView {
         layer.borderColor = UIColor.label.cgColor
         layer.borderWidth = 1
         
-        // Add tap gesture
-        let tapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(handleTap(_:))
-        )
-        addGestureRecognizer(tapGesture)
+        
         
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -81,11 +70,7 @@ final class PuzzleSquare: UIView {
         ])
     }
     
-    /// Toggles background of view that was tapped
-    @objc private func handleTap(_ sender: UITapGestureRecognizer) {
-        let mode = wasTapped(tag, fillState)
-        fillState.setNewState(for: mode)
-    }
+    
     private func updateFill() {
         switch fillState {
         case .empty:
@@ -98,5 +83,25 @@ final class PuzzleSquare: UIView {
             backgroundColor = emptyColor
             exImageView.isHidden = false
         }
+    }
+    
+    func tempFill(mode: TempFillMode) {
+        // If it's already temporarily filled then bail
+        guard stateBeforeTemp == nil else { return }
+        // If there'd be no change then bail
+        guard let newState = fillState.getStateAfterTempFill(mode) else { return }
+        stateBeforeTemp = fillState
+        fillState = newState
+    }
+    func shouldValidate() -> Bool {
+        guard let lastState = stateBeforeTemp else { return false }
+        return (lastState == .filled && fillState == .empty) ||
+            (lastState == .empty && fillState == .filled)
+    }
+    func dismissTemp() {
+        guard let lastState = stateBeforeTemp else { return }
+        // Reset
+        fillState = lastState
+        stateBeforeTemp = nil
     }
 }

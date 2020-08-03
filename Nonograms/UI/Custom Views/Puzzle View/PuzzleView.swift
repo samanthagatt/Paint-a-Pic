@@ -104,6 +104,106 @@ final class PuzzleView: UIView {
         gridStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
     }()
     
+    private var border: UIView = {
+        let border = UIView()
+        border.translatesAutoresizingMaskIntoConstraints = false
+        border.backgroundColor = .clear
+        border.layer.borderColor = UIColor.label.cgColor
+        border.layer.borderWidth = 2
+        return border
+    }()
+    
+    private var startingSquareIndices: TwoIntTuple?
+    private var lastSquareIndices: TwoIntTuple?
+    private var lastAxis: UIAxis?
+    private var tempFilledIndices: Set<TwoIntTuple> = []
+    private var tempFillMode: TempFillMode?
+    
+    private func getSquare(at panPoint: CGPoint) -> PuzzleSquare? {
+        let indices = getSquareIndices(at: panPoint)
+        let stackView = gridStackView.arrangedSubviews[indices.int0]
+            as? UIStackView
+        return stackView?.arrangedSubviews[indices.int1] as? PuzzleSquare
+    }
+    private func getSquare(from indices: TwoIntTuple) -> PuzzleSquare? {
+        let stackView = gridStackView.arrangedSubviews[indices.int0] as? UIStackView
+        return stackView?.arrangedSubviews[indices.int1] as? PuzzleSquare
+    }
+    private func getSquareIndices(at point: CGPoint) -> TwoIntTuple {
+        let squareSize = referenceSquare?.frame.width ?? 1
+        let x = min(max(point.x, 0), gridStackView.frame.width)
+        let y = min(max(point.y, 0), gridStackView.frame.height)
+        let row = Int(x / squareSize)
+        let col = Int(y / squareSize)
+        return TwoIntTuple(col, row)
+    }
+    
+    @objc private func pan(_ sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            let panPoint = sender.location(in: gridStackView)
+            let indices = getSquareIndices(at: panPoint)
+            let square = getSquare(from: indices)
+            let mode = square?.fillState.getTempFillMode(fillMode)
+            guard let tempMode = mode else { return }
+            startingSquareIndices = indices
+            tempFilledIndices.insert(indices)
+            tempFillMode = mode
+//            square?.backgroundColor = .red
+            square?.tempFill(mode: tempMode)
+        case .changed:
+            let panPoint = sender.location(in: gridStackView)
+            let indices = getSquareIndices(at: panPoint)
+            let square = getSquare(from: indices)
+            guard let tempMode = tempFillMode else { return }
+            guard !tempFilledIndices.contains(indices) else { return }
+            tempFilledIndices.insert(indices)
+//            square?.backgroundColor = .red
+            square?.tempFill(mode: tempMode)
+            /*
+            let axis: UIAxis = max(panPoint.x, panPoint.y) == panPoint.x ?
+                .horizontal : .vertical
+            let indices = getSquareIndices(at: panPoint)
+            guard let lastAxis = lastAxis,
+                let lastIndices = lastSquareIndices,
+                lastIndices != indices else { return }
+            if lastAxis == axis {
+                switch axis {
+                case .horizontal:
+                    return
+                case .vertical:
+                    return
+                default:
+                    return
+                }
+            } else {
+                // delete all the others and start on next axis
+            }
+            */
+        case .ended:
+            for indicies in tempFilledIndices {
+                guard let square = getSquare(from: indicies) else { continue }
+                if square.shouldValidate() {
+                    let isValid = validator.toggle(square: square.tag)
+                    self.puzzleValidity.send(isValid)
+                }
+            }
+            startingSquareIndices = nil
+            lastSquareIndices = nil
+            lastAxis = nil
+            tempFillMode = nil
+        case .cancelled, .failed:
+            for indicies in tempFilledIndices {
+                getSquare(from: indicies)?.dismissTemp()
+            }
+        default:
+            startingSquareIndices = nil
+            lastSquareIndices = nil
+            lastAxis = nil
+            tempFillMode = nil
+        }
+    }
+    
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -123,8 +223,13 @@ final class PuzzleView: UIView {
     
     /// Makes sure stack views are added to view and the puzzle grid is rendered
     private func sharedInit() {
-        addSubviews(gridStackView, colCluesStackView, rowCluesStackView)
+        addSubviews(border, gridStackView, colCluesStackView, rowCluesStackView)
         setupPuzzle()
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(pan))
+        panGesture.maximumNumberOfTouches = 1
+        gridStackView.addGestureRecognizer(panGesture)
+        
         NSLayoutConstraint.activate([
             // Center grid in parent view
             centerXConstraint,
@@ -145,6 +250,11 @@ final class PuzzleView: UIView {
             colCluesStackView.bottomAnchor
                 .constraint(equalTo: gridStackView.topAnchor,
                             constant: -cluesToGridPadding),
+            
+            border.topAnchor.constraint(equalTo: gridStackView.topAnchor),
+            border.bottomAnchor.constraint(equalTo: gridStackView.bottomAnchor),
+            border.leadingAnchor.constraint(equalTo: gridStackView.leadingAnchor),
+            border.trailingAnchor.constraint(equalTo: gridStackView.trailingAnchor),
         ])
     }
     
@@ -276,20 +386,13 @@ final class PuzzleView: UIView {
             for row in 1...clues.colClues.count {
                 /// Unique tag for each square (starting with 1)
                 let number = row + (clues.colClues.count * col)
-                let square = PuzzleSquare(tag: number) {
-                    [weak self] squareTag, fillState in
-                    guard let self = self else { return .fill }
-                    if self.isForSolving {
-                        if self.fillMode == .fill && fillState != .exed {
-                            let isValid = self.validator
-                                .toggle(square: squareTag)
-                            self.puzzleValidity.send(isValid)
-                        }
-                    } else {
-                        self.maker.filled.toggle(squareTag)
-                    }
-                    return self.fillMode
-                }
+                let square = PuzzleSquare(tag: number)
+                // Add tap gesture
+//                let tapGesture = UITapGestureRecognizer(
+//                    target: self,
+//                    action: #selector(handleTap(_:))
+//                )
+//                square.addGestureRecognizer(tapGesture)
                 if col == 0 && row == 1 { referenceSquare = square }
                 // Add square to horizontal stack view
                 stackView.addArrangedSubview(square)
@@ -299,6 +402,21 @@ final class PuzzleView: UIView {
         }
     }
     
+    /// Toggles background of view that was tapped
+    @objc private func handleTap(_ sender: UITapGestureRecognizer) {
+        guard let square = sender.view as? PuzzleSquare else { return }
+        if self.isForSolving {
+            if self.fillMode == .fill && square.fillState != .exed {
+                let isValid = self.validator.toggle(square: square.tag)
+                self.puzzleValidity.send(isValid)
+            }
+        } else {
+            self.maker.filled.toggle(square.tag)
+        }
+        square.fillState.setNewState(for: fillMode)
+    }
+    
+    // MARK: - Public Methods
     func filledSquaresAsClues() -> PuzzleClues {
         return maker.getClues()
     }
