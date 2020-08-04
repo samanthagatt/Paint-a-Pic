@@ -152,15 +152,21 @@ final class PuzzleView: UIView {
     private func getIndices(at point: CGPoint) -> TwoIntTuple {
         let width = (gridStackView.arrangedSubviews.first as? UIStackView)?
             .arrangedSubviews.first?.frame.size.width ?? 1
-        let x = min(max(point.x, 0), gridStackView.frame.width)
-        let y = min(max(point.y, 0), gridStackView.frame.height)
+        let x = min(max(point.x, 0), gridStackView.frame.width - 1)
+        let y = min(max(point.y, 0), gridStackView.frame.height - 1)
         let row = Int(x / width)
         let col = Int(y / width)
         return TwoIntTuple(col, row)
     }
     private func getSquare(from indices: TwoIntTuple) -> PuzzleSquare? {
+        // Just in case
+        guard indices.int0 < gridStackView.arrangedSubviews.count
+            else { return nil }
         let stackView = gridStackView.arrangedSubviews[indices.int0]
             as? UIStackView
+        // Just in case
+        guard indices.int1 < stackView?.arrangedSubviews.count ?? 0
+            else { return nil }
         return stackView?.arrangedSubviews[indices.int1] as? PuzzleSquare
     }
     
@@ -172,26 +178,25 @@ final class PuzzleView: UIView {
         gridStackView.addGestureRecognizer(tap)
         gridStackView.addGestureRecognizer(pan)
     }
-    func toggle(square: PuzzleSquare) {
+    func toggle(square: PuzzleSquare) -> Bool {
         if self.isForSolving {
             // Make sure user is filling/erasing squares and the square isn't already exed
-            guard fillMode == .fill && square.fillState != .exed else { return }
+            guard fillMode == .fill && square.fillState != .exed else { return false }
             // Toggle square
-            let isValid = self.validator.toggle(square: square.tag)
-            // Notify listeners of the new validity
-            self.puzzleValidity.send(isValid)
+            return self.validator.toggle(square: square.tag)
         } else {
             self.maker.filled.toggle(square.tag)
+            return false
         }
     }
     @objc func onTap(_ sender: UITapGestureRecognizer) {
         let location = getIndices(at: sender.location(in: gridStackView))
         guard let square = getSquare(from: location) else { return }
-        toggle(square: square)
+        self.puzzleValidity.send(toggle(square: square))
         // Make sure square updates its UI
         square.setState(for: fillMode)
     }
-    var tempFilled: [TwoIntTuple] = []
+    var tempFilled: Set<TwoIntTuple> = []
     var tempMode: PuzzleTempFillMode?
     @objc func onPan(_ sender: UIPanGestureRecognizer) {
         switch sender.state {
@@ -200,21 +205,24 @@ final class PuzzleView: UIView {
             guard let square = getSquare(from: location) else { return }
             tempMode = square.fillState.getTempMode(from: fillMode)
             guard let tempMode = tempMode else { return }
-            if square.tempFill(for: tempMode) && !tempFilled.contains(location) {
-                tempFilled.append(location)
+            if square.tempFill(for: tempMode) {
+                tempFilled.insert(location)
             }
         case .changed:
             let location = getIndices(at: sender.location(in: gridStackView))
             guard let square = getSquare(from: location),
                 let tempMode = tempMode else { return }
             if square.tempFill(for: tempMode) {
-                tempFilled.append(location)
+                tempFilled.insert(location)
             }
         case .ended:
-            for indices in tempFilled {
+            for (i, indices) in tempFilled.enumerated() {
                 guard let square = getSquare(from: indices) else { continue }
-                toggle(square: square)
+                let isValid = toggle(square: square)
                 square.confirmTempFill()
+                if i == tempFilled.count - 1 {
+                    self.puzzleValidity.send(isValid)
+                }
             }
             tempFilled = []
             tempMode = nil
@@ -232,11 +240,9 @@ final class PuzzleView: UIView {
         super.layoutSubviews()
         
         /// Width of row clues and padding between clues and puzzle
-        let rowCluesWidth = rowCluesStackView.frame.width +
-            cluesToGridPadding
+        let rowCluesWidth = rowCluesStackView.frame.width + cluesToGridPadding
         /// Height of column clues and padding between clues and puzzle
-        let colCluesHeight = colCluesStackView.frame.height +
-            cluesToGridPadding
+        let colCluesHeight = colCluesStackView.frame.height + cluesToGridPadding
         updateConstraintConstants(rowCluesWidth, colCluesHeight)
         
         // Only one length constraint should be activated at a time
