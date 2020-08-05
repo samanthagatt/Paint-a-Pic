@@ -26,7 +26,13 @@ let tutorials = [
                 all the squares in.
                 """),
     Tutorial(clues: .init(name: "tut-2",
-                          rowClues: [[5], [2, 2], [1, 1, 1]],
-                          colClues: [[3], [2], [1, 1], [2], [3]]),
-             instruction: "")
+                          rowClues: [[2, 2], [1, 1, 1]],
+                          colClues: [[2], [1], [1], [1], [2]]),
+             instruction: """
+                If there is more than one clue for a row or column, there must \
+                be at least one empty square between them.\n
+                If the sum of the clues plus one in between each is equal \
+                to the total count of squares in that direction, there is \
+                only one possible configuration.
+                """),
 ]

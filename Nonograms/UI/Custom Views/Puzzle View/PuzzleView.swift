@@ -346,6 +346,7 @@ final class PuzzleView: UIView {
     private func setupGrid() {
         // Delete old grid
         for subview in gridStackView.arrangedSubviews {
+            gridStackView.removeArrangedSubview(subview)
             subview.removeFromSuperview()
         }
         // Loop through the number of vertical rows desired
@@ -376,26 +377,30 @@ final class PuzzleView: UIView {
         setupGrid()
         validator = PuzzleValidator(from: clues)
     }
-    func getFirstFrameOfCol(_ col: Int) -> CGRect? {
+    func getFirstFrameOfCol(_ col: Int,
+                            in space: UICoordinateSpace? = nil) -> CGRect? {
         guard let square = getSquare(from: .init(0, col)) else { return nil }
         let stackView = gridStackView.arrangedSubviews[0]
-        return stackView.convert(square.frame, to: coordinateSpace)
+        return stackView.convert(square.frame, to: space ?? coordinateSpace)
     }
-    func getLastFrameOfCol(_ col: Int) -> CGRect? {
+    func getLastFrameOfCol(_ col: Int,
+                           in space: UICoordinateSpace? = nil) -> CGRect? {
         let row = clues.rowClues.count - 1
         guard let square = getSquare(from: .init(row, col)) else { return nil }
         let stackView = gridStackView.arrangedSubviews[row]
-        return stackView.convert(square.frame, to: coordinateSpace)
+        return stackView.convert(square.frame, to: space ?? coordinateSpace)
     }
-    func getFirstFrameOfRow(_ row: Int) -> CGRect? {
+    func getFirstFrameOfRow(_ row: Int,
+                            in space: UICoordinateSpace? = nil) -> CGRect? {
         guard let square = getSquare(from: .init(row, 0)) else { return nil }
         let stackView = gridStackView.arrangedSubviews[row]
-        return stackView.convert(square.frame, to: coordinateSpace)
+        return stackView.convert(square.frame, to: space ?? coordinateSpace)
     }
-    func getLastFrameOfRow(_ row: Int) -> CGRect? {
+    func getLastFrameOfRow(_ row: Int,
+                           in space: UICoordinateSpace? = nil) -> CGRect? {
         let col = clues.colClues.count - 1
         guard let square = getSquare(from: .init(row, col)) else { return nil }
         let stackView = gridStackView.arrangedSubviews[row]
-        return stackView.convert(square.frame, to: coordinateSpace)
+        return stackView.convert(square.frame, to: space ?? coordinateSpace)
     }
 }
