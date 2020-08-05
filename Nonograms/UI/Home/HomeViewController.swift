@@ -31,6 +31,17 @@ final class HomeViewController: UIViewController {
         collectionView.reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !UserDefaults.standard.bool(forKey: "tutorial") {
+            UserDefaults.standard.set(true, forKey: "tutorial")
+            guard let tutVC = UIStoryboard(name: "Tutorial", bundle: nil)
+                .instantiateInitialViewController() else { return }
+            tutVC.modalPresentationStyle = .fullScreen
+            present(tutVC, animated: true)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "showPuzzle",
             let destVC = segue.destination as? PuzzleViewController,

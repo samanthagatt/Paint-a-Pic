@@ -376,4 +376,26 @@ final class PuzzleView: UIView {
         setupGrid()
         validator = PuzzleValidator(from: clues)
     }
+    func getFirstFrameOfCol(_ col: Int) -> CGRect? {
+        guard let square = getSquare(from: .init(0, col)) else { return nil }
+        let stackView = gridStackView.arrangedSubviews[0]
+        return stackView.convert(square.frame, to: coordinateSpace)
+    }
+    func getLastFrameOfCol(_ col: Int) -> CGRect? {
+        let row = clues.rowClues.count - 1
+        guard let square = getSquare(from: .init(row, col)) else { return nil }
+        let stackView = gridStackView.arrangedSubviews[row]
+        return stackView.convert(square.frame, to: coordinateSpace)
+    }
+    func getFirstFrameOfRow(_ row: Int) -> CGRect? {
+        guard let square = getSquare(from: .init(row, 0)) else { return nil }
+        let stackView = gridStackView.arrangedSubviews[row]
+        return stackView.convert(square.frame, to: coordinateSpace)
+    }
+    func getLastFrameOfRow(_ row: Int) -> CGRect? {
+        let col = clues.colClues.count - 1
+        guard let square = getSquare(from: .init(row, col)) else { return nil }
+        let stackView = gridStackView.arrangedSubviews[row]
+        return stackView.convert(square.frame, to: coordinateSpace)
+    }
 }

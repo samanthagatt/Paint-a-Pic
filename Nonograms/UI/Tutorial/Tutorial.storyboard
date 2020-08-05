@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Whf-zj-2Jn">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tutorial View Controller-->
+        <scene sceneID="urt-4B-fuC">
+            <objects>
+                <viewController id="Whf-zj-2Jn" customClass="TutorialViewController" customModule="Paint_a_Pic" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mNa-v7-Vj6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="JLh-xs-X0h">
+                                <rect key="frame" x="24" y="68" width="366" height="770"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="790" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="C5e-Hn-5a9">
+                                        <rect key="frame" x="0.0" y="0.0" width="366" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tyn-Xo-7Uz">
+                                                <rect key="frame" x="0.0" y="0.0" width="48" height="30"/>
+                                                <state key="normal" title="Cancel"/>
+                                                <connections>
+                                                    <action selector="exitTutorial:" destination="Whf-zj-2Jn" eventType="touchUpInside" id="K7f-aW-iqK"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tutorial" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cVl-uk-bVg">
+                                                <rect key="frame" x="162.5" y="0.0" width="57" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xvq-Sg-qP0">
+                                                <rect key="frame" x="334" y="0.0" width="32" height="30"/>
+                                                <state key="normal" title="Next"/>
+                                                <connections>
+                                                    <action selector="goToNextStep:" destination="Whf-zj-2Jn" eventType="touchUpInside" id="d1v-cF-Cid"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="791" translatesAutoresizingMaskIntoConstraints="NO" id="Eal-oz-47Q" customClass="PuzzleView" customModule="Paint_a_Pic" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="30" width="366" height="719.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1" verticalCompressionResistancePriority="800" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q72-7i-WbR">
+                                        <rect key="frame" x="0.0" y="749.5" width="366" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="RwX-WW-dY1" firstAttribute="bottom" secondItem="JLh-xs-X0h" secondAttribute="bottom" constant="24" id="Ag7-Jp-TjJ"/>
+                            <constraint firstItem="JLh-xs-X0h" firstAttribute="leading" secondItem="RwX-WW-dY1" secondAttribute="leading" constant="24" id="KQT-Zz-HKN"/>
+                            <constraint firstItem="JLh-xs-X0h" firstAttribute="top" secondItem="RwX-WW-dY1" secondAttribute="top" constant="24" id="icW-0f-RfZ"/>
+                            <constraint firstItem="RwX-WW-dY1" firstAttribute="trailing" secondItem="JLh-xs-X0h" secondAttribute="trailing" constant="24" id="yM5-bE-bT0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="RwX-WW-dY1"/>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="Tyn-Xo-7Uz" id="f6q-bd-HDk"/>
+                        <outlet property="instructionsLabel" destination="Q72-7i-WbR" id="A6k-4d-HpI"/>
+                        <outlet property="nextButton" destination="xvq-Sg-qP0" id="zqV-qt-Fod"/>
+                        <outlet property="puzzleView" destination="Eal-oz-47Q" id="49n-fg-5Zp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zuv-pt-XaR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="127"/>
+        </scene>
+    </scenes>
+</document>
