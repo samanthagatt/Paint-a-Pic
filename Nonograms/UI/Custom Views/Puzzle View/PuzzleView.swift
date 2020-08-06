@@ -56,8 +56,7 @@ final class PuzzleView: UIView {
     }
     /// The puzzle validator based off of the given` clues`
     /// - Warning: Progress will be overwritten when `clues` is changed/updated
-    private lazy var validator: PuzzleValidator =
-        PuzzleValidator(from: clues)
+    private lazy var validator = PuzzleValidator(from: clues)
     var fillMode: PuzzleFillMode = .fill
     private lazy var maker: PuzzleMaker = PuzzleMaker(
         name: clues.name,
@@ -302,18 +301,22 @@ final class PuzzleView: UIView {
     ///
     /// Should be called after `clues` changes
     private func setupPuzzle() {
-        setupClues(rowCluesStackView)
-        setupClues(colCluesStackView)
+        let rowClues: FixedLengthArray<[Int]>
+        if let overClues = clues.overwriteRow { rowClues = overClues }
+        else { rowClues = clues.rowClues }
+        setupClues(rowCluesStackView, stackClues: rowClues)
+        setupClues(colCluesStackView, stackClues: clues.colClues)
         setupGrid()
     }
-    private func setupClues(_ cluesStackView: UIStackView) {
+    private func setupClues(_ cluesStackView: UIStackView,
+                            stackClues: FixedLengthArray<[Int]>) {
         // Delete old clues
         for subView in cluesStackView.arrangedSubviews {
             subView.removeFromSuperview()
         }
-        // Get desired array of clues
-        let stackClues = cluesStackView == rowCluesStackView ?
-            clues.rowClues : clues.colClues
+//        // Get desired array of clues
+//        let stackClues = cluesStackView == rowCluesStackView ?
+//            clues.rowClues : clues.colClues
         // For each array of clues in desired clues array
         for clues in stackClues {
             // Create stack view to hold every clue
@@ -402,5 +405,8 @@ final class PuzzleView: UIView {
         guard let square = getSquare(from: .init(row, col)) else { return nil }
         let stackView = gridStackView.arrangedSubviews[row]
         return stackView.convert(square.frame, to: space ?? coordinateSpace)
+    }
+    func hideColClues() {
+        colCluesStackView.isHidden = true
     }
 }

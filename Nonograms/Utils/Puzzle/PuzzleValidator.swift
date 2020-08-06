@@ -23,17 +23,14 @@ struct PuzzleValidator {
     private var filled: Set<Int> = []
     /// Computed property determining the validity of the current state of puzzle
     private var isValid: Bool {
-        !rows.contains(false) &&
-            !cols.contains(false)
+        !rows.contains(false) && !cols.contains(false)
     }
     
     /// Initialize a new puzzle validator with no progress from a `PuzzleClues`
     init(from clues: PuzzleClues) {
         self.clues = clues
-        rows = FixedLengthArray(repeating: false,
-                                count: clues.rowClues.count)
-        cols = FixedLengthArray(repeating: false,
-                                count: clues.colClues.count)
+        rows = FixedLengthArray(storage: clues.rowClues.map { $0 == [0] })
+        cols = FixedLengthArray(storage: clues.colClues.map { $0 == [0] })
     }
     
     /// Fills or unfills square and returns the validity of the entire puzzle
@@ -103,6 +100,7 @@ struct PuzzleValidator {
             }
         }
         if stretch > 0 { stretches.append(stretch) }
+        if stretches.isEmpty { stretches = [0] }
         return clues == stretches
     }
     /// Returns the validity of a row

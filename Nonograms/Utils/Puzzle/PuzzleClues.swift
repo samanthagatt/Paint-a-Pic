@@ -13,25 +13,34 @@ struct PuzzleClues: Equatable, Codable {
     var name: String
     let rowClues: FixedLengthArray<[Int]>
     let colClues: FixedLengthArray<[Int]>
+    let overwriteRow: FixedLengthArray<[Int]>?
     init(
         id: UUID = UUID(),
         name: String,
         rowClues: FixedLengthArray<[Int]>,
-        colClues: FixedLengthArray<[Int]>
+        colClues: FixedLengthArray<[Int]>,
+        overwriteRow: FixedLengthArray<[Int]>? = nil
     ) {
         self.id = id
         self.name = name
         self.rowClues = rowClues
         self.colClues = colClues
+        self.overwriteRow = overwriteRow
     }
     init(
         name: String,
         rowClues: [[Int]],
-        colClues: [[Int]]
+        colClues: [[Int]],
+        overwriteRow: [[Int]]? = nil
     ) {
+        var overRow: FixedLengthArray<[Int]>? = nil
+        if let overwriteRow = overwriteRow {
+            overRow = FixedLengthArray(storage: overwriteRow)
+        }
         self.init(name: name,
                   rowClues: FixedLengthArray(storage: rowClues),
-                  colClues: FixedLengthArray(storage: colClues))
+                  colClues: FixedLengthArray(storage: colClues),
+                  overwriteRow: overRow)
     }
 }
 
@@ -55,5 +64,6 @@ extension PuzzleClues {
         let colCluesStorage = try values.decode([[Int]].self, forKey: .colClues)
         rowClues = FixedLengthArray(storage: rowCluesStorage)
         colClues = FixedLengthArray(storage: colCluesStorage)
+        overwriteRow = nil
     }
 }
