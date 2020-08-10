@@ -50,14 +50,12 @@ final class TutorialViewController: UIViewController {
         let imageView = UIImageView(image: UIImage(named: "pointing"))
         imageView.tintColor = .systemBackground
         imageView.alpha = 0
-        imageView.isHidden = true
         return imageView
     }()
     private lazy var pointingFillImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "pointing.fill"))
         imageView.tintColor = .label
         imageView.alpha = 0
-        imageView.isHidden = true
         return imageView
     }()
     private lazy var circle: UIView = {
@@ -91,19 +89,18 @@ final class TutorialViewController: UIViewController {
     }
     
     private func scaleAndFadeCircle(atSquare square: CGRect,
-                                    delay: TimeInterval = 0,
                                     start: TimeInterval,
                                     dur: TimeInterval,
                                     totalDur: TimeInterval) {
         let opacityDelay = 0.25
         let opacityDur = dur - opacityDelay <= 0 ? dur : dur - opacityDelay
-        let opacityStart = delay + start + opacityDelay
+        let opacityStart = start + opacityDelay
         
         let circleX = square.origin.x + square.size.width / 2
         let circleY = square.origin.y + square.size.height / 2
 
         // Make sure circle's configured right to start
-        UIView.addKeyframe(withRelativeStartTime: (delay + start) / totalDur,
+        UIView.addKeyframe(withRelativeStartTime: start / totalDur,
                            relativeDuration: 0) {
                             let transform = CGAffineTransform(scaleX: 0.01,
                                                               y: 0.01)
@@ -112,7 +109,7 @@ final class TutorialViewController: UIViewController {
                             self.circle.frame.origin = CGPoint(x: circleX,
                                                                y: circleY)
         }
-        UIView.addKeyframe(withRelativeStartTime: (delay + start) / totalDur,
+        UIView.addKeyframe(withRelativeStartTime: start / totalDur,
                            relativeDuration: dur / totalDur) {
                             let transform = CGAffineTransform(scaleX: 1, y: 1)
                             self.circle.transform = transform
@@ -124,26 +121,22 @@ final class TutorialViewController: UIViewController {
     }
     /// Pointer images get smaller and fade in
     private func fadeInPointers(atSquare square: CGRect,
-                                delay: TimeInterval = 0,
                                 start: TimeInterval,
                                 dur: TimeInterval,
                                 totalDur: TimeInterval) {
-        // Get pointer images in position to start animating
         let startOrig = CGPoint(x: square.origin.x,
                                 y: square.origin.y +
                                     square.size.height / 3)
         let startSize = CGSize(width: 90, height: 90)
         let startFrame = CGRect(origin: startOrig, size: startSize)
-        
-        UIView.addKeyframe(withRelativeStartTime: (delay + start) / totalDur,
+        // Get pointer images in position to start animating
+        UIView.addKeyframe(withRelativeStartTime: start / totalDur,
                            relativeDuration: 0) {
                             self.pointingImageView.frame = startFrame
                             self.pointingFillImageView.frame = startFrame
-                            self.pointingImageView.isHidden = false
-                            self.pointingFillImageView.isHidden = false
         }
-        
-        UIView.addKeyframe(withRelativeStartTime: (delay + start) / totalDur,
+        // Animation
+        UIView.addKeyframe(withRelativeStartTime: start / totalDur,
                            relativeDuration: dur / totalDur) {
                             self.pointingImageView.frame.size -= 20
                             self.pointingFillImageView.frame.size -= 20
@@ -151,19 +144,7 @@ final class TutorialViewController: UIViewController {
                             self.pointingFillImageView.alpha = 1
         }
     }
-    private func panPointers(toSquare square: CGRect, delay: TimeInterval = 0,
-                             start: TimeInterval, dur: TimeInterval,
-                             totalDur: TimeInterval) {
-        // Pointer images drag to end point
-        let endOrig = CGPoint(x: square.origin.x,
-                                y: square.origin.y +
-                                    square.size.height / 3)
-        UIView.addKeyframe(withRelativeStartTime: (delay + start) / totalDur,
-                           relativeDuration: dur / totalDur) {
-                            self.pointingImageView.frame.origin = endOrig
-                            self.pointingFillImageView.frame.origin = endOrig
-        }
-    }
+    /// Fades pointers out - pointers should already be in correct spot
     private func fadeOutPointers(delay: TimeInterval = 0,
                                  start: TimeInterval,
                                  dur: TimeInterval,
@@ -177,6 +158,19 @@ final class TutorialViewController: UIViewController {
                             self.pointingFillImageView.alpha = 0
         }
     }
+    private func panPointers(toSquare square: CGRect,
+                             start: TimeInterval, dur: TimeInterval,
+                             totalDur: TimeInterval) {
+        // Pointer images drag to end point
+        let endOrig = CGPoint(x: square.origin.x,
+                                y: square.origin.y +
+                                    square.size.height / 3)
+        UIView.addKeyframe(withRelativeStartTime: start / totalDur,
+                           relativeDuration: dur / totalDur) {
+                            self.pointingImageView.frame.origin = endOrig
+                            self.pointingFillImageView.frame.origin = endOrig
+        }
+    }
     private func getDurForTap(fadeDur: Double = 0.5,
                               circleDur: Double = 0.75,
                               fadeOutDelay: Double) -> Double {
@@ -187,7 +181,7 @@ final class TutorialViewController: UIViewController {
                              circleDur: Double = 0.75, fadeOutDelay: Double,
                              totalDur: Double) {
         let circleStart = start + fadeDur
-        let fadeOutStart = circleStart + max(circleDur, fadeOutDelay)
+        let fadeOutStart = circleStart + fadeOutDelay
         fadeInPointers(atSquare: square, start: start, dur: fadeDur,
                        totalDur: totalDur)
         scaleAndFadeCircle(atSquare: square, start: circleStart,
@@ -235,53 +229,138 @@ final class TutorialViewController: UIViewController {
                                        start: 0, panDur: panDur,
                                        totalDur: dur)
                 
-        }) { _ in
-            self.pointingImageView.isHidden = true
-            self.pointingFillImageView.isHidden = true
-            self.animDone = true
-        }
+        }) { _ in self.animDone = true }
     }
     private func doSecondAnim() {
-        let beginDelay = 0.5
-        let panDur = 1.0
-        let rest = 0.5
-        let fadeOutDelay = 0.25
-        
-        let panStart2 = getDurForTapAndPan(panDur: panDur) + rest
-        let tapStart1 = panStart2 + getDurForTapAndPan(panDur: panDur) + rest
-        let tapStart2 = tapStart1 + getDurForTap(fadeOutDelay: fadeOutDelay) + rest
-        let tapStart3 = tapStart2 + getDurForTap(fadeOutDelay: fadeOutDelay) + rest
-        let dur = tapStart3 + getDurForTap(fadeOutDelay: fadeOutDelay)
-        
         let square1 = puzzleView.getFirstFrameOfRow(0, in: space) ?? .zero
+        let startOrig1 = CGPoint(x: square1.origin.x,
+                                y: square1.origin.y + square1.size.height / 3)
+        let startSize = CGSize(width: 90, height: 90)
+        let startFrame1 = CGRect(origin: startOrig1, size: startSize)
+        // Get pointers ready
+        pointingImageView.frame = startFrame1
+        pointingFillImageView.frame = startFrame1
+        
+        let circleX1 = square1.origin.x + square1.size.width / 2
+        let circleY1 = square1.origin.y + square1.size.height / 2
+        // Get circle ready
+        self.circle.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        self.circle.layer.opacity = 1
+        self.circle.frame.origin = CGPoint(x: circleX1, y: circleY1)
+        
         let square2 = puzzleView.getFirstFrameOfCol(1, in: space) ?? .zero
+        let endOrig1 = CGPoint(x: square2.origin.x,
+                               y: square2.origin.y + square2.size.height / 3)
+        
         let square3 = puzzleView.getFirstFrameOfCol(3, in: space) ?? .zero
         let square4 = puzzleView.getLastFrameOfRow(0, in: space) ?? .zero
-        let square5 = puzzleView.getFirstFrameOfRow(1, in: space) ?? .zero
-        let square6 = puzzleView.getLastFrameOfCol(2, in: space) ?? .zero
-        let square7 = puzzleView.getLastFrameOfRow(1, in: space) ?? .zero
+        let startOrig2 = CGPoint(x: square3.origin.x,
+                                y: square3.origin.y + square3.size.height / 3)
+        let startFrame2 = CGRect(origin: startOrig2, size: startSize)
+        let endOrig2 = CGPoint(x: square4.origin.x,
+                               y: square4.origin.y + square4.size.height / 3)
+        let circleX2 = square3.origin.x + square3.size.width / 2
+        let circleY2 = square3.origin.y + square3.size.height / 2
         
+        let fadeDur = 0.5
+        let panDur = 0.5
+        let panDelay = 0.5
+        let opacityDelay = 0.25
+        let transformDur = 0.5
+        let opacityDur = transformDur - opacityDelay
+        
+        let transformStart1 = fadeDur
+        let opacityStart1 = transformStart1 + opacityDelay
+        let panStart1 = opacityStart1 + opacityDur
+        let fadeOutStart1 = panStart1 + panDur
+        let fadeInStart2 = fadeOutStart1 + fadeDur + panDelay
+        let transformStart2 = fadeInStart2 + fadeDur
+        let opacityStart2 = transformStart2 + opacityDelay
+        let panStart2 = opacityStart2 + opacityDur
+        let duration = panStart2 + fadeDur
+        // Animation
         UIView.animateKeyframes(
-            withDuration: dur,
-            delay: beginDelay,
+            withDuration: duration, delay: 0.5, options: [],
             animations: {
-                self.tapAndPanPointers(fromSquare: square1,
-                                       toSquare: square2, start: 0,
-                                       panDur: panDur, totalDur: dur)
-                self.tapAndPanPointers(fromSquare: square3,
-                                       toSquare: square4, start: panStart2,
-                                       panDur: panDur, totalDur: dur)
-                self.tapPointers(atSquare: square5, start: tapStart1,
-                                 fadeOutDelay: fadeOutDelay, totalDur: dur)
-                self.tapPointers(atSquare: square6, start: tapStart2,
-                                 fadeOutDelay: fadeOutDelay, totalDur: dur)
-                self.tapPointers(atSquare: square7, start: tapStart3,
-                                 fadeOutDelay: fadeOutDelay, totalDur: dur)
-        }) { _ in
-            self.pointingImageView.isHidden = true
-            self.pointingFillImageView.isHidden = true
-            self.animDone = true
-        }
+                UIView.addKeyframe(
+                    withRelativeStartTime: 0 / duration,
+                    relativeDuration: fadeDur / duration
+                ) {
+                    self.pointingImageView.frame.size -= 20
+                    self.pointingFillImageView.frame.size -= 20
+                    self.pointingImageView.alpha = 1
+                    self.pointingFillImageView.alpha = 1
+                }
+                UIView.addKeyframe(
+                    withRelativeStartTime: transformStart1 / duration,
+                    relativeDuration: transformDur / duration
+                ) {
+                    let transform = CGAffineTransform(scaleX: 1, y: 1)
+                    self.circle.transform = transform
+                }
+                UIView.addKeyframe(
+                    withRelativeStartTime: opacityStart1 / duration,
+                    relativeDuration: opacityDur / duration
+                ) {
+                    self.circle.layer.opacity = 0
+                }
+                UIView.addKeyframe(
+                    withRelativeStartTime: panStart1 / duration,
+                    relativeDuration: panDur / duration
+                ) {
+                    self.pointingImageView.frame.origin = endOrig1
+                    self.pointingFillImageView.frame.origin = endOrig1
+                }
+                UIView.addKeyframe(
+                    withRelativeStartTime: fadeOutStart1 / duration,
+                    relativeDuration: fadeDur / duration
+                ) {
+                    self.pointingImageView.frame.size += 10
+                    self.pointingFillImageView.frame.size += 10
+                    self.pointingImageView.alpha = 0
+                    self.pointingFillImageView.alpha = 0
+                }
+                UIView.addKeyframe(
+                    withRelativeStartTime: (fadeInStart2 - 0.01) / duration,
+                    relativeDuration: 0
+                ) {
+                    self.circle.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+                    self.circle.layer.opacity = 1
+                    self.circle.frame.origin = CGPoint(x: circleX2, y: circleY2)
+                    self.pointingImageView.frame = startFrame2
+                    self.pointingFillImageView.frame = startFrame2
+                }
+                UIView.addKeyframe(
+                    withRelativeStartTime: fadeInStart2 / duration,
+                    relativeDuration: fadeDur / duration
+                ) {
+                    self.pointingImageView.frame.size -= 20
+                    self.pointingFillImageView.frame.size -= 20
+                    self.pointingImageView.alpha = 1
+                    self.pointingFillImageView.alpha = 1
+                }
+                UIView.addKeyframe(
+                    withRelativeStartTime: transformStart2 / duration,
+                    relativeDuration: transformDur / duration
+                ) {
+                    let transform = CGAffineTransform(scaleX: 1, y: 1)
+                    self.circle.transform = transform
+                }
+                UIView.addKeyframe(
+                    withRelativeStartTime: opacityStart2 / duration,
+                    relativeDuration: opacityDur / duration
+                ) {
+                    self.circle.layer.opacity = 0
+                }
+                UIView.addKeyframe(
+                    withRelativeStartTime: panStart2 / duration,
+                    relativeDuration: panDur / duration
+                ) {
+                    self.pointingImageView.frame.origin = endOrig2
+                    self.pointingFillImageView.frame.origin = endOrig2
+                }
+            }
+        ) { _ in self.animDone = true }
     }
     private func alertExit() {
         alert(title: "Are you sure you want to exit?",
